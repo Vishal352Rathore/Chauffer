@@ -1,0 +1,21 @@
+.bg-image-termsandcondition{
+    background-image: url('../cab_images/wqdD.png');
+    background-repeat: no-repeat;
+    background-size: 100%;
+    width: 100%;
+}
+.termsandcondition{
+    font-family: Dosis;
+    font-size: 36px;
+    font-weight: 700;
+    text-align: left;
+    color : #000000;
+    padding: 80px 0px 0px 0px;
+}
+.termsandcondition-para{
+    font-family: Dosis;
+    font-size: 14px;
+    font-weight: 300;
+    text-align: left;
+    color : #000000;
+}

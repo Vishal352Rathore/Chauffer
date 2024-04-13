@@ -1,0 +1,60 @@
+.bg-image-services{
+    background-image: url('../cab_images/wqdD.png');
+    background-repeat: no-repeat;
+    background-size: 100%;
+    width: 100%;
+}
+.text-content-services{
+    display: flex;
+    justify-content:left;
+    flex-direction: column;
+    color: white;   
+    text-align: left;
+    font-weight: 400;
+    font-size: 40px;
+}
+.bg-image-services  .text-content-services .text-heading-first{
+    font-family: 'Inria Sans', sans-serif;
+    font-size: 40px;
+    font-weight: 400;
+    text-align: left;
+    padding: 200px 0px 0px 0px;
+}
+.our-services{
+    font-family: 'Dosis';
+    font-size: 34px;
+    font-weight: 600;
+    text-align: center;
+    padding: 50px 0px 0px 0px ;
+    color: #000000;
+    
+}
+.our-services-about{
+    color:rgb(156, 144, 130);
+    font-family: 'Dosis';
+    font-size: 18px;
+    padding: 0px 0px 30px 0px;
+}
+.img-size-services{
+    width:100%;
+    border-radius: 8px;
+}
+.img-name-service{
+    color:gray;
+    text-transform: capitalize;
+    padding: 20px 0px 0px 0px;
+    font-family: 'Dosis';
+    text-align: center;
+}
+
+/* bootstrap5 class */
+.services .pagination {
+    column-gap: 20px;
+}
+.services .pagination .page-item.page-item :nth-child(1) 
+{
+    border-radius: 50%;
+}
+.services .page-link {
+    color: #D7D2BD;
+}

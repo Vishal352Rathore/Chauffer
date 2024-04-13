@@ -1,0 +1,63 @@
+.signup-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: "Inter", sans-serif;
+}
+.signup-container .container .signup-logo-container {
+    width: 240px;
+    height: auto;
+    padding: 30px 0px 60px 0px;
+}
+
+.signup-form{
+    border: 1px solid #CACACA;
+    font-family: "Inter", sans-serif;
+    text-align: left;  
+}
+.signup-form .formtitle{
+    font-family: "Inter", sans-serif;
+    font-size: 32px;
+    font-weight: 600;
+    color: #000000;
+    /* line-height: 39px; */
+    /* padding:  30px 0 30px 0; */
+}
+.signup-form .form-label{
+    font-family: "Inter", sans-serif;
+    font-size: 24px;
+    font-weight: 400;
+    line-height: 29px;
+    color: #000000;
+
+}
+
+.signup-form input{
+    border: 1px solid #D7D2BD;
+    padding: 16px;
+    border-radius: 1px;
+    /* margin-bottom: 30px; */
+
+}
+.signup-form .termandcondition{
+    font-family: "Inter", sans-serif;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 24px;
+    letter-spacing: 0em;
+    text-align: center;
+    padding: 80px 0px 20px 0px;
+    /* border: 1px solid red; */
+}
+.signup-form .termandcondition span{
+    font-weight: 700;
+}
+.btn-create-acc{
+    font-size: 20px;
+    font-weight: 600;
+    text-align: center;
+    border-radius: 1px;
+    background-color: #000000;
+    /* margin-bottom: 30px; */
+    cursor: pointer;
+}
