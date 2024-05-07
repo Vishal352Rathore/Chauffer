@@ -111,7 +111,7 @@ span.pagination__selected{
 }
 @media (min-width:1200px) and (max-width:1600px) {
     
-    .all-agent-conainer th {
+    .all-agent .all-agent-conainer th {
         padding: 10px 17px;
         font-size: 16px;
         text-align: center;
@@ -123,10 +123,10 @@ span.pagination__selected{
         font-size: 16px;
     }
     
-    .all-agent-conainer td :first-child {
+    .all-agent .all-agent-conainer td :first-child {
         padding: 0px 0px 0px 0px;
     }
-   .all-agent-conainer th {
+    .all-agent .all-agent-conainer th {
       padding: 20px 10px;
       font-size: 10px;
   }
