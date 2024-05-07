@@ -77,25 +77,33 @@
 @media only screen and (min-width: 1200px) and (max-width: 1600px) {
         
     .all-vehicle-conainer {
+        height: 525px;
         padding: 12px 20px;
     }
     .all-vehicle-conainer th {
         padding: 10px 50px;
+        font-size: 14px;
         text-align: center;
     }
     .all-vehicle-conainer td {
         padding: 10px 30px;
+        font-size: 14px;
         text-align: center;
     }
     }
 @media only screen and (min-width: 992px) and (max-width: 1199px) 
 {
+    .all-vehicle-conainer {
+        height: 400px;
+        padding: 12px 20px;
+    }
     .all-vehicle-conainer th {
         padding: 20px 20px;
         font-size: 12px;
+        text-align: center;
     }
     .all-vehicle-conainer td {
-        padding: 20px 20px;
+        padding: 8px;
         font-size: 11px;
         text-align: center;
     } 
