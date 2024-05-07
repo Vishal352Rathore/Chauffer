@@ -1,0 +1,109 @@
+ .form-title {
+     font-family: Inter;
+     font-size: 32px;
+     font-weight: 700;
+     text-align: left;
+     color: #000000;
+ }
+
+ .form-title h3 span {
+     color: #5D68CA;
+     margin: 0 !important;
+ }
+
+ .agent-container form {
+     margin-top: 3%;
+ }
+
+ .agent-container form label {
+     font-family: Inter;
+     font-size: 16px;
+     font-weight: 300;
+     text-align: left;
+     padding-top: 20px;
+
+ }
+
+ .agent-container form input {
+     border: 1px solid #E8E8E8;
+     color: #969696;
+     padding: 8px 20px 8px 20px;
+     border-radius: 12px;
+     font-size: 16px;
+     font-family: Inter;
+     font-size: 16px;
+     font-weight: 300;
+     text-align: left;
+ }
+
+ .form-btn {
+     margin-top: 5%;
+     width: 100%;
+     padding: 16px 0px 16px 0px;
+     border-radius: 36px 36px 36px 36px;
+     background: #B5022E;
+     color: #fff;
+     font-family: Inter;
+     font-size: 24px;
+     font-weight: 600;
+     text-align: center;
+     border: unset;
+ }
+
+ .upload-icon {
+     position: relative;
+ }
+
+ .upload-icon input {
+     position: absolute;
+ }
+
+ .agent-container .upload-container {
+     width: 100%;
+     height: 150px;
+     border: 1px solid #E8E8E8;
+     border-radius: 12px;
+     display: flex;
+     justify-content: center;
+     align-items: center;
+ }
+
+ .agent-container .upload-container label {
+
+     padding-top: unset;
+     display: flex;
+     flex-direction: column;
+     justify-content: center;
+     align-items: center;
+
+ }
+
+ input#agent-doc {
+     width: 100%;
+     height: 120px;
+     border: 1px solid #E8E8E8;
+     display: flex;
+     flex-direction: column;
+     justify-content: center;
+     align-items: center;
+     color: #969696;
+     font-family: Inter;
+     font-size: 14px;
+     font-weight: 300;
+     text-align: center;
+     background-color: #F9F9F9;
+ }
+
+ @media (min-width:768px) and (max-width:890px) {
+    .form-btn {
+        margin-top: 4%;
+        padding: 0px 0px 0px 0px;
+        font-size: 13px;
+        font-weight: 200;
+        border-radius: 30px;
+    }
+     .all-driver-conainer th {
+        padding: 20px 10px;
+        font-size: 12px;
+    }
+ }

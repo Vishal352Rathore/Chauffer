@@ -1,0 +1,169 @@
+.all-agent .all-driver-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 2%;
+    margin-bottom: 2%;
+}
+
+.all-agent .all-driver-header h3{
+  margin: 0 !important;
+}
+
+.all-agent .add-driver-navigate-btn-div {
+    display: flex;
+    align-items: center;
+}
+
+.all-agent .add-driver-btn {
+    margin-right: 20px;
+    padding: 5px 30px;
+    border-radius: 22px;
+    border: 1px solid #1A2A84;
+    background-color: #1A2A84;
+    color: #fff;
+    text-decoration: none !important;
+}
+
+.all-agent .add-driver-btn:hover {
+    color: #fff;
+}
+.all-agent .all-agent-conainer th {
+
+        padding: 10px 45px;
+        text-align: center;
+        font-family: Inter;
+        font-size: 16px;
+        font-weight: 600;
+        color: #fff;
+  
+}
+/* 
+.all-agent .all-driver-conainer th :first-child {
+    padding: 20px 0px 20px 25px;
+} */
+.all-agent .all-agent-conainer td {
+    padding: 15px 30px;
+}
+.all-agent .pagination {
+    padding: 10px;
+    margin: 5px 137px;
+    display: flex;
+    justify-content: end;
+    column-gap: 1%;
+}
+.all-agent .pagination>span {
+    padding: 15px 20px;
+    border: 1px solid gray;
+    cursor: pointer;
+}
+.pagination>span {
+    padding: 15px 15px;
+    border: 1px solid gray;
+    cursor: pointer;
+    width: 50px;
+    height: 50px;
+    border: 1px solid #CDCDCD;
+    border-radius: 80px;
+    text-align: center;
+    color: #fff;
+}
+.pagination .inactive_page{
+    color: #9C9C9C;
+}
+span.pagination__selected{
+    background-image: linear-gradient(180deg, #1B2B84 0%, #0D1540 100%);
+
+}
+.all-agent .pagination__selected {
+    background-color: rgb(220, 220, 220);
+}
+
+.search-box {
+    display: inline-block;
+    border: 1px solid #E8E8E8;
+    border-radius: 12px;
+    padding: 2px;
+}
+
+.search-box-section label{
+    margin: 0px 30px;
+}
+
+
+.search-box input {
+    border: unset;
+}
+
+.search-box input:focus {
+    border-color: unset !important;
+    outline: 0;
+    box-shadow: unset !important;
+}
+
+.all-agent-conainer thead {
+    background-color: #9C9C9C;
+}
+
+.all-agent-conainer  {  
+        height: 650px;
+        padding: 12px 20px;
+}
+
+
+@media (min-width:850px) and (max-width:991px) {
+    
+    .all-agent-conainer th {
+        padding: 20px 8px;
+        font-size: 10px;
+        text-align: center;
+        /* border: 1px solid red; */
+    }
+   
+    
+    .all-agent-conainer td {
+        padding: 18px 20px;
+        /* border: 1px solid red; */
+        text-align: center;
+        font-size: 10px;
+    }
+    
+    .all-agent-conainer td :first-child {
+        padding: 0px 0px 0px 0px;
+    }
+   .all-agent-conainer th {
+      padding: 20px 10px;
+      font-size: 10px;
+  }
+  .action_icon img {
+    margin: 0px 3px;
+}
+}
+@media (min-width:768px) and (max-width:850px) {
+    
+    .all-agent-conainer th {
+        padding: 20px 8px;
+        font-size: 10px;
+        text-align: center;
+        /* border: 1px solid red; */
+    }
+    
+    .all-agent-conainer th :first-child {
+        padding: 20px 0px 20px 20px;
+    }
+    
+    .all-agent-conainer td {
+        padding: 18px 20px;
+        /* border: 1px solid red; */
+        text-align: center;
+        font-size: 10px;
+    }
+    
+    .all-agent-conainer td :first-child {
+        padding: 0px 0px 0px 0px;
+    }
+   .all-agent-conainer th {
+      padding: 20px 10px;
+      font-size: 10px;
+  }
+}

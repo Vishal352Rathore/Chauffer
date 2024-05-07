@@ -1,0 +1,230 @@
+.flex-container {
+  display: flex;
+  height: 100vh;
+}
+
+.fa-user {
+  color: white;
+  font-size: 24px;
+}
+
+.sidebar-container {
+  color: white;
+  font-weight: 500;
+  font-size: 20px;
+  text-align: left;
+  position: fixed;
+  top: 0;
+  width: 14vw;
+  height: 100vh;
+  /* overflow-y: auto; */
+  background-image: linear-gradient(180deg, #1A2A84 0%, #000000 188.09%);
+}
+
+/* ::-webkit-scrollbar {
+  width: 0;  
+  background: transparent;  
+} */
+
+/* ::-webkit-scrollbar-thumb {
+  background: transparent; 
+} */
+
+
+.component-show {
+  display: block;
+  position: relative;
+  top: 100px;
+}
+
+.sidebar {
+  position: relative;
+  top: 0px;
+  left: 0;
+  transition: left 0.3s ease;
+  z-index: 99;
+}
+
+.open {
+  left: -268.80px;
+}
+
+.logo-container {
+  display: flex;
+  flex-direction: row;
+}
+
+.logo-container .username {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: Inter;
+  font-size: 24px;
+  font-weight: 400;
+  text-align: left;
+  width: 40%;
+  padding-left: 10px;
+}
+
+.sidebar .sidebar-container ul li {
+  list-style: none;
+}
+
+.sidebar .sidebar-container ul .dashboard-container {
+  padding: 40px 0px;
+}
+
+.sidebar .sidebar-container ul li .logo-container {
+  width: 100%;
+  display: flex;
+}
+
+.sidebar .sidebar-container ul li .logo-container .logo {
+  padding-right: 10px;
+}
+
+.sidebar-container .menu {
+  padding: 10px 0px;
+}
+
+.sidebar .sidebar-container ul li .link-tag {
+  text-decoration: none;
+}
+
+.link-tag span {
+  color: #fff;
+  font-family: Inter;
+  font-size: 20px;
+  font-weight: 300;
+  text-align: left;
+}
+
+.link-tag span img {
+  width: 24px;
+}
+
+.header-position {
+  height: 100%;
+  position: absolute;
+  display: flex;
+  /* left: 268.79px; */
+  background-color: #fff;
+  flex-direction: column;
+  flex: 1;
+  overflow-y: scroll;
+}
+
+.app-content-container {
+  position: relative;
+  z-index: 1;
+}
+
+/* Media for laptop view */
+@media only screen and (min-width: 1200px) and (max-width: 1600px) {
+  .flex-container {
+    min-height: 100vh;
+  }
+
+  .sidebar-container {
+    width: 17vw;
+    min-height: 100vh;
+    position: fixed;
+  }
+
+  .header-position {
+
+    position: absolute;
+    display: flex;
+    /* left: 260px; */
+    top: 0px;
+    flex-direction: column;
+  }
+
+  .logo-container .username {
+    font-size: 20px;
+    width: 40%;
+    padding-left: 10px;
+  }
+
+  .link-tag span {
+    padding-left: 10px;
+    font-size: 16px;
+  }
+
+  .link-tag span img {
+    width: 24px;
+    padding-right: 5px;
+  }
+
+  .open {
+    left: -260px;
+  }
+}
+
+@media only screen and (min-width: 992px) and (max-width: 1199px) {
+
+  .sidebar-container {
+    width: 20vw;
+    position: fixed;
+  }
+
+  .sidebar-container .menu {
+    padding: 8px 0px;
+  }
+
+  .logo-container .username {
+    font-size: 20px;
+  }
+
+  .link-tag span {
+    font-size: 16px;
+  }
+
+  .link-tag span img {
+    width: 17px;
+  }
+  .header-position {
+    left: 204.80px;
+}
+
+.open {
+  left: -204.80px;
+}
+
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  .sidebar-container {
+    font-size: 20px;
+    width: 27vw;
+    background-image: linear-gradient(180deg, #1A2A84 0%, #000000 188.09%);
+  }
+  .link-tag span {
+    font-size: 14px;
+  }
+  .sidebar .sidebar-container ul .dashboard-container {
+    padding: 15px 0px;
+  }
+  .logo-container .username {
+    font-size: 18px;
+    width: 40%;
+  }
+
+}
+@media (min-width:768px) and (max-width:890px) {
+  .sidebar-container {
+    font-size: 20px;
+    width: 30vw;
+    background-image: linear-gradient(180deg, #1A2A84 0%, #000000 188.09%);
+}
+.header-position {
+  left: 255px;
+  
+}
+}
+/* @media (max-width: 767px) {}
+@media (min-width: 768px) and (max-width: 991px) {}
+@media only screen and (min-width: 992px) and (max-width: 1199px) {}  */
+/* @media only screen and (min-width: 1200px) and (max-width: 1600px) {
+
+} */

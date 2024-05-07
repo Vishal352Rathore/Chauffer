@@ -1,0 +1,28 @@
+.complaint-container button{
+
+    margin-left: 20px;
+    padding: 5px 50px;
+    border-radius: 22px;
+    border: 1px solid #1A2A84;
+
+}
+
+.complaint-tab{
+    display: flex;
+    justify-content: space-between;
+}
+
+.add-complaint-btn{
+    margin-right: 20px;
+    padding: 5px 30px;
+    border-radius: 22px;
+    border: 1px solid #B5022E;
+    background-color:  #B5022E;
+    color: #fff;
+    text-decoration: none !important;
+}
+
+.add-complaint-btn:hover{
+  
+        color: #fff;
+}

@@ -1,0 +1,240 @@
+import React from "react";
+import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import Images from "../Images";
+import "./AllDriver.css";
+
+const AllDriver = () => {
+  const [driverData, setDriverData] = useState(null);
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [filteredDrivers, setFilteredDrivers] = useState(null);
+  const token = localStorage.getItem("token");
+  const superAdminId = localStorage.getItem("superAdminId");
+  const agencyId = localStorage.getItem("agencyId");
+  const URL = process.env.REACT_APP_DRIVER_LIST_API_URL;
+  
+
+  const fetchData = async () => {
+    const raw = JSON.stringify({
+      superAdminId: superAdminId,
+      agencyId : agencyId,
+      page: page,
+    });
+
+    const myHeaders = new Headers();
+    myHeaders.append("token", token);
+    myHeaders.append("type", "superAdmin");
+    myHeaders.append("Content-Type", "application/json");
+
+    const requestOptions = {
+      method: "POST",
+      headers: myHeaders,
+      body: raw,
+      redirect: "follow",
+    };
+
+    try {
+      fetch(URL, requestOptions)
+        .then((response) => response.json())
+        .then((result) => {
+          console.log("result", result);
+          //  console.log("Date :", formattedDate);
+
+          if (result.status === true) {
+            setDriverData(result.items.drivers);
+            setFilteredDrivers(result.items.drivers);
+            setTotalPages(Math.ceil(result.items.totalCount / 10));
+            console.log("response.data.items", result);
+          } else {
+            console.log("response.data.items", result);
+          }
+        })
+        .catch((error) => console.error("error", error));
+    } catch (error) {
+      console.log("error", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, [page]);
+
+  const selectPageHandler = (selectedPage) => {
+    if (
+      selectedPage >= 1 &&
+      selectedPage <= totalPages &&
+      selectedPage !== page
+    ) {
+      setPage(selectedPage);
+      console.log("selectedPage", selectedPage);
+    }
+  };
+
+  // Function to handle search input change
+  const handleSearchInputChange = (event) => {
+    const query = event.target.value.toLowerCase();
+    setSearchQuery(query);
+
+    if (query.trim() === "") {
+      setFilteredDrivers(driverData); // Reset to full list if input field is cleared
+      return;
+    }
+
+    const keywords = query.split(" ");
+    const filtered = driverData.filter((driver) =>
+      keywords.every((keyword) => {
+        if (keyword === "active" || keyword === "inactive") {
+          return driver.status.toLowerCase() === keyword;
+        }
+        return Object.values(driver).some(
+          (value) =>
+            typeof value === "string" && value.toLowerCase().includes(keyword)
+        );
+      })
+    );
+    setFilteredDrivers(filtered);
+  };
+
+  return (
+    <div>
+      <section className="container-fluid">
+        <div className="row">
+          <div className="col-md-12">
+            <div className="all-driver-header">
+              <div className="form-title  padding_left_20  ">
+                <p>
+                  All <span>Driver</span>
+                </p>
+              </div>
+              <div className="add-driver-navigate-btn-div">
+                <span>
+                  <Link to="addDriver" className="add-driver-btn">
+                    {" "}
+                    Add Driver
+                  </Link>{" "}
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div className="search-box-section">
+        <label htmlFor="searchby">Search :</label>
+
+        <div className="search-box">
+          <img src={Images("search_icon")} alt="not found" />
+          <input
+            type="text"
+            placeholder="Search..."
+            value={searchQuery}
+            onChange={handleSearchInputChange}
+          />
+        </div>
+      </div>
+
+      <div className="all-driver-conainer">
+        <div className="container-fluid">
+          <div className="row">
+            <div className="col-md-12">
+              <table>
+                <thead>
+                  <tr>
+                    <th>S No.</th>
+                    <th>Driver name </th>
+
+                    <th>Status</th>
+                    <th>Email Id</th>
+                    <th>Created</th>
+                    {/* <th>Info</th> */}
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {filteredDrivers &&
+                    filteredDrivers.map((driver, index) => {
+                      return (
+                        <tr key={driver._id}>
+                          <>
+                            <td> {index + 1 + (page - 1) * 10}</td>
+                            <td> {driver.drivername}</td>
+                            {driver.status && driver.status === "Done" ? (
+                              <td>
+                                <button style={{ background: "#5DCA95" }}>
+                                  Done
+                                </button>
+                              </td>
+                            ) : (
+                              <td>
+                                <button>Pending</button>
+                              </td>
+                            )}
+
+                            <td>{driver.email}</td>
+                            <td>{driver.createdAt}</td>
+                            <td>
+                              <div className="action_icon">
+                                <img
+                                  src={Images("view_icon")}
+                                  alt="not found"
+                                />
+
+                                <img
+                                  src={Images("delete_icon")}
+                                  alt="not found"
+                                />
+                              </div>
+                            </td>
+                          </>
+                        </tr>
+                      );
+                    })}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+      <section className="container">
+        <div className="row">
+          <div className="col-md-12">
+            {driverData && (
+              <div className="pagination ">
+                <span
+                  onClick={() => selectPageHandler(page - 1)}
+                  className={page > 1 ? "prev_page" : "pagination__disable"}
+                >
+                  <i class="fa-solid fa-chevron-left"></i>
+                </span>
+
+                {[...Array(totalPages)].map((_, i) => {
+                  return (
+                    <span
+                      key={i}
+                      className={page === i + 1 ? "pagination__selected" : "inactive_page"}
+                      onClick={() => selectPageHandler(i + 1)}
+                      
+                    >
+                      {i + 1}
+                    </span>
+                  );
+                })}
+
+                <span
+                  onClick={() => selectPageHandler(page + 1)}
+                  className={page < totalPages ? "next-page" : "pagination__disable"}
+                >
+                  <i class="fa-solid fa-angle-right"></i>
+                </span>
+              </div>
+            )}
+          </div>
+        </div>
+      </section>
+    </div>
+  );
+};
+
+export default AllDriver;

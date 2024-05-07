@@ -1,0 +1,181 @@
+.login-page {
+    font-family: inter;
+}
+.login-image {
+    position: absolute;
+    color: white;
+    z-index: 999;
+    bottom: 14rem;
+    text-align: left;
+    width: 100%;
+    padding-left: 140px;
+}
+.login-image h2 {
+    font-family: Inter;
+    font-size: 56px;
+    font-weight: 800;
+}
+.login-image p {
+    font-family: Inter;
+    font-size: 24px;
+    font-weight: 600;
+}
+.set_postion img {
+    width: 100%;
+    height: 100vh;
+    object-fit: cover;
+}
+.container-fluid {
+    padding: 0px !important;
+    overflow-x: hidden;
+}
+.set_postion {
+    position: relative;
+}
+.login-form-container {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: left;
+}
+.login-form {
+    text-align: left;
+}
+.login-form div:nth-child(1) h2 {
+    font-family: Inter;
+    font-size: 48px;
+    font-weight: 600;
+    text-align: left;
+}
+.login-form div:nth-child(1) p {
+    font-family: Inter;
+    font-size: 24px;
+    font-weight: 400;
+    text-align: left;
+    color: #777777;
+    padding: 50px 0px;
+}
+.login-form input[type="email"],
+.login-form input[type="password"] {
+    width: 444px;
+    border: 1px solid gray;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    margin: 14px 0px;
+    font-size: 24px;
+    color: #777777;
+}
+.login-form button {
+    margin-top: 5%;
+    width: 100%;
+    padding: 12px 0px 12px 0px;
+    border-radius: 36px ;
+    background: #B5022E;
+    color: #fff;
+    font-family: Inter;
+    font-size: 24px;
+    font-weight: 600;
+    text-align: center;
+    border: unset;
+}
+.login-form form div:nth-child(3) label {
+    font-size: 24px;
+    color: #777777;
+    padding : 16px 0px 0px 10px;
+}
+.login-form form div:nth-child(3) input {
+    width: 24px;
+    height: 24px;
+    padding:4px;
+    border: 2px solid #777777;
+    margin-top: 5%;
+}
+/* @media (max-width: 767px) {}
+@media (min-width: 768px) and (max-width: 991px) {}
+@media only screen and (min-width: 992px) and (max-width: 1199px) {}  */
+/* media for laptop view */
+@media only screen and (min-width: 1200px) and (max-width: 1600px) {
+    .login-image {
+        bottom: 9rem;
+    }
+    .login-form div:nth-child(1) h2 {
+        font-size: 30px;
+    }
+    .login-form div:nth-child(1) p {
+        font-size: 20px;
+        padding: 12px 0px;
+    }
+    
+    .login-form input[type="email"], .login-form input[type="password"] 
+     {
+        margin: 12px 0px;
+        font-size: 18px;
+    }
+    .login-form button {
+        margin-top: 3%;
+        padding: 10px 0px 10px 0px;
+        font-size: 20px;
+    }
+}
+/* mini Lp view */
+@media only screen and (min-width: 992px) and (max-width: 1199px) 
+{
+    .login-image {
+        position: absolute;
+        color: white;
+        z-index: 999;
+        bottom: 14rem;
+        text-align: left;
+        width: 100%;
+        padding-left: 45px;
+    }
+    .login-form button {
+        margin-top: 3%;
+        padding: 10px 0px 10px 0px;
+        font-size: 20px;
+    }
+}
+@media (min-width: 768px) and (max-width: 991px) {
+    .login-image h2 {
+        font-family: Inter;
+        font-size: 46px;
+        font-weight: 800;
+    }
+    .login-form div:nth-child(1) h2 {
+        font-size: 40px;
+    }
+    .login-form div:nth-child(1) p {
+        font-size: 20px;
+        padding: 20px 0px;
+    }
+    .login-form input[type="email"], .login-form input[type="password"] {
+        margin: 24px 0px 0px 0px;
+        font-size: 15px;
+        width: 300px;
+    }
+    .login-image {
+        bottom: 14rem;
+        padding-left: 46px;
+    }
+    .login-image p {
+        font-size: 20px;
+    }
+    .login-form form div:nth-child(3) label {
+        font-size: 20px;
+        padding: 10px 0px 0px 10px;
+    }
+    .login-form form div:nth-child(3) input {
+        width: 24px;
+        height: 24px;
+        margin-top: 3%;
+    }
+    .login-form button {
+        margin-top: 3%;
+        padding: 6px 0px 6px 0px;
+        font-size: 18px;
+        font-weight: 600;
+    }
+}
