@@ -114,7 +114,7 @@ const AddVehicle = () => {
             alert(response.data.message);
             navigate("/home/allVehicle");
           } else {
-            alert(response.message);
+            alert(response.data.message);
           }
         })
         .catch((error) => console.log(error));
