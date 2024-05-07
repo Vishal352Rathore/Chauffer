@@ -113,23 +113,20 @@ span.pagination__selected{
     
     .all-agent .all-agent-conainer th {
         padding: 10px 17px;
-        font-size: 16px;
+        font-size: 14px;
         text-align: center;
     }
    
     .all-agent  .all-agent-conainer td {
         padding: 15px 16px;
         text-align: center;
-        font-size: 16px;
+        font-size: 14px;
     }
     
     .all-agent .all-agent-conainer td :first-child {
         padding: 0px 0px 0px 0px;
     }
-    .all-agent .all-agent-conainer th {
-      padding: 20px 10px;
-      font-size: 10px;
-  }
+ 
   .action_icon img {
     margin: 0px 3px;
 }
@@ -155,10 +152,7 @@ span.pagination__selected{
     .all-agent .all-agent-conainer td :first-child {
         padding: 0px 0px 0px 0px;
     }
-    .all-agent .all-agent-conainer th {
-      padding: 20px 10px;
-      font-size: 10px;
-  }
+ 
   .action_icon img {
     margin: 0px 3px;
 }
