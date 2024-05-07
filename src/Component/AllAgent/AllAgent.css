@@ -137,7 +137,7 @@ span.pagination__selected{
 
 @media (min-width:992px) and (max-width:1199px) {
     
-    .all-agent-conainer th {
+    .all-agent .all-agent-conainer th {
         padding: 20px 8px;
         font-size: 10px;
         text-align: center;
@@ -145,17 +145,17 @@ span.pagination__selected{
     }
    
     
-    .all-agent-conainer td {
+    .all-agent .all-agent-conainer td {
         padding: 18px 20px;
         /* border: 1px solid red; */
         text-align: center;
         font-size: 10px;
     }
     
-    .all-agent-conainer td :first-child {
+    .all-agent .all-agent-conainer td :first-child {
         padding: 0px 0px 0px 0px;
     }
-   .all-agent-conainer th {
+    .all-agent .all-agent-conainer th {
       padding: 20px 10px;
       font-size: 10px;
   }
@@ -166,7 +166,7 @@ span.pagination__selected{
 
 @media (min-width:850px) and (max-width:991px) {
     
-    .all-agent-conainer th {
+    .all-agent .all-agent-conainer th {
         padding: 20px 8px;
         font-size: 10px;
         text-align: center;
@@ -174,17 +174,17 @@ span.pagination__selected{
     }
    
     
-    .all-agent-conainer td {
+    .all-agent .all-agent-conainer td {
         padding: 18px 20px;
         /* border: 1px solid red; */
         text-align: center;
         font-size: 10px;
     }
     
-    .all-agent-conainer td :first-child {
+    .all-agent .all-agent-conainer td :first-child {
         padding: 0px 0px 0px 0px;
     }
-   .all-agent-conainer th {
+    .all-agent .all-agent-conainer th {
       padding: 20px 10px;
       font-size: 10px;
   }
@@ -194,29 +194,29 @@ span.pagination__selected{
 }
 @media (min-width:768px) and (max-width:850px) {
     
-    .all-agent-conainer th {
+    .all-agent .all-agent-conainer th {
         padding: 20px 8px;
         font-size: 10px;
         text-align: center;
         /* border: 1px solid red; */
     }
     
-    .all-agent-conainer th :first-child {
+    .all-agent .all-agent-conainer th :first-child {
         padding: 20px 0px 20px 20px;
     }
     
-    .all-agent-conainer td {
+    .all-agent .all-agent-conainer td {
         padding: 18px 20px;
         /* border: 1px solid red; */
         text-align: center;
         font-size: 10px;
     }
     
-    .all-agent-conainer td :first-child {
+    .all-agent  .all-agent-conainer td :first-child {
         padding: 0px 0px 0px 0px;
     }
-   .all-agent-conainer th {
+    /* .all-agent  .all-agent-conainer th {
       padding: 20px 10px;
       font-size: 10px;
-  }
+  } */
 }
