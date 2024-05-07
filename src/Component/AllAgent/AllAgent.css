@@ -109,7 +109,60 @@ span.pagination__selected{
         height: 650px;
         padding: 12px 20px;
 }
+@media (min-width:1200px) and (max-width:1600px) {
+    
+    .all-agent-conainer th {
+        padding: 10px 17px;
+        font-size: 16px;
+        text-align: center;
+    }
+   
+    .all-agent  .all-agent-conainer td {
+        padding: 15px 16px;
+        text-align: center;
+        font-size: 16px;
+    }
+    
+    .all-agent-conainer td :first-child {
+        padding: 0px 0px 0px 0px;
+    }
+   .all-agent-conainer th {
+      padding: 20px 10px;
+      font-size: 10px;
+  }
+  .action_icon img {
+    margin: 0px 3px;
+}
+}
 
+@media (min-width:992px) and (max-width:1199px) {
+    
+    .all-agent-conainer th {
+        padding: 20px 8px;
+        font-size: 10px;
+        text-align: center;
+        /* border: 1px solid red; */
+    }
+   
+    
+    .all-agent-conainer td {
+        padding: 18px 20px;
+        /* border: 1px solid red; */
+        text-align: center;
+        font-size: 10px;
+    }
+    
+    .all-agent-conainer td :first-child {
+        padding: 0px 0px 0px 0px;
+    }
+   .all-agent-conainer th {
+      padding: 20px 10px;
+      font-size: 10px;
+  }
+  .action_icon img {
+    margin: 0px 3px;
+}
+}
 
 @media (min-width:850px) and (max-width:991px) {
     
