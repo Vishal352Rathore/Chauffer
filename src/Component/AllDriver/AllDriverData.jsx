@@ -52,10 +52,10 @@ const AllDriverData = ({ superAdminId, agencyId }) => {
   };
 
   useEffect(() => {
-    if(searchQuery.trim() === ""){
+    if (searchQuery.trim() === "") {
       fetchData();
-    }else{
-      filteredDriverData()
+    } else {
+      filteredDriverData();
     }
   }, [page]);
 
