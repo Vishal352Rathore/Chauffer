@@ -1,0 +1,9 @@
+.home-container{
+    position: relative;
+    z-index: 200;
+}
+
+#home-container{
+    /* position: absolute; */
+  }
+  

@@ -1,0 +1,352 @@
+.add-vehicle-container form {
+    margin-top: 3%;
+}
+
+.add-vehicle-container form label {
+    font-family: Inter;
+    font-size: 16px;
+    font-weight: 300;
+    text-align: left;
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+.add-vehicle-container form input,
+.add-vehicle-container form .form-select {
+    border: 1px solid #E8E8E8;
+    color: #969696;
+    padding: 8px 20px 8px 20px;
+    border-radius: 12px;
+    font-size: 16px;
+    font-family: Inter;
+    font-weight: 300;
+    text-align: left;
+    background-color: #F9F9F9
+}
+
+.vehicle-details {
+    font-family: Inter;
+    font-size: 15px;
+    font-weight: 700;
+    text-align: left;
+    color: #222222;
+    border-bottom: 1px solid #222222;
+    padding-bottom: 12px;
+}
+
+.add-btn {
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+.add-btn button {
+    width: 86px;
+    height: 34px;
+    border: 1px solid #1A2A84;
+    padding: 4px 12px 4px 12px;
+    background-color: #1A2A84;
+    border-radius: 16px;
+    color: #fff;
+    font-family: Inter;
+    font-size: 11px;
+    font-weight: 400;
+    text-align: center;
+
+}
+
+.vehicleregdoc {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+}
+
+.input-container {
+    border-radius: 10px;
+    position: relative;
+}
+
+.input-container input {
+    background-color: #F9F9F9;
+}
+
+
+.input-container p {
+    font-family: Inter;
+    font-size: 14px;
+    font-weight: 300;
+    text-align: center;
+    color: #969696;
+}
+
+.vehicleimg-container {
+    border-radius: 10px;
+    background-color: #F9F9F9;
+    position: relative;
+}
+
+.vehicleimg-container .vehicleimg {
+    background-color: #F9F9F9;
+    border: unset;
+}
+
+.vehicleimg-container p {
+    font-family: Inter;
+    font-size: 14px;
+    font-weight: 300;
+    text-align: center;
+    color: #969696;
+}
+
+.input-container {
+    width: 100%;
+    height: 120px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: #ccc;
+}
+
+.input-container input {
+    width: 100%;
+}
+
+.upload-container .FileUpload1 {
+    display: none;
+}
+
+.add-vehicle-container .upload-container {
+    height: 160px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.add-vehicle-container .upload-container label {
+    width: 200px;
+    height: 120px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+
+
+.add-vehicle-btn-div {
+    margin: 0 auto 15px auto;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+img#imgpreview {
+    width: 100%;
+    height: 100%;
+}
+
+
+@media only screen and (min-width: 1200px) and (max-width: 1600px) {
+    .add-vehicle-container form label {
+        font-family: Inter;
+        font-size: 16px;
+        font-weight: 300;
+        text-align: left;
+        padding-top: 15px;
+        padding-bottom: 0px;
+    }
+
+    .add-vehicle-container form input,
+    .add-vehicle-container form .form-select {
+        padding: 5px 20px 5px 20px;
+    }
+
+    .add-vehicle-container .upload-container {
+        width: 90%;
+        background-color: #F9F9F9;
+        border-radius: 10px;
+
+    }
+
+    .add-vehicle-container .upload-container label {
+        width: 100%;
+        border-radius: 10px;
+
+    }
+
+    .add-vehicle-container .upload-container label img {
+        width: 50%;
+        height: 50%;
+    }
+
+    .add-vehicle-container .upload-container p {
+        font-size: 14px;
+    }
+
+    .form-btn {
+        margin-top: 2%;
+        padding: 12px 0px 12px 0px;
+        font-size: 20px;
+    }
+
+    .vehicle-details {
+        padding-top: 12px;
+    }
+
+}
+
+@media only screen and (min-width: 992px) and (max-width: 1199px) {
+
+    .add-vehicle-container form label {
+        font-family: Inter;
+        font-size: 16px;
+        font-weight: 300;
+        text-align: left;
+        padding-top: 15px;
+        padding-bottom: 0px;
+    }
+
+    .add-vehicle-container form input,
+    .add-vehicle-container form .form-select {
+        padding: 5px 20px 5px 20px;
+    }
+
+    .add-vehicle-container .upload-container {
+        width: 90%;
+        background-color: #F9F9F9;
+        border-radius: 10px;
+
+    }
+
+    .add-vehicle-container .upload-container label {
+        width: 100%;
+        border-radius: 10px;
+
+    }
+
+    .add-vehicle-container .upload-container label img {
+        width: 50%;
+        height: 50%;
+    }
+
+    .add-vehicle-container .upload-container p {
+        font-size: 14px;
+    }
+
+    .form-btn {
+        margin-top: 2%;
+        padding: 12px 0px 12px 0px;
+        font-size: 20px;
+    }
+
+    .vehicle-details {
+        padding-top: 12px;
+    }
+
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+
+    .add-vehicle-container form label {
+        font-size: 9px;
+        padding-bottom: 0px;
+    }
+
+    .add-vehicle-container form input,
+    .add-vehicle-container form .form-select {
+        padding: 8px 10px 8px 10px;
+        font-size: 10px;
+    }
+
+    .add-vehicle-container .upload-container {
+        width: 90%;
+        background-color: #F9F9F9;
+        border-radius: 10px;
+
+    }
+
+    .add-vehicle-container .upload-container label {
+        width: 100%;
+        height: 100px;
+        border-radius: 10px;
+
+    }
+
+    .add-vehicle-container .upload-container label img {
+        width: 20%;
+        height: 20%;
+    }
+
+    .add-vehicle-container .upload-container p {
+        font-size: 10px;
+    }
+
+    .vehicle-details {
+        padding-bottom: 12px;
+        padding-top: 12px;
+    }
+
+    .add-btn {
+        padding-top: 15px;
+        padding-bottom: 15px;
+
+    }
+
+    .add-btn button {
+        width: 74px;
+        height: 26px;
+        font-size: 9px;
+    }
+
+    .input-container {
+        border-radius: 10px;
+        position: relative;
+    }
+
+    .input-container p {
+        font-size: 14px;
+        font-weight: 300;
+    }
+
+    .vehicleimg-container p {
+        font-size: 14px;
+        padding: 0px 10px;
+        border: 1px solid red;
+    }
+
+
+    .input-container {
+        width: 100%;
+        height: 120px;
+
+    }
+
+    .input-container input {
+        width: 100%;
+    }
+
+    .add-vehicle-container .upload-container {
+        height: 100px;
+    }
+
+    .add-vehicle-container .upload-container:hover {
+        border-radius: 12px;
+        box-shadow: 1px 1px 1px 1px rgb(202, 198, 198);
+    }
+
+    .add-vehicle-container .upload-container label {
+        width: 200px;
+        height: 120px;
+        font-size: 7px;
+    }
+
+    .add-vehicle-btn-div {
+        margin: 0 auto 15px auto;
+    }
+}

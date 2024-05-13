@@ -1,0 +1,372 @@
+.spinner {
+    position: absolute;
+    top: 50%;
+    left: 42%;
+    z-index: 999;
+    display: none;
+    filter: blur(0);
+}
+
+.isLoading {
+    display: block;
+}
+
+.add-driver {
+    position: relative;
+}
+
+.form-title p {
+    font-family: Inter;
+    font-size: 32px;
+    font-weight: 700;
+    line-height: 38.73px;
+    text-align: left;
+    margin: 0px;
+}
+
+.form-title p span {
+    color: #5D68CA;
+}
+
+.add-driver label {
+    display: block;
+    font-family: Inter;
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 19.36px;
+    text-align: left;
+    margin-top: 20px;
+    margin-bottom: 15px;
+}
+
+
+.add-driver input {
+    width: 80%;
+    padding: 6px;
+    border-radius: 12px;
+    border: 1px solid #dcd5d5;
+}
+
+.add-driver .profile {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.profile-preview {  
+    width: 200px;
+    height: 200px;
+}
+
+.driver-image {
+    width: 200px;
+    height: 200px;
+    margin: 0 auto;
+    margin-bottom: 70px;
+}
+
+.driver-image img {
+    width: 100%;
+    height: 100%;
+}
+
+.profile-image {
+    width: 140px;
+    height: 60px;
+    margin: 0 auto;
+    margin-top: -100px;
+    display: flex;
+    justify-content: end;
+}
+
+.profile-image img {
+    width: 30px;
+    height: 30px;
+}
+
+.add-driver .upload-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.FileUpload1 {
+    display: none;
+}
+
+.add-driver .upload-container label {
+    width: 200px;
+    height: 120px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #F9F9F9;
+    border: 1px solid #F9F9F9;
+    border-radius: 10px;
+}
+
+
+.add-driver .upload-container input {
+    display: none;
+}
+
+.add-driver .upload-container p {
+    color: #969696;
+    font-size: 21px;
+    margin-top: 10px;
+    margin-bottom: 3px;
+}
+
+.add-driver .upload-container span {
+    color: #494949;
+}
+
+.form-btn {
+    width: 100%;
+    height: 61px;
+    /* padding: 16px 0px 0px 0px; */
+    border-radius: 36px 36px 36px 36px;
+    background: #B5022E;
+    color: #fff;
+    font-family: Inter;
+    font-size: 24px;
+    font-weight: 600;
+    text-align: center;
+}
+
+.add-driver .upload-container label img {
+    width: 76px;
+    height: 46px;
+}
+
+
+img#imageProfile {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border: 1px solid #dcd5d5;
+
+}
+
+.loading_icon {}
+
+img#imagePreview {
+    width: 100%;
+    height: 100%;
+}
+
+.add-driver-btn-div {
+    margin: 0 auto 15px auto;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.submitted-btn {
+    background-color: rgb(133, 225, 133);
+    margin-top: 5%;
+    width: 100%;
+    padding: 16px 0px 16px 0px;
+    border-radius: 36px 36px 36px 36px;
+    color: #fff;
+    font-family: Inter;
+    font-size: 24px;
+    font-weight: 600;
+    text-align: center;
+    border: unset;
+}
+
+/* @media (max-width: 767px) {}
+@media (min-width: 768px) and (max-width: 991px) {}
+@media only screen and (min-width: 992px) and (max-width: 1199px) {}  */
+/* media for laptop view */
+@media only screen and (min-width: 1200px) and (max-width: 1600px) {
+
+    .driver-image {
+        width: 150px;
+        height: 150px;
+        margin: 0 auto;
+        margin-bottom: 30px;
+    }
+
+    .add-driver-form {
+        display: flex;
+        justify-content: space-between;
+        padding: 0 80px;
+    }
+
+    .add-driver .upload-container label {
+        width: 200px;
+        height: 110px;
+    }
+
+    .add-driver input {
+        width: 100%;
+        background-color: #F9F9F9;
+        border: 1px solid #E8E8E8;
+
+    }
+
+    .add-driver .upload-container label {
+        width: 100%;
+        height: 160px;
+        border-radius: 10px;
+
+    }
+
+    .add-driver .upload-container label img {
+        width: 76px;
+        height: 46px;
+    }
+
+    .add-driver .upload-container p {
+        font-size: 14px;
+    }
+
+    .form-btn {
+        margin-top: 2%;
+        padding: 12px 0px 12px 0px;
+        font-size: 20px;
+    }
+}
+
+@media only screen and (min-width: 992px) and (max-width: 1199px) {
+    .driver-image {
+        width: 100px;
+        height: 100px;
+        margin: 0 auto;
+        margin-bottom: 20px;
+    }
+
+    .add-driver .upload-container p {
+        font-size: 14px;
+    }
+
+    .add-driver .upload-container label {
+        width: 160px;
+    }
+
+    .add-driver .upload-container label img {
+        width: 40%;
+        height: 20%;
+    }
+
+    .form-btn {
+        padding: 6px 0px 6px 0px;
+        font-size: 18px;
+    }
+
+    .row.add-driver-form {
+        /* border: 1px solid red; */
+        padding: 0px 50px;
+    }
+
+    .add-driver .upload-container label {
+        width: 200px;
+        height: 110px;
+    }
+
+    .add-driver input {
+        width: 100%;
+        background-color: #F9F9F9;
+        border: 1px solid #E8E8E8;
+
+    }
+
+    .add-driver .upload-container label {
+        width: 100%;
+        height: 160px;
+        border-radius: 10px;
+
+    }
+
+    .add-driver .upload-container label img {
+        width: 20%;
+        height: 20%;
+    }
+
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+    .driver-image {
+        width: 100px;
+        height: 100px;
+        margin: 0 auto;
+        margin-bottom: 20px;
+    }
+
+    .add-driver .upload-container p {
+        font-size: 14px;
+    }
+
+    .add-driver .upload-container label {
+        width: 160px;
+    }
+
+    .add-driver .upload-container label img {
+        width: 40%;
+        height: 20%;
+    }
+
+    .form-btn {
+        padding: 6px 0px 6px 0px;
+        font-size: 18px;
+    }
+
+    .row.add-driver-form {
+        /* border: 1px solid red; */
+        padding: 0px 50px;
+    }
+
+    .add-driver .upload-container label {
+        width: 200px;
+        height: 110px;
+    }
+
+    .add-driver input {
+        width: 100%;
+        background-color: #F9F9F9;
+        border: 1px solid #E8E8E8;
+
+    }
+
+    .add-driver .upload-container label {
+        width: 100%;
+        height: 160px;
+        border-radius: 10px;
+
+    }
+
+    .add-driver .upload-container label img {
+        width: 20%;
+        height: 20%;
+    }
+}
+
+@media (min-width:768px) and (max-width:890px) {
+    .add-driver .upload-container label img {
+        width: 16%;
+        height: 16%;
+    }
+
+    .add-driver .upload-container p {
+        font-size: 10px;
+    }
+
+    .add-driver .upload-container span {
+        color: #494949;
+        font-size: 10px;
+    }
+
+    .add-driver-btn .form-btn {
+        margin-top: 5%;
+        width: 100%;
+        padding: 7px 0px 7px 0px;
+        font-size: 16px;
+        font-weight: 200;
+    }
+}
