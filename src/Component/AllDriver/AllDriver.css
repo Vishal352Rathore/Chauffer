@@ -136,16 +136,15 @@ span.pagination__selected{
         text-align: left;
     }
 
-    .action_icon  {
-        display: flex;
-        justify-content: space-evenly;
+    .action_icon {
         align-items: center;
-        /* border: 1px solid black; */
-
+        display: flex;
+        column-gap: 8px;
+        justify-content: start;
     }
     .action_icon img {
         
-      width:30px;  
+      width:20px;  
         
     }
 
