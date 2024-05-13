@@ -55,7 +55,7 @@
   flex-direction: row;
 }
 .logo-cntainer .logo img{
-    width:80%;
+    width:60%;
 }
 .logo-container .username {
   display: flex;
