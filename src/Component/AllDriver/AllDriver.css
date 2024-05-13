@@ -147,6 +147,9 @@ span.pagination__selected{
       width:20px;  
         
     }
+    .action_icon img:last-child{
+        width:10px;
+    }
 
 }
 @media screen and (min-width:992px ) and (max-width:1199px) {
