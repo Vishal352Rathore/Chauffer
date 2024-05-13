@@ -16,7 +16,7 @@
   text-align: left;
   position: fixed;
   top: 0;
-  width: 14vw;
+  width: 18vw;
   height: 100vh;
   /* overflow-y: auto; */
   background-image: linear-gradient(180deg, #1A2A84 0%, #000000 188.09%);
@@ -68,9 +68,9 @@
   width: 40%;
   padding-left: 10px;
 }
-.sidebar .sidebar-container{
+/* .sidebar .sidebar-container{
   width: 18vw;
-}
+} */
 .sidebar .sidebar-container ul li {
   list-style: none;
 }
