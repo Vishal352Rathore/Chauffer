@@ -68,7 +68,9 @@
   width: 40%;
   padding-left: 10px;
 }
-
+.sidebar .sidebar-container{
+  width: 18vw;
+}
 .sidebar .sidebar-container ul li {
   list-style: none;
 }
