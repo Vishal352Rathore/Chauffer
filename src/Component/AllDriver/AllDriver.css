@@ -61,10 +61,7 @@ table tbody tr{
     padding: 10px 0px 10px 40px;
     text-align: left;
 }
-.action_icon img {
-    padding: 0 0 0 10px;
-    width: 20%;
-}
+
 /* .action-th {
     padding: ;
 } */
@@ -143,9 +140,9 @@ span.pagination__selected{
         padding: 0px 15px;
 
     }
-    .action_icon img{
-        width: 18px;
-        margin-right: 10px;
+    .action_icon img {
+        padding: 0 0 0 10px;
+        width:30px;
     }
 
 }
