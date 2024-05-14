@@ -144,11 +144,11 @@ span.pagination__selected{
     }
     .action_icon img {
         
-      width:20px;  
+      width:17px;  
         
     }
     .action_icon img:last-child{
-        width:10px;
+        width:13px;
     }
 
 }
