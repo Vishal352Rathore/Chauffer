@@ -143,10 +143,8 @@ span.pagination__selected{
         /* justify-content: start;
         border:1px solid black; */
     }
-    .action_icon img {
-        
-      width:17px;  
-        
+    .action_icon img {   
+      width:17px;    
     }
     .action_icon img:last-child{
         width:13px;
