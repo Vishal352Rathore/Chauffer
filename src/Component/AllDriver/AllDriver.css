@@ -140,7 +140,8 @@ span.pagination__selected{
         align-items: center;
         display: flex;
         column-gap: 8px;
-        justify-content: start;
+        /* justify-content: start;
+        border:1px solid black; */
     }
     .action_icon img {
         
