@@ -158,13 +158,13 @@ const AllAgent = () => {
                             <td>{agency.zipCode}</td>
                             {agency.status && agency.status === "active" ? (
                               <td>
-                                <button style={{ background: "#5DCA95" }}>
+                                <button style={{ background: "#5DCA95" }} className="status-btn approved-btn">
                                   Approved
                                 </button>
                               </td>
                             ) : (
                               <td>
-                                <button>Pending</button>
+                                <button className="status-btn pending-btn">Pending</button>
                               </td>
                             )}
                             <td>
