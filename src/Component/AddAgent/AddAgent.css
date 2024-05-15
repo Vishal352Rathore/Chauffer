@@ -38,13 +38,12 @@
 
 
  .agent-container form label {
-    font-family: Inter;
-    font-size: 16px;
-    font-weight: 300;
-    text-align: left;
-    padding-top: 20px;
-    padding-bottom: 13px;
-}
+     font-family: Inter;
+     font-size: 16px;
+     font-weight: 300;
+     text-align: left;
+     padding-top: 20px;
+ }
 
  .agent-container form input {
      border: 1px solid #E8E8E8;

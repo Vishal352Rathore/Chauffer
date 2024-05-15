@@ -1,5 +1,9 @@
 import React, { useState } from "react";
 import "./AddAgent.css";
+import Images from "../Images";
+import { useDispatch, useSelector } from "react-redux";
+import { AddAgentAction } from "../../Redux/Reducer/AddAgent_Reducers";
+import { selectAddAgent } from "../../Redux/Reducer/AddAgent_Reducers";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 

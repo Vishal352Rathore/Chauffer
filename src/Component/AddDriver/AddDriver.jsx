@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Images from "../Images";
 import axios from "axios";
+import * as yup from 'yup';
 import { useNavigate } from "react-router-dom";
 import Spinner from "react-bootstrap/Spinner";
 import {  toast } from 'react-toastify';
@@ -139,6 +140,8 @@ const AddDriver = () => {
     setSelectedFiles(updatedSelectedFiles);
     return selectedFiles.every(fileObj => fileObj.file !== null);
   };
+
+
 
   const DriverRegister = () => {
     const headers = {

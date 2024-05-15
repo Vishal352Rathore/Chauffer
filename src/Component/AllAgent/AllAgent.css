@@ -38,7 +38,7 @@
     color: #fff;
 
 }
-
+/* status-btn */
 .all-agent-conainer tbody tr td:nth-child(7) button {
     background-color: #5D68CA;
     border-radius: 16px;
@@ -50,7 +50,25 @@
     border: none;
     padding: 4px 10px;
 }
+.all-agent-conainer tbody tr td:nth-child(7) button.approved-btn{
+    font-size: 14px;
+    padding: 5px 10px;
+} 
+.pending-btn{
+    border-radius: 10px;
+    text-align: center;
+    color: #fff;
+    font-family: Inter; 
+    font-size: 14px;
+    font-weight: 400;
+    border: none;
+}
 
+
+/* 
+.all-agent .all-driver-conainer th :first-child {
+    padding: 20px 0px 20px 25px;
+} */
 .all-agent .all-agent-conainer td {
     padding: 10px 0px 10px 20px;
     text-align: left;
@@ -124,28 +142,103 @@ span.pagination__selected {
     height: 650px;
     padding: 12px 20px;
 }
+
+.all-agent-conainer .action_icon img:first-child {
+    width: 20px;
+}
+@media (min-width:1200px) and (max-width:1600px) {
+    
+.all-agent-conainer {
+    height: 580px;
+}
+.all-agent-conainer tbody tr td:nth-child(7) button {
+    font-size: 14px;
+    padding: 5px 15px;
+}
+.all-agent-conainer tbody tr td:nth-child(7) button.approved-btn{
+        font-size: 14px;
+        padding: 5px 10px;
+   } 
+   .pending-btn{
+        border-radius: 10px;
+        text-align: center;
+        color: #fff;
+        font-family: Inter; 
+        font-size: 14px;
+        font-weight: 400;
+        border: none;
+   }
+   .all-agent td:last-child .action_icon{
+        padding: 0px 0px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        column-gap: 10px;
+       
+    }
+.all-agent td:last-child .action_icon img:nth-child(1){
+    width:17px;
+}
+.all-agent td:last-child .action_icon img:nth-child(2){
+    width:13px;
+}
+}
+@media (min-width:991px) and (max-width:1199px) {
+    .all-agent-conainer {
+        height: 950px;
+    }
+    .all-agent .all-agent-conainer th {
+        padding: 10px 0px 10px 20px;
+        font-size: 14px;
+      
+    }
+    .all-agent td:last-child .action_icon{
+        padding: 0px 0px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        column-gap: 6px;
+       
+    }
+.all-agent td:last-child .action_icon img:nth-child(1){
+    width:17px;
+}
+.all-agent td:last-child .action_icon img:nth-child(2){
+    width:13px;
+}
 .all-agent .action_icon {
     display: flex;
     justify-content: center;
     align-items: center;
     column-gap: 10px;
 }
-
+}
 @media (min-width:850px) and (max-width:991px) {
-
+    .all-agent-conainer {
+        height: 750px;
+        padding: 12px 20px;
+    }
+    .all-agent .all-agent-conainer th {
+        padding: 10px 10px 10px 10px;
+        text-align: left;
+        font-family: Inter;
+        font-size: 12px;
+        font-weight: 600;
+        color: #fff;
+    }
     .all-agent-conainer th {
         padding: 20px 8px;
         font-size: 10px;
-        text-align: center;
+        /* text-align: center; */
         /* border: 1px solid red; */
     }
 
 
     .all-agent-conainer td {
-        padding: 18px 20px;
-        /* border: 1px solid red; */
         text-align: center;
-        font-size: 10px;
+        font-size: 12px;
+        padding: 10px 0px 10px 10px;
+        
     }
 
     .all-agent-conainer td :first-child {
@@ -156,10 +249,27 @@ span.pagination__selected {
         padding: 20px 10px;
         font-size: 10px;
     }
-
-    .action_icon img {
-        margin: 0px 3px;
+    .action_icon {
+        align-items: center;
+        display: flex;
+        column-gap: 4px;
     }
+    .all-agent-conainer .action_icon img:first-child {
+        width: 15px;
+    }
+    .all-agent-conainer .action_icon img:last-child {
+        width: 12px;
+    }
+    .all-agent-conainer tbody tr td:nth-child(7) button {
+      
+        font-size: 13px;
+        padding: 2px 9px;
+    }
+    .all-agent-conainer tbody tr td:nth-child(7) button.approved-btn {
+        font-size: 13px;
+        padding: 4px 9px;
+    }
+      
 }
 
 @media (min-width:768px) and (max-width:850px) {
