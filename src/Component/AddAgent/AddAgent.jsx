@@ -1,13 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "./AddAgent.css";
-import Images from "../Images";
-import { useDispatch, useSelector } from "react-redux";
-import { AddAgentAction } from "../../Redux/Reducer/AddAgent_Reducers";
-import { selectAddAgent } from "../../Redux/Reducer/AddAgent_Reducers";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
-const AddAgent = () => {
+const AddAgent = ({ agencyData }) => {
+  const AGENCY_STATUS_CHANGE_URL =
+    process.env.REACT_APP_AGENCY_STATUS_CHANGE_API_URL;
 
-  const [selectedFile, setSelectedFile] = useState(null)
+  const navigate = useNavigate();
+
+  const token = localStorage.getItem("token");
 
   const [AddAgentData, setAddAgentData] = useState({
     ownerName: "",
@@ -18,164 +20,105 @@ const AddAgent = () => {
     countOfVehicle: "",
     serviceArea: "",
     agentDoc: "",
+    status: "",
   });
-  const dispatch = useDispatch();
-  const selector = useSelector((state) => state.addAgent);
 
   const handleChange = (e) => {
-      setAddAgentData({ ...AddAgentData, [e.target.name]: e.target.value });
+    setAddAgentData({ ...AddAgentData, [e.target.name]: e.target.value });
   };
-
-  const handleFileSelect = (event) =>{
-    const file = event.target.files[0]
-    console.log("selectedFile" ,file);
-    setSelectedFile(file)
-  }
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(AddAgentAction(AddAgentData));
-    AddAgentData.agentDoc = selectedFile ;
-
     ApiCalling();
   };
 
- const ApiCalling = () =>{
-  console.log("AddAgentData" ,AddAgentData);
- }
+  const ApiCalling = async () => {
+    try {
+      const response = await axios.post(
+        AGENCY_STATUS_CHANGE_URL,
+        {
+          agencyId: agencyData._id,
+          agencyStatus: AddAgentData.status,
+        },
+        {
+          headers: {
+            token: token,
+            type: "superAdmin",
+          },
+        }
+      );
+
+      if (response.data.status === true) {
+        console.log("response.data.items", response.items);
+        alert(response.data.message);
+        navigate("/home/allAgent");
+      } else {
+        alert(response.data.message);
+        console.log("response.data.items.drivers fail", response);
+      }
+    } catch (error) {
+      console.log("error", error);
+    }
+  };
 
   return (
-    <div >
-      <section className="container-fluid">
-        <div className="row">
-          <div className="col-md-12">
-            <div className="form-title margin_top_4 padding_left_20">
-              <h3>
-                Add <span>Agent</span>
-              </h3>
+    <div>
+      <div className="agent-container">
+        <section className="container-fluid">
+          <form onSubmit={handleSubmit}>
+            <div class="row">
+              <div class="col-md-6">
+              <div class="label">Name</div>
+               <div class="value">{agencyData.name}</div>
+              </div>
+              <div class="col-md-6">
+              <div class="label">Email</div>
+               <div class="value">{agencyData.email}</div>
+              </div>
             </div>
-          </div>
-        </div>
-      </section>
-      <div className="agent-container "> 
+            <div class="row">
+              <div class="col-md-6">
+              <div class="label">Contact No</div>
+               <div class="value">{agencyData.mobile}</div>
+              </div>
+              <div class="col-md-6">
+              <div class="label">City</div>
+               <div class="value">{agencyData.city}</div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+              <div class="label">Zipcode</div>
+               <div class="value">{agencyData.zipCode}</div>
+              </div>
+              <div class="col-md-6">
+                <label htmlfor="serviceArea" class="form-label">
+                  Selected Status
+                </label>
+                <select
+                  class="form-select value"
+                  aria-label="Default select example"
+                  id="status"
+                  name="status"
+                  value={AddAgentData.status}
+                  onChange={handleChange}
+                >
+                  <option>Vehicle Select Class</option>
+                  <option value="active">Approve</option>
+                  <option value="inactive">Reject</option>
+                </select>
+              </div>
+            </div>
 
-      <section className="container">
-        <form onSubmit={handleSubmit}>
-          <div class="row">
-            <div class="col-md-6">
-              <label htmlfor="ownerName" class="form-label">
-                Owner Name
-              </label>
-              <input
-                type="text"
-                class="form-control"
-                placeholder="Owner Name"
-                name="ownerName"
-                id="ownerName"
-                value={AddAgentData.ownerName}
-                onChange={handleChange}
-              />
-            </div>
-            <div class="col-md-6">
-              <label htmlfor="companyName" class="form-label">
-                Company Name
-              </label>
-              <input
-                type="text"
-                class="form-control"
-                placeholder="Company Name"
-                name="companyName"
-                id="companyName"
-                value={AddAgentData.companyName}
-                onChange={handleChange}
-              />
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-6">
-              <label htmlfor="companyEmail" class="form-label">
-                Company Email
-              </label>
-              <input
-                type="text"
-                class="form-control"
-                placeholder="Company Email"
-                name="companyEmail"
-                id="companyEmail"
-                value={AddAgentData.companyEmail}
-                onChange={handleChange}
-              />
-            </div>
-            <div class="col-md-6">
-              <label htmlfor="password" class="form-label">
-                Password
-              </label>
-              <input
-                type="password"
-                class="form-control"
-                placeholder="Enter password"
-                name="password"
-                id="password"
-                value={AddAgentData.password}
-                onChange={handleChange}
-              />
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-6">
-              <label htmlfor="vehicleType" class="form-label">
-                Vehicle Type
-              </label>
-              <input
-                type="text"
-                class="form-control"
-                placeholder="Vehicle Type"
-                name="vehicleType"
-                id="vehicleType"
-                value={AddAgentData.vehicleType}
-                onChange={handleChange}
-              />
-            </div>
-            <div class="col-md-6">
-              <label htmlfor="countOfVehicle" class="form-label">
-                Count of Vehicle
-              </label>
-              <input
-                type="number"
-                class="form-control"
-                placeholder="Count Of Vehicle"
-                name="countOfVehicle"
-                id="countOfVehicle"
-                value={AddAgentData.countOfVehicle}
-                onChange={handleChange}
-              />
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-12">
-              <label htmlfor="serviceArea" class="form-label">
-                Services Area
-              </label>
-              <input
-                type="text"
-                class="form-control"
-                placeholder="Service Area"
-                name="serviceArea"
-                id="serviceArea"
-                value={AddAgentData.serviceArea}
-                onChange={handleChange}
-              />
-            </div>
-          </div>
-          <div className="row">
+            {/* <div className="row">
             <div className="col-md-12">
               <label htmlfor="agent-doc" className="form-label filelabel">
                 Document
               </label>
             </div>
-          </div>
+          </div> */}
 
-          <div className="col-md-12">
+            {/* <div className="col-md-12">
             <div className="upload-container">
               <label className="filelabel" htmlFor="FileInput-0">
                 {selectedFile && <div>{selectedFile.name}</div>  }
@@ -190,17 +133,17 @@ const AddAgent = () => {
                 onChange={handleFileSelect}
               />
             </div>
-          </div>
-          <div className="row">
-            <div className="col-md-4 mx-auto">
-              <button className="form-btn" type="submit">
-                Submit
-              </button>
+          </div> */}
+            <div className="row">
+              <div className="col-md-4 mx-auto">
+                <button className="form-btn" type="submit">
+                  Submit
+                </button>
+              </div>
             </div>
-          </div>
-        </form>
+          </form>
 
-        {/* <form>
+          {/* <form>
             <div className="row">
               <div className="col">
               <div class="mb-3">
@@ -231,7 +174,7 @@ const AddAgent = () => {
               </div>
             </div>
             </form> */}
-      </section>
+        </section>
       </div>
     </div>
   );

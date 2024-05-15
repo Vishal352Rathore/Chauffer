@@ -8,17 +8,17 @@ import AllDriver from "./Component/AllDriver/AllDriver";
 import AddDriver from "./Component/AddDriver/AddDriver";
 import AddVehicle from "./Component/AddVehicle/AddVehicle";
 import AllVehicle from "./Component/AllVehicle/AllVehicle";
-import AddAgent from "./Component/AddAgent/AddAgent";
 import Earnings from "./Component/Earnings/Earnings";
 import Complaints from "./Component/Complaints/Complaints";
 import TermsAndCondition from "./Component/TermsAndCondition/TermsAndCondition";
 import Policy from "./Component/Policy/Policy";
 import RideDetails from "./Component/RideDetails/RideDetails";
 import ComplaintForm from "./Component/ComplaintForm/ComplaintForm";
-// import {ToastContainer } from "react-toastify";
-// import "react-toastify/dist/ReactToastify.css";
 import Signup from "./Component/Signup/Signup";
 import AllAgent from "./Component/AllAgent/AllAgent";
+import AgencyDetail from "./Component/AgencyDetail/AgencyDetail";
+import VehicleDetail from "./Component/VehicleDetail/VehicleDetail";
+import DriverDetail from "./Component/DriverDetail/DriverDetail";
 function App() {
 
   return (
@@ -32,13 +32,15 @@ function App() {
             <Route index element={<Dashboard />} />
             <Route path="dashboard" element={<Dashboard />} />
             <Route path="allRides" element={<AllRides />} />
-            <Route path="rideDetails" element={<RideDetails />} />
+            <Route path="allRides/rideDetails/:rideId" element={<RideDetails />} />
             <Route path="allDriver" element={<AllDriver />} />
+            <Route path="allDriver/driverDetail/:driverId" element={<DriverDetail />} /> 
             <Route path="allDriver/addDriver" element={<AddDriver />} />
             <Route path="allVehicle" element={<AllVehicle />} />
+            <Route path="allVehicle/vehicleDetail/:vehicleId" element={<VehicleDetail />} /> 
             <Route path="allVehicle/addVehicle" element={<AddVehicle />} />
             <Route path="allAgent" element={<AllAgent />} /> 
-            <Route path="allAgent/addAgent" element={<AddAgent />} /> 
+            <Route path="allAgent/agencyDetail/:agencyId" element={<AgencyDetail />} /> 
             <Route path="earnings" element={<Earnings />} />
             <Route path="complaints" element={<Complaints />} />
             <Route path="complaints/complaintForm" element={<ComplaintForm />} />

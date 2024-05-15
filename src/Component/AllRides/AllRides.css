@@ -1,11 +1,29 @@
-.all-ride-conainer{
-    padding: 12px 20px;
+.all-rides-header{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 2%;
+    margin-bottom: 2%;
 }
+
+.all-ride-conainer{
+    height: 650px;
+    padding: 12px 20px;
+  
+}
+.all-rides .all-ride-conainer td{
+    padding: 10px 0px 10px 20px;
+    text-align: left;
+}
+
+
+
 .all-rides .all-ride-conainer th {
-    padding: 8px 30px;
+    padding: 10px 0px 10px 20px;
+    text-align: left;
     color: #fff;
     background-color:#9C9C9C;
-    text-align: center;
+    
 }
 .search-box {
     display: inline-block;

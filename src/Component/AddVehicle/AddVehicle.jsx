@@ -26,14 +26,17 @@ const AddVehicle = () => {
     vehicleRcDoc: "",
     vehicleInsuranceDoc: "",
     superAdminId: "",
-    agencyId:""
+    agencyId: "",
   });
+  
   const [selectedFiles, setSelectedFiles] = useState(
     Array.from({ length: 5 }, () => null)
   );
+
   const [imagePreviews, setImagePreviews] = useState(
     Array.from({ length: 5 }, () => null)
   );
+
   const handleFileSelect = (event, index) => {
     const files = event.target.files;
     if (files.length === 0) return;
@@ -58,12 +61,14 @@ const AddVehicle = () => {
     };
     reader.readAsDataURL(file);
   };
+
   const handleChange = (e) => {
     setAddVehicleData({ ...addVehicleData, [e.target.name]: e.target.value });
   };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    addVehicleData.vehicleImagesOne =  selectedFiles[0]
+    addVehicleData.vehicleImagesOne = selectedFiles[0];
     addVehicleData.vehicleImagesTwo = selectedFiles[1];
     addVehicleData.vehicleImagesThree = selectedFiles[2];
     addVehicleData.vehicleRcDoc = selectedFiles[3];
@@ -79,7 +84,7 @@ const AddVehicle = () => {
       headers: {
         token: token,
         type: "superAdmin",
-      }
+      },
     };
 
     const myHeaders = new Headers();
@@ -87,15 +92,24 @@ const AddVehicle = () => {
     myHeaders.append("type", "superAdmin");
 
     const formdata = new FormData();
-    if(localStorage.getItem("superAdminId") !== null && localStorage.getItem("superAdminId") !== ""){
-      formdata.append("superAdminId", addVehicleData.superAdminId); 
-    }else if(localStorage.getItem("agencyId") !== null && localStorage.getItem("agencyId") !== ""){
-      formdata.append("agencyId", addVehicleData.agencyId); 
+    if (
+      localStorage.getItem("superAdminId") !== null &&
+      localStorage.getItem("superAdminId") !== ""
+    ) {
+      formdata.append("superAdminId", addVehicleData.superAdminId);
+    } else if (
+      localStorage.getItem("agencyId") !== null &&
+      localStorage.getItem("agencyId") !== ""
+    ) {
+      formdata.append("agencyId", addVehicleData.agencyId);
     }
     formdata.append("vehicleName", addVehicleData.vehicleType);
     formdata.append("vehicleNoPlate", addVehicleData.vehicleNo);
     formdata.append("vehicleChechisNo", addVehicleData.vehicleChassisNo);
-    formdata.append( "vehicleRegistrationNo", addVehicleData.vehicleRegistrationNo );
+    formdata.append(
+      "vehicleRegistrationNo",
+      addVehicleData.vehicleRegistrationNo
+    );
     formdata.append("vehicleLastServising", addVehicleData.vehicleLastService);
     formdata.append("model", addVehicleData.vehicleVariant);
     formdata.append("brand", addVehicleData.vehicleBrand);
@@ -104,7 +118,7 @@ const AddVehicle = () => {
     formdata.append("vehicleCharges", addVehicleData.vehicleCharges);
     formdata.append("vehicleRCDocument", addVehicleData.vehicleRcDoc);
     formdata.append("vehicleImg", addVehicleData.vehicleImagesOne);
-  
+
     try {
       axios
         .post(URL, formdata, headers)
@@ -114,7 +128,7 @@ const AddVehicle = () => {
             alert(response.data.message);
             navigate("/home/allVehicle");
           } else {
-            alert(response.data.message);
+            alert(response.message);
           }
         })
         .catch((error) => console.log(error));
@@ -250,24 +264,18 @@ const AddVehicle = () => {
                     {selectedFiles[0].name}
                   </label>
                 ) : (
-                  <div>
-                    {" "}
-                    <label className="filelabel" htmlFor="FileInput-0">
-                      <img
-                        src={Images("upload_document_icon")}
-                        alt="not-found"
-                      />
-                      <p>Upload Document</p>
-                    </label>
-                    <input
-                      className="FileUpload1"
-                      id="FileInput-0"
-                      name="booking_attachment-0"
-                      type="file"
-                      onChange={(event) => handleFileSelect(event, 0)} // Pass index to handleFileSelect
-                    />{" "}
-                  </div>
+                  <label className="filelabel" htmlFor="FileInput-0">
+                    <img src={Images("upload_document_icon")} alt="not-found" />
+                    <p>Upload Document</p>
+                  </label>
                 )}
+                <input
+                  className="FileUpload1"
+                  id="FileInput-0"
+                  name="booking_attachment-0"
+                  type="file"
+                  onChange={(event) => handleFileSelect(event, 0)} // Pass index to handleFileSelect
+                />
               </div>
             </div>
 
@@ -402,7 +410,15 @@ const AddVehicle = () => {
                 id="vehicleLastService"
                 value={addVehicleData.vehicleLastService}
                 onChange={handleChange}
+                max={new Date().toISOString().split("T")[0]} // Set max date to today
                 pattern="\d{2}-\d{2}-\d{4}"
+                required
+                onInvalid={(e) =>
+                  e.target.setCustomValidity(
+                    "Please enter Vehicle Last Servicing"
+                  )
+                }
+                onInput={(e) => e.target.setCustomValidity("")}
               />
             </div>
           </div>
@@ -415,7 +431,7 @@ const AddVehicle = () => {
                 </div>
               </div>
               <div className="upload-container">
-              {selectedFiles[3] ? (
+                {selectedFiles[3] ? (
                   <label className="filelabel" htmlFor="vehicleImage-2">
                     <img
                       src={imagePreviews[3] || "#"}
@@ -424,20 +440,25 @@ const AddVehicle = () => {
                     />
                     {selectedFiles[3].name}
                   </label>
-                ) : ( <div>        
-                  <label className="filelabel img-doc" htmlFor="FileInput-3">
-                  <p>{selectedFiles[3] && selectedFiles[3].name}</p>
-                  <img src={Images("upload_document_icon")} alt="not-found" />
-                  <p>Upload Document</p>
-                </label>
-                <input
-                  className="FileUpload1"
-                  id="FileInput-3"
-                  name="booking_attachment-3"
-                  type="file"
-                  onChange={(event) => handleFileSelect(event, 3)} // Pass index to handleFileSelect
-                />
-                </div>)}
+                ) : (
+                  <div>
+                    <label className="filelabel img-doc" htmlFor="FileInput-3">
+                      <p>{selectedFiles[3] && selectedFiles[3].name}</p>
+                      <img
+                        src={Images("upload_document_icon")}
+                        alt="not-found"
+                      />
+                      <p>Upload Document</p>
+                    </label>
+                    <input
+                      className="FileUpload1"
+                      id="FileInput-3"
+                      name="booking_attachment-3"
+                      type="file"
+                      onChange={(event) => handleFileSelect(event, 3)} // Pass index to handleFileSelect
+                    />
+                  </div>
+                )}
               </div>
             </div>
             <div className="col-md-6">
@@ -451,7 +472,7 @@ const AddVehicle = () => {
                 </div>
               </div>
               <div className="upload-container">
-              {selectedFiles[4] ? (
+                {selectedFiles[4] ? (
                   <label className="filelabel" htmlFor="vehicleImage-2">
                     <img
                       src={imagePreviews[4] || "#"}
@@ -460,20 +481,25 @@ const AddVehicle = () => {
                     />
                     {selectedFiles[4].name}
                   </label>
-                ) : ( <div>
-               <label className="filelabel img-doc" htmlFor="FileInput-4">
-                  <p>{selectedFiles[4] && selectedFiles[4].name}</p>
-                  <img src={Images("upload_document_icon")} alt="not-found" />
-                  <p>Upload Document</p>
-                </label>
-                <input
-                  className="FileUpload1"
-                  id="FileInput-4"
-                  name="booking_attachment-4"
-                  type="file"
-                  onChange={(event) => handleFileSelect(event, 4)} // Pass index to handleFileSelect
-                />
-                 </div> )}
+                ) : (
+                  <div>
+                    <label className="filelabel img-doc" htmlFor="FileInput-4">
+                      <p>{selectedFiles[4] && selectedFiles[4].name}</p>
+                      <img
+                        src={Images("upload_document_icon")}
+                        alt="not-found"
+                      />
+                      <p>Upload Document</p>
+                    </label>
+                    <input
+                      className="FileUpload1"
+                      id="FileInput-4"
+                      name="booking_attachment-4"
+                      type="file"
+                      onChange={(event) => handleFileSelect(event, 4)} // Pass index to handleFileSelect
+                    />
+                  </div>
+                )}
               </div>
             </div>
           </div>

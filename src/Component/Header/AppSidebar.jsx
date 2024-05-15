@@ -7,13 +7,11 @@ import AppContent from "./AppContent"
 
 const AppSidebar = ({ isOpen, toggleSidebar }) => {
 
-
    const isAdmin = () =>{
       if(localStorage.getItem("superAdminId")){
         return true
       }
    }
-
 
  var divWidth = null;
  
@@ -24,12 +22,12 @@ const AppSidebar = ({ isOpen, toggleSidebar }) => {
   useEffect(() => {
      divWidth = document.querySelector('.sidebar-container').getBoundingClientRect().width;
      setSidebarWidth(`${divWidth}px`)
-     console.log("divWidtleftWidthForHeadeContainerh", divWidth);
      setDynamicWidth(isOpen ?  `99.90vw`  : `calc(99.90vw - ${divWidth}px)`) ;
   }, [isOpen])
   
   return (
     <div className="flex-container sidebar" style={{ left: isOpen ? `-${sidebarWidth}`: ""}}>
+    
       <div className="sidebar-container">
         <ul>
           <div className="dashboard-container ">
@@ -48,20 +46,20 @@ const AppSidebar = ({ isOpen, toggleSidebar }) => {
             <li>
               {" "}
               <Link to="dashboard" className="link-tag">
-                <span>
-                  <img src={Images("dashboard_icon")} alt="not found" />{" "}
-                  Dashboard
-                </span>
-              </Link>
+                
+                  <img src={Images("dashboard_icon")} alt="not found" className="dashboard-icon" />
+                  <span>Dashboard
+                </span>{" "}
+              </Link>{" "}
             </li>
           </div>
           <div className="menu">
             <li>
               {" "}
               <Link to="allRides" className="link-tag">
-                <span>
-                  <img src={Images("all_rides_icon")} alt="not found" /> All
-                  Rides
+                
+                  <img src={Images("all_rides_icon")} alt="not found" className="all-rides-icon" /> 
+                  <span>  All Rides
                 </span>{" "}
               </Link>{" "}
             </li>
@@ -69,9 +67,9 @@ const AppSidebar = ({ isOpen, toggleSidebar }) => {
           <div className="menu">
             <li>
               <Link to="allDriver" className="link-tag">
-                <span>
-                  <img src={Images("add_driver_icon")} alt="not found" /> 
-                  All  Driver
+                
+                  <img src={Images("add_driver_icon")} alt="not found" className="add-driver-icon"/> 
+                  <span>All  Driver
                 </span>{" "}
               </Link>
             </li>
@@ -79,19 +77,19 @@ const AppSidebar = ({ isOpen, toggleSidebar }) => {
           <div className="menu">
             <li>
               <Link to="allVehicle" className="link-tag">
-                <span>
-                  <img src={Images("add_vehicle_icon")} alt="not found" />
-                  All Vehicle
+                
+                  <img src={Images("add_vehicle_icon")} alt="not found" className="add-vehicle-icon"/>
+                  <span>All Vehicle
                 </span>{" "}
               </Link>
             </li>
-          </div>
+          </div>    
        {  isAdmin() && <div className="menu">
             <li>
               <Link to="allAgent" className="link-tag">
-                <span>
-                  <img src={Images("agent_icon")} alt="not found" />
-                  All Agent 
+                
+                  <img src={Images("agent_icon")} alt="not found" className="agent-icon"/>
+                  <span>All Agent 
                 </span>{" "}
               </Link>
             </li>
@@ -99,9 +97,9 @@ const AppSidebar = ({ isOpen, toggleSidebar }) => {
           <div className="menu">
             <li>
               <Link to="earnings" className="link-tag">
-                <span>
-                  <img src={Images("earning_icon")} alt="not found" />
-                  Earnings
+                
+                  <img src={Images("earning_icon")} alt="not found" className="earning-icon" />
+                  <span>Earnings
                 </span>{" "}
               </Link>
             </li>
@@ -109,9 +107,9 @@ const AppSidebar = ({ isOpen, toggleSidebar }) => {
           <div className="menu">
             <li>
               <Link to="complaints" className="link-tag">
-                <span>
-                  <img src={Images("complaints_icon")} alt="not found" />
-                  Complaints
+                
+                  <img src={Images("complaints_icon")} alt="not found" className="complaints-icon"/>
+                  <span>Complaints
                 </span>{" "}
               </Link>
             </li>
@@ -119,9 +117,9 @@ const AppSidebar = ({ isOpen, toggleSidebar }) => {
           <div className="menu">
             <li>
               <Link to="terms&Condition" className="link-tag">
-                <span>
-                  <img src={Images("terms_condition_icon")} alt="not found" />{" "}
-                  Terms and Condition
+                
+                  <img src={Images("terms_condition_icon")} alt="not found" className="terms-condition-icon"/>
+                  <span>Terms and Condition
                 </span>{" "}
               </Link>
             </li>
@@ -129,8 +127,9 @@ const AppSidebar = ({ isOpen, toggleSidebar }) => {
           <div className="menu">
             <li>
               <Link to="policy" className="link-tag">
-                <span>
-                  <img src={Images("policy_icon")} alt="not found" /> Policy
+                
+                  <img src={Images("policy_icon")} alt="not found" className="policy-icon"/> 
+                  <span>Policy
                 </span>{" "}
               </Link>
             </li>
@@ -138,8 +137,9 @@ const AppSidebar = ({ isOpen, toggleSidebar }) => {
           <div className="menu logout">
             <li>
               <Link to="policy" className="link-tag">
-                <span>
-                  <img src={Images("logout_icon")} alt="not found" /> Logout
+                
+                  <img src={Images("logout_icon")} alt="not found" className="logout-icon" />
+                  <span>Logout
                 </span>{" "}
               </Link>
             </li>
@@ -152,7 +152,7 @@ const AppSidebar = ({ isOpen, toggleSidebar }) => {
         <div className="app-content-container">
         <AppContent />
         </div>
-      </div>
+      </div>  
 
     </div>
   );

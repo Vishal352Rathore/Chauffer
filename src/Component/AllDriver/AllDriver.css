@@ -30,7 +30,6 @@
 }
 
 .all-driver-conainer {
-    /* border: 1px solid red; */
     height: 650px;
     padding: 12px 20px;
 }
@@ -39,30 +38,28 @@ table {
     width: 100%;
 }
 table tbody tr{
-    text-align: center;
+    text-align: left;
 }
 .all-driver-conainer th {
-    padding: 10px 50px;
-    text-align: center;
+    padding: 10px 0px 10px 20px;
+    text-align: left;
     font-family: Inter;
     font-size: 16px;
     font-weight: 600;
     color: #fff;
 }
-.all-driver-conainer th :first-child {
-    padding: 20px 0px 20px 25px;
-}
-.all-driver-conainer td {
-    padding: 15px 70px;
-}
 .all-driver-conainer thead {
     background-color: #9C9C9C;
 }
-.all-driver-conainer tbody tr td:nth-child(4) {
-    padding: 0px 0px 0px 0px;
-}
 
-.all-driver-conainer tbody tr td:nth-child(3) button {
+.all-driver-conainer td{
+    padding: 10px 0px 10px 20px;
+    text-align: left;
+}
+/* .action-th {
+    padding: ;
+} */
+.all-driver-conainer tbody tr td:nth-child(5) button {
     background-color: #5D68CA;
     border-radius: 16px;
     text-align: center;
@@ -70,8 +67,8 @@ table tbody tr{
     font-family: Inter;
     font-size: 16px;
     font-weight: 400;
-    border: 1px solid #5D68CA;
-
+    border: none;
+    padding: 4px 10px;
 }
 .pagination {
     padding: 10px;
@@ -80,12 +77,13 @@ table tbody tr{
     column-gap: 1%;
 }
 .prev_page .fa-solid , .next-page .fa-solid{
-  
-    color:#CDCDCD;
-}
-.pagination__disable .fa-solid{
     color: #000;
 }
+
+.pagination__disable .fa-solid{
+    color:#CDCDCD;
+}
+
 .pagination>span {
     padding: 15px 15px;
     border: 1px solid gray;
@@ -95,15 +93,15 @@ table tbody tr{
     border: 1px solid #CDCDCD;
     border-radius: 80px;
     text-align: center;
-    color: #fff;
+    color: #000;
 }
 .pagination .inactive_page{
-    color: #9C9C9C;
+    color:  #CDCDCD ;
 }
 span.pagination__selected{
     background-image: linear-gradient(180deg, #1B2B84 0%, #0D1540 100%);
-
 }
+
 .search-box {
     display: inline-block;
     border: 1px solid #E8E8E8;
@@ -128,43 +126,45 @@ span.pagination__selected{
 
 @media (min-width:1200px) and (max-width:1600px) {
     .all-driver-conainer th {
-        padding: 8px 30px;
+        /* padding: 8px 30px; */
         font-size: 14px;
-        text-align: center;
+        text-align: left;
     }
 
-    .action_icon img {
-        margin: 0px 3px;
+    .action_icon  {
+        padding: 0px 15px;
+
+    }
+    .action_icon img{
+        width: 18px;
+        margin-right: 10px;
     }
 
 }
-
+@media screen and (min-width:992px ) and (max-width:1199px) {
+    .all-driver-conainer th {
+        padding: 10px 20px;
+        font-size: 14px;
+        
+    }
+   
+    
+}
 @media (min-width:850px) and (max-width:991px) {
 
     .all-driver-conainer th {
-        padding: 20px 8px;
+ 
         font-size: 10px;
-        text-align: center;
-        /* border: 1px solid red; */
-    }
-
-    .all-driver-conainer th :first-child {
-        padding: 20px 0px 20px 20px;
+        text-align: left;
+   
     }
 
     .all-driver-conainer td {
-        padding: 18px 20px;
-        /* border: 1px solid red; */
-        text-align: center;
         font-size: 10px;
     }
 
-    .all-driver-conainer td :first-child {
-        padding: 0px 0px 0px 0px;
-    }
-
     .all-driver-conainer th {
-        padding: 20px 10px;
+        /* padding: 20px 10px; */
         font-size: 10px;
     }
 }
@@ -172,27 +172,14 @@ span.pagination__selected{
 @media (min-width:768px) and (max-width:850px) {
 
     .all-driver-conainer th {
-        padding: 20px 8px;
         font-size: 10px;
-        text-align: center;
-        /* border: 1px solid red; */
-    }
-
-    .all-driver-conainer th :first-child {
-        padding: 20px 0px 20px 20px;
+        text-align: left;
     }
 
     .all-driver-conainer td {
-        padding: 18px 20px;
-        /* border: 1px solid red; */
-        text-align: center;
+        text-align: left;
         font-size: 10px;
     }
-
-    .all-driver-conainer td :first-child {
-        padding: 0px 0px 0px 0px;
-    }
-
     .all-driver-conainer th {
         padding: 20px 10px;
         font-size: 10px;

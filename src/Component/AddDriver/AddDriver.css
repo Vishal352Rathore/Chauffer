@@ -1,10 +1,27 @@
+.spinner {
+    position: absolute;
+    top: 50%;
+    left: 42%;
+    z-index: 999;
+    display: none ;
+    filter: blur(0);
+}
+
+.isLoading {
+    display: block;
+}
+
+.add-driver {
+    position: relative;
+}
+
 .form-title p {
     font-family: Inter;
     font-size: 32px;
     font-weight: 700;
     line-height: 38.73px;
     text-align: left;
-
+    margin: 0px;
 }
 
 .form-title p span {
@@ -30,6 +47,17 @@
     border: 1px solid #dcd5d5;
 }
 
+.add-driver .profile {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.profile-preview {  
+    width: 200px;
+    height: 200px;
+}
+
 .driver-image {
     width: 200px;
     height: 200px;
@@ -42,10 +70,28 @@
     height: 100%;
 }
 
+.profile-image {
+    width: 140px;
+    height: 60px;
+    margin: 0 auto;
+    margin-top: -100px;
+    display: flex;
+    justify-content: end;
+}
+
+.profile-image img {
+    width: 30px;
+    height: 30px;
+}
+
 .add-driver .upload-container {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.FileUpload1 {
+    display: none;
 }
 
 .add-driver .upload-container label {
@@ -88,10 +134,21 @@
     font-weight: 600;
     text-align: center;
 }
+
 .add-driver .upload-container label img {
     width: 76px;
     height: 46px;
 }
+
+
+img#imageProfile {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border: 1px solid #dcd5d5;
+
+}
+
 img#imagePreview {
     width: 100%;
     height: 100%;
@@ -107,6 +164,25 @@ input[type=number]::-webkit-outer-spin-button {
     margin: 0;
 }
 
+.submitted-btn {
+    background-color: rgb(111, 115, 111);
+    margin-top: 5%;
+    width: 100%;
+    padding: 16px 0px 16px 0px;
+    border-radius: 36px 36px 36px 36px;
+    color: #fff;
+    font-family: Inter;
+    font-size: 24px;
+    font-weight: 600;
+    text-align: center;
+    border: unset;
+}
+
+.error-message{
+    display: flex;
+    justify-content: center;
+    color: red;
+}
 
 /* @media (max-width: 767px) {}
 @media (min-width: 768px) and (max-width: 991px) {}
@@ -187,10 +263,12 @@ input[type=number]::-webkit-outer-spin-button {
         padding: 6px 0px 6px 0px;
         font-size: 18px;
     }
+
     .row.add-driver-form {
         /* border: 1px solid red; */
         padding: 0px 50px;
     }
+
     .add-driver .upload-container label {
         width: 200px;
         height: 110px;
@@ -242,10 +320,12 @@ input[type=number]::-webkit-outer-spin-button {
         padding: 6px 0px 6px 0px;
         font-size: 18px;
     }
+
     .row.add-driver-form {
         /* border: 1px solid red; */
         padding: 0px 50px;
     }
+
     .add-driver .upload-container label {
         width: 200px;
         height: 110px;
@@ -276,13 +356,16 @@ input[type=number]::-webkit-outer-spin-button {
         width: 16%;
         height: 16%;
     }
+
     .add-driver .upload-container p {
         font-size: 10px;
     }
+
     .add-driver .upload-container span {
         color: #494949;
         font-size: 10px;
     }
+
     .add-driver-btn .form-btn {
         margin-top: 5%;
         width: 100%;
@@ -290,4 +373,4 @@ input[type=number]::-webkit-outer-spin-button {
         font-size: 16px;
         font-weight: 200;
     }
-    }
+}

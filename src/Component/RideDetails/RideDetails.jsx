@@ -4,21 +4,23 @@ import './RideDetails.css'
 
 const RideDetails = () => {
   return (
-    <div>
+    <div className="ride-detail">
         <section className="container-fluid">
         <div className="row">
           <div className="col-md-12">
-            <div className="form-title margin_top_4 padding_left_20">
-              <h3>
-              Ride <span>Detail</span>
-              </h3>
+            <div className="all-rides-header">
+              <div className="form-title padding_left_20  ">
+                <p>
+                  All <span>Rides</span>
+                </p>
+              </div>
             </div>
           </div>
         </div>
       </section>
     
       <div className="ride-detail-container">
-        <div className="container">
+        <div className="container-fluid">
           <div className="row">
             <div className="col-md-6">
               <h4>General Details</h4>

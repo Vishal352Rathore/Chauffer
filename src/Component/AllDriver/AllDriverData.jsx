@@ -1,35 +1,30 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import { useParams } from "react-router-dom";
-import axios from "axios";
 import Images from "../Images";
-import "./AllAgent.css";
+import { Link } from "react-router-dom";
+import axios from "axios";
 
-const AllAgent = () => {
-  const [agencyData, setAgencyData] = useState(null);
+const AllDriverData = ({ superAdminId, agencyId }) => {
+  const [driverData, setDriverData] = useState(null);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
-  const [filteredAgency, setFilteredAgency] = useState(null);
+  const [filteredDrivers, setFilteredDrivers] = useState(null);
   const token = localStorage.getItem("token");
-  const adminId = localStorage.getItem("adminId");
-  const URL = process.env.REACT_APP_AGENCY_LIST_API_URL;
+  const URL = process.env.REACT_APP_DRIVER_LIST_API_URL;
+  const DRIVER_SEARCH_URL = process.env.REACT_APP_DRIVER_SEARCH_API_URL;
 
   const fetchData = async () => {
-
     const raw = JSON.stringify({
-      page : page
+      superAdminId: superAdminId,
+      agencyId: agencyId,
+      page: page,
     });
-
 
     const myHeaders = new Headers();
     myHeaders.append("token", token);
     myHeaders.append("type", "superAdmin");
     myHeaders.append("Content-Type", "application/json");
-
-    
-    console.log("raw", raw);
 
     const requestOptions = {
       method: "POST",
@@ -42,10 +37,9 @@ const AllAgent = () => {
       fetch(URL, requestOptions)
         .then((response) => response.json())
         .then((result) => {
-          console.log("response.data.items", result);
           if (result.status === true) {
-            setAgencyData(result.items.agencies);
-            setFilteredAgency(result.items.agencies);
+            setDriverData(result.items.drivers);
+            setFilteredDrivers(result.items.drivers);
             setTotalPages(Math.ceil(result.items.totalCount / 10));
             console.log("response.data.items", result);
           } else {
@@ -59,8 +53,12 @@ const AllAgent = () => {
   };
 
   useEffect(() => {
-    fetchData();
-  }, [page]);
+    if (searchQuery.trim() === "") {
+      fetchData();
+    } else {
+      filteredDriverData();
+    }
+  }, [page, searchQuery]);
 
   const selectPageHandler = (selectedPage) => {
     if (
@@ -73,61 +71,63 @@ const AllAgent = () => {
     }
   };
 
-  const handleSearchInputChange = (event) => {
-    const query = event.target.value.toLowerCase();
-    setSearchQuery(query);
+  useEffect(() => {
+    setPage(1);
+  }, [searchQuery]);
 
-    if (query.trim() === "") {
-      setFilteredAgency(agencyData);
+  const filteredDriverData = async () => {
+    console.log("searchQuery", searchQuery);
+
+    if (searchQuery.trim() === "") {
       return;
     }
 
-    const keywords = query.split(" ");
-    const filtered = agencyData.filter((driver) =>
-      keywords.every((keyword) => {
-        if (keyword === "active" || keyword === "inactive") {
-          return driver.status.toLowerCase() === keyword;
+    try {
+      const result = await axios.post(
+        DRIVER_SEARCH_URL,
+        {
+          superAdminId: superAdminId,
+          agencyId: agencyId,
+          searchBy: searchQuery,
+          page: page,
+        },
+        {
+          headers: {
+            token: token,
+            type: "superAdmin",
+          },
         }
-        return Object.values(driver).some(
-          (value) =>
-            typeof value === "string" && value.toLowerCase().includes(keyword)
-        );
-      })
-    );
-    setFilteredAgency(filtered);
+      );
+
+      if (result.data.status === true) {
+        setFilteredDrivers(result.data.items.drivers);
+        setTotalPages(Math.ceil(result.data.items.totalCount / 10));
+        console.log("response.data.items", result.data.items);
+      } else {
+        setFilteredDrivers(result.data.items.drivers);
+        setTotalPages(Math.ceil(result.data.items.totalCount / 10));
+        console.log("response.data.items.drivers fail", result);
+      }
+    } catch (error) {
+      console.log("error", error);
+    }
   };
 
   return (
-    <div className="all-agent">
-      <section className="container-fluid">
-        <div className="row">
-          <div className="col-md-12">
-            <div className="all-driver-header">
-              <div className="form-title  padding_left_20  ">
-                <p>
-                  All <span>Agents</span>
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
+    <div>
       <div className="search-box-section">
         <label htmlFor="searchby">Search :</label>
-
         <div className="search-box">
           <img src={Images("search_icon")} alt="not found" />
           <input
             type="text"
             placeholder="Search..."
             value={searchQuery}
-            onChange={handleSearchInputChange}
+            onChange={(e) => setSearchQuery(e.target.value.toLowerCase())}
           />
         </div>
       </div>
-
-      <div className="all-agent-conainer">
+      <div className="all-driver-conainer">
         <div className="container-fluid">
           <div className="row">
             <div className="col-md-12">
@@ -135,31 +135,27 @@ const AllAgent = () => {
                 <thead>
                   <tr>
                     <th>S No.</th>
-                    <th>Agency name </th>
-                    <th>Email</th>
-                    <th>Contact No</th>
-                    <th>City</th>
-                    <th>Zip Code</th>
+                    <th>Driver name </th>
+                    <th>Email Id</th>
+                    <th>Created</th>
                     <th>Status</th>
                     <th>Action</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {filteredAgency &&
-                    filteredAgency.map((agency, index) => {
+                  {filteredDrivers &&
+                    filteredDrivers.map((driver, index) => {
                       return (
-                        <tr key={agency._id}>
+                        <tr key={driver._id}>
                           <>
-                            <td>{index + 1 + (page - 1) * 10}</td>
-                            <td> {agency.name}</td>
-                            <td>{agency.email}</td>
-                            <td>{agency.mobile}</td>
-                            <td>{agency.city}</td>
-                            <td>{agency.zipCode}</td>
-                            {agency.status && agency.status === "active" ? (
+                            <td> {index + 1 + (page - 1) * 10}</td>
+                            <td> {driver.drivername}</td>
+                            <td>{driver.email}</td>
+                            <td>{driver.createdAt}</td>
+                            {driver.status && driver.status === "active" ? (
                               <td>
                                 <button style={{ background: "#5DCA95" }}>
-                                  Approved
+                                  Done
                                 </button>
                               </td>
                             ) : (
@@ -170,8 +166,8 @@ const AllAgent = () => {
                             <td>
                               <div className="action_icon">
                                 <Link
-                                  to={`agencyDetail/${agency._id}`}
-                                  state={{ agencyData: agency }}
+                                  to={`driverDetail/${driver._id}`}
+                                  state={{ driverData: driver }}
                                 >
                                   <img
                                     src={Images("view_icon")}
@@ -194,12 +190,12 @@ const AllAgent = () => {
           </div>
         </div>
       </div>
-
       <section className="container">
         <div className="row">
           <div className="col-md-12">
-          {agencyData && (
-              <div className="pagination">           
+            {driverData && (
+              <div className="pagination">
+                {/* Show previous button */}
                 <span
                   onClick={() => selectPageHandler(page - 1)}
                   className={page > 1 ? "prev_page" : "pagination__disable"}
@@ -207,6 +203,7 @@ const AllAgent = () => {
                   <i className="fa-solid fa-chevron-left"></i>
                 </span>
 
+                {/* Render page numbers */}
                 {Array.from(
                   { length: totalPages >= 4 ? 4 : totalPages },
                   (_, i) => {
@@ -227,11 +224,12 @@ const AllAgent = () => {
                         </span>
                       );
                     } else {
-                      return null; 
+                      return null; // Render nothing for pages beyond totalPages
                     }
                   }
                 )}
 
+                {/* Show next button if there are more than 2 pages */}
                 {totalPages > 0 && (
                   <span
                     onClick={() => selectPageHandler(page + 1)}
@@ -242,6 +240,7 @@ const AllAgent = () => {
                 )}
               </div>
             )}
+
           </div>
         </div>
       </section>
@@ -249,4 +248,4 @@ const AllAgent = () => {
   );
 };
 
-export default AllAgent;
+export default AllDriverData;

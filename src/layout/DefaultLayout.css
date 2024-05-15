@@ -1,8 +1,9 @@
-.layout-container{
-    display: flex;
-    width: 100%;
-    
-}
-.position-lay{
+.home-container{
     position: relative;
+    z-index: 200;
 }
+
+#home-container{
+    /* position: absolute; */
+  }
+  
