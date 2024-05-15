@@ -1,0 +1,9 @@
+.login-form div:nth-child(1) h2 ,
+.login-image,
+.login-image h2
+login-image p 
+.add-driver .upload-container label
+
+
+media for size greater than 1600 , and correction in some media
+in addDriver , AddVehicle ,AllAgent, AllDriver ,AllVehicle ,Login,Registration form design and creditional

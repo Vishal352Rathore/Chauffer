@@ -57,11 +57,13 @@ const Login = () => {
               <div className="login-form">
                 <div>
                   <h2>Log In</h2>
+
                   {/* <p>
                     Please enter your login information or <br />
                     <a onClick={()=>navigate('/signUp')} href="">click here</a> to
                     register
                   </p> */}
+                  
                 </div>
                 <form onSubmit={handleSubmit}>
                   <div className="mb-3">

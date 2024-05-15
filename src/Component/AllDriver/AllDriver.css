@@ -61,10 +61,19 @@ table tbody tr{
     padding: 10px 0px 10px 40px;
     text-align: left;
 }
+.action_icon {
+    align-items: center;
+    display: flex;
+    column-gap: 8px;
+   
+}
+.action_icon img {   
+  width:22px;    
+}
+.action_icon img:last-child{
+    width:16px;
+}
 
-/* .action-th {
-    padding: ;
-} */
 .all-driver-conainer tbody tr td:nth-child(5) button {
     background-color: #5D68CA;
     border-radius: 16px;
@@ -136,14 +145,17 @@ span.pagination__selected{
         text-align: left;
     }
 
-    .action_icon  {
-        padding: 0px 15px;
-
+    .action_icon {
+        align-items: center;
+        display: flex;
+        column-gap: 8px;
+       
     }
-    .action_icon img {
-        padding: 0 0 0 30px;
-        width:40px;
-        
+    .action_icon img {   
+      width:17px;    
+    }
+    .action_icon img:last-child{
+        width:13px;
     }
 
 }
@@ -166,7 +178,7 @@ span.pagination__selected{
     }
 
     .all-driver-conainer td {
-        font-size: 10px;
+        font-size: 14px;
     }
 
     .all-driver-conainer th {

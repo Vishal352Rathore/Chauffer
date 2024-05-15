@@ -95,8 +95,8 @@
 }
 
 .add-driver .upload-container label {
-    width: 200px;
-    height: 120px;
+    width: 410px;
+    height: 180px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -148,8 +148,6 @@ img#imageProfile {
     border: 1px solid #dcd5d5;
 
 }
-
-.loading_icon {}
 
 img#imagePreview {
     width: 100%;
@@ -232,6 +230,12 @@ input[type=number]::-webkit-outer-spin-button {
         padding: 12px 0px 12px 0px;
         font-size: 20px;
     }
+    .add-driver .upload-container label {
+        width: 200px;
+        height: 120px;
+        
+    }
+    
 }
 
 @media only screen and (min-width: 992px) and (max-width: 1199px) {
@@ -292,6 +296,12 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 @media (min-width: 768px) and (max-width: 991px) {
+    .add-driver img#imageProfile {
+        width: 80%;
+        height: 80%;
+        border-radius: 50%;
+        border: 1px solid #dcd5d5;
+    }
     .driver-image {
         width: 100px;
         height: 100px;
@@ -344,6 +354,11 @@ input[type=number]::-webkit-outer-spin-button {
     .add-driver .upload-container label img {
         width: 20%;
         height: 20%;
+    }
+    .add-driver img#imagePreview {
+        width: 80%;
+        height: 80%;
+        border-radius: 6px;
     }
 }
 
