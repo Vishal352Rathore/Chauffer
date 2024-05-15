@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import Images from "../Images";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import "./AllDriver.css";
 
 const AllDriverData = ({ superAdminId, agencyId }) => {
   const [driverData, setDriverData] = useState(null);
