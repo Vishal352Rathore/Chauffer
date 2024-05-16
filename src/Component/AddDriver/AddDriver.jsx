@@ -228,10 +228,10 @@ const AddDriver = () => {
 
   return (
     <div className="add-driver">
-      <Spinner
+      {/* <Spinner
         className={`spinner ${isLoading ? "isLoading" : ""}`}
         animation="border"
-      />
+      /> */}
       <section className="container-fluid">
         <div className="row">
           <div className="col-md-12">
