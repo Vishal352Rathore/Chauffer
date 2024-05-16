@@ -147,6 +147,7 @@ input[type=number]::-webkit-outer-spin-button {
 img#imgpreview {
     width: 100%;
     height: 100%;
+    border-radius: 10px;
 }
 
 
@@ -166,14 +167,15 @@ img#imgpreview {
     }
 
     .add-vehicle-container .upload-container {
-        width: 90%;
+        align-items: center;
         background-color: #F9F9F9;
         border-radius: 10px;
-        height: 160px;
         display: flex;
+        height: 160px;
         justify-content: center;
-        align-items: center;               
+        width: 90%;
     }
+    
 
     .add-vehicle-container .upload-container label {
         width: 200px;
