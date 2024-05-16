@@ -96,9 +96,9 @@ const AddAgent = ({ agencyData }) => {
                <div class="value">{agencyData.zipCode}</div>
               </div>
               <div class="col-md-6">
-                <label htmlfor="serviceArea" class="form-label">
+                <div htmlfor="serviceArea" class="label">
                   Selected Status
-                </label>
+                </div>
                 <select
                   class="value"
                   aria-label="Default select example"
