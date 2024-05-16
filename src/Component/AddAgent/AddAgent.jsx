@@ -100,7 +100,7 @@ const AddAgent = ({ agencyData }) => {
                   Selected Status
                 </label>
                 <select
-                  class="form-select value"
+                  class="value"
                   aria-label="Default select example"
                   id="status"
                   name="status"
