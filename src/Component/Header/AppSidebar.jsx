@@ -106,6 +106,16 @@ const AppSidebar = ({ isOpen, toggleSidebar }) => {
           </div>
           <div className="menu">
             <li>
+              <Link to="discount" className="link-tag">
+                
+                  <img src={Images("earning_icon")} alt="not found" className="earning-icon" />
+                  <span>Discount
+                </span>{" "}
+              </Link>
+            </li>
+          </div>
+          <div className="menu">
+            <li>
               <Link to="complaints" className="link-tag">
                 
                   <img src={Images("complaints_icon")} alt="not found" className="complaints-icon"/>

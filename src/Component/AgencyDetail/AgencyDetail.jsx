@@ -26,7 +26,7 @@ const AgencyDetail = () => {
           <AllVehicleData superAdminId={superAdminId} agencyId={agencyId} />
         );
       default:
-        return <AddAgent />;
+        return <AddAgent agencyData={agencyData} />;
     }
   };
 

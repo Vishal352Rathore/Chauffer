@@ -19,6 +19,8 @@ import AllAgent from "./Component/AllAgent/AllAgent";
 import AgencyDetail from "./Component/AgencyDetail/AgencyDetail";
 import VehicleDetail from "./Component/VehicleDetail/VehicleDetail";
 import DriverDetail from "./Component/DriverDetail/DriverDetail";
+import { Discount } from "./Component/Discount/Discount";
+import AddDiscount from "./Component/AddDiscount/AddDiscount";
 function App() {
 
   return (
@@ -41,6 +43,8 @@ function App() {
             <Route path="allVehicle/addVehicle" element={<AddVehicle />} />
             <Route path="allAgent" element={<AllAgent />} /> 
             <Route path="allAgent/agencyDetail/:agencyId" element={<AgencyDetail />} /> 
+            <Route path="discount" element={<Discount />} />
+            <Route path="discount/addDiscount" element={<AddDiscount />} />
             <Route path="earnings" element={<Earnings />} />
             <Route path="complaints" element={<Complaints />} />
             <Route path="complaints/complaintForm" element={<ComplaintForm />} />
