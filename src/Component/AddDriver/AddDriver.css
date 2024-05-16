@@ -95,8 +95,8 @@
 }
 
 .add-driver .upload-container label {
-    width: 410px;
-    height: 180px;
+    width: 200px;
+    height: 120px;
     display: flex;
     flex-direction: column;
     align-items: center;

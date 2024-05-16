@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Images from "../Images";
 import axios from "axios";
-import * as yup from 'yup';
 import { useNavigate } from "react-router-dom";
 import Spinner from "react-bootstrap/Spinner";
 import {  toast } from 'react-toastify';
@@ -77,29 +76,7 @@ const AddDriver = () => {
 
   const handleChange = (event) => {
     setDriverData({ ...driverData, [event.target.name]: event.target.value });
-
   };
-  // const validationSchema = yup.object().shape({
-  //   drivername: yup.string()
-  //     .matches(
-  //       /^[A-Z][a-z]+\s[A-Z][a-z]+$/,
-  //       'Please enter a valid full name (e.g., John Doe)'
-  //     )
-  //     .required('Driver name is required'),
-  //     mobile: yup.string()
-  //     .matches(/^[0-9]{10}$/, 'Please enter a 10-digit phone number')
-  //     .required('Phone number is required'),
-  // });
-  
-  function isValidEmail(email) {
-    const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    return regex.test(email);
-  }
-  function isValidContactNumber(contactNumber) {
-    const regex = /^[0-9]{10}$/;
-    return regex.test(contactNumber);
-  }
-
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -140,8 +117,6 @@ const AddDriver = () => {
     setSelectedFiles(updatedSelectedFiles);
     return selectedFiles.every(fileObj => fileObj.file !== null);
   };
-
-
 
   const DriverRegister = () => {
     const headers = {
@@ -191,14 +166,13 @@ const AddDriver = () => {
             }
             alertShowing(response);
           } else {
-            alert(response.data.message);
             setIsLoading(false);
             setIsSubmit(false);
             if (parentElement) {
               parentElement.style.filter = "blur(0px)";
               parentElement.style.pointerEvents = 'auto';
             }
-            toast.success(response.message);
+            toast.error(response.message);
           }
         })
         .catch((error) => {
@@ -208,6 +182,7 @@ const AddDriver = () => {
           }
           setIsLoading(false);
           setIsSubmit(false);
+          toast.error(error);
           console.error(error);
         });
     } catch (error) {
@@ -215,14 +190,13 @@ const AddDriver = () => {
         parentElement.style.filter = "blur(0px)";
         parentElement.style.pointerEvents = 'auto';
       }
-      console.log("error", error);
       setIsLoading(false);
       setIsSubmit(false);
     }
   };
 
   const alertShowing = (response) => {
-    alert(response.data.message);
+    toast.success(response.message);
     navigate("/home/allDriver");
   };
 
