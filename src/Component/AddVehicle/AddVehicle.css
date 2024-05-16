@@ -51,14 +51,12 @@
     font-size: 11px;
     font-weight: 400;
     text-align: center;
-
 }
 
 .vehicleregdoc {
     display: flex;
     justify-content: space-between;
     align-items: center;
-
 }
 
 .input-container {
@@ -118,27 +116,23 @@
 }
 
 .add-vehicle-container .upload-container {
-    height: 160px;
     display: flex;
-    justify-content: start;
+    justify-content: center;
     align-items: center;
- 
 }
 
 
 .add-vehicle-container .upload-container label {
-    width: 410px;
+    width: 200px;
     height: 150px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: start;
+    justify-content: center;
     background-color: #F9F9F9;
     border: 1px solid #F9F9F9;
     border-radius: 10px;
 }
-
-
 
 .add-vehicle-btn-div {
     margin: 0 auto 15px auto;
@@ -178,18 +172,16 @@ img#imgpreview {
         height: 160px;
         display: flex;
         justify-content: center;
-        align-items: center;
-     
-
+        align-items: center;               
     }
 
     .add-vehicle-container .upload-container label {
         width: 200px;
         height: 120px;
         display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+       flex-direction: column;
+       align-items: center;
+       justify-content: center;
 
     }
 
