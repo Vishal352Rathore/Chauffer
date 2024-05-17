@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import "./AddDiscount.css"
 
-
 const AddDiscount = () => {
 
     const [addDiscountData, setAddDiscountData] = useState({

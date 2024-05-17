@@ -16,6 +16,7 @@ const Login = () => {
   const handleChange = (e) => {
     setLoginData({ ...loginData, [e.target.name]: e.target.value });
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -50,6 +51,7 @@ const Login = () => {
       console.log("Error :", err.message);
     }
   };
+
   return (
     <div className="login-page">
       <div className="container-fluid">
@@ -85,6 +87,8 @@ const Login = () => {
                       value={loginData.email}
                       onChange={handleChange}
                       className="form-control"
+                      required
+                      pattern="[a-zA-Z0-9._%+-]+@[a-z]+\.[a-z]{2,}$"
                     />
                   </div>
                   <div className="mb-3">
@@ -96,6 +100,7 @@ const Login = () => {
                       placeholder="Password"
                       value={loginData.password}
                       onChange={handleChange}
+                      required
                     />
                   </div>
                   <div className="mb-3 form-check">

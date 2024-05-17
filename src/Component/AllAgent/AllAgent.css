@@ -54,7 +54,7 @@
     font-size: 14px;
     padding: 5px 10px;
 } 
-.pending-btn{
+.all-agent .pending-btn{
     border-radius: 10px;
     text-align: center;
     color: #fff;
@@ -82,24 +82,20 @@
 }
 
 .all-agent .pagination>span {
-    padding: 15px 20px;
-    border: 1px solid gray;
-    cursor: pointer;
-}
-
-.pagination>span {
-    padding: 15px 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     border: 1px solid gray;
     cursor: pointer;
     width: 50px;
     height: 50px;
     border: 1px solid #CDCDCD;
-    border-radius: 80px;
+    border-radius: 50%;
     text-align: center;
     color: #fff;
 }
 
-.pagination .inactive_page {
+.all-agent .pagination .inactive_page {
     color: #000;
 }
 
@@ -112,23 +108,23 @@ span.pagination__selected {
     background-color: rgb(220, 220, 220);
 }
 
-.search-box {
+.all-agent .search-box {
     display: inline-block;
     border: 1px solid #E8E8E8;
     border-radius: 12px;
     padding: 2px;
 }
 
-.search-box-section label {
+.all-agent  .search-box-section label {
     margin: 0px 30px;
 }
 
 
-.search-box input {
+.all-agent  .search-box input {
     border: unset;
 }
 
-.search-box input:focus {
+.all-agent  .search-box input:focus {
     border-color: unset !important;
     outline: 0;
     box-shadow: unset !important;

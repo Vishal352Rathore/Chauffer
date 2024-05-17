@@ -52,29 +52,20 @@ const AgencyDetail = () => {
 
         <div >
         <header>
-          <nav className="agency-detail-header">
-            <ul className="tab-bar">
-              <li
-                className="nav-item"
-                onClick={(e) => handlePageChange(e, "form")}
-              >
-                Form
-              </li>
-              <li
-                className="nav-item"
-                onClick={(e) => handlePageChange(e, "driver")}
-              >
-                Driver
-              </li>
-              <li
-                className="nav-item"
-                onClick={(e) => handlePageChange(e, "vehicle")}
-              >
-                Vehicle
-              </li>
-            </ul>
-          </nav>
-        </header>
+      <nav className="agency-detail-header">
+        <ul className="tab-bar">
+          {["form", "driver", "vehicle"].map((tab) => (
+            <li
+              key={tab}
+              className={`nav-item ${currentPage === tab ? 'selected' : ''}`}
+              onClick={(e) => handlePageChange(e, tab)}
+            >
+              {tab.charAt(0).toUpperCase() + tab.slice(1)}
+            </li>
+          ))}
+        </ul>
+      </nav>
+    </header>
         <main className="agency-detail-data">{renderPage()}</main>
         </div>
       </section>

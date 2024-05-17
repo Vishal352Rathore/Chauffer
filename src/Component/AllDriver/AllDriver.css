@@ -103,21 +103,24 @@ table tbody tr{
 }
 
 .pagination>span {
-    padding: 15px 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     border: 1px solid gray;
     cursor: pointer;
     width: 50px;
     height: 50px;
     border: 1px solid #CDCDCD;
-    border-radius: 80px;
+    border-radius: 50%;
     text-align: center;
     color: #000;
 }
 .pagination .inactive_page{
-    color:  #CDCDCD ;
+    color:  #000 ;
 }
 span.pagination__selected{
     background-image: linear-gradient(180deg, #1B2B84 0%, #0D1540 100%);
+    color: white;
 }
 
 .search-box {

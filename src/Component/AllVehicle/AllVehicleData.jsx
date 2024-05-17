@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./AllVehicle.css";
 import Images from "../Images";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 const AllVehicleData = ({ superAdminId, agencyId }) => {
   const [vehicleData, setVehicleData] = useState(null);
@@ -11,50 +12,97 @@ const AllVehicleData = ({ superAdminId, agencyId }) => {
   const [filteredVehicles, setFilteredVehicles] = useState(null);
   const token = localStorage.getItem("token");
   const URL = process.env.REACT_APP_VEHICLE_LIST_API_URL;
+  const VEHICLE_SEARCH_URL = process.env.REACT_APP_VEHICLE_SEARCH_API_URL;
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const myHeaders = new Headers();
-        myHeaders.append("token", token);
-        myHeaders.append("type", "superAdmin");
-        myHeaders.append("Content-Type", "application/json");
+    if (searchQuery.trim() === "") {
+      fetchData();
+    } else {
+      filteredVehicleData();
+    }
+  }, [page, searchQuery]);
 
-        const raw = JSON.stringify({
+  const fetchData = async () => {
+    try {
+      const myHeaders = new Headers();
+      myHeaders.append("token", token);
+      myHeaders.append("type", "superAdmin");
+      myHeaders.append("Content-Type", "application/json");
+
+      const raw = JSON.stringify({
+        superAdminId: superAdminId,
+        agencyId: agencyId,
+        page: page,
+      });
+
+      const requestOptions = {
+        method: "POST",
+        headers: myHeaders,
+        body: raw,
+        redirect: "follow",
+      };
+
+      fetch(URL, requestOptions)
+        .then((response) => response.json())
+        .then((result) => {
+          console.log(result);
+          if (result.status === true) {
+            setVehicleData(result.items.vehicles);
+            setFilteredVehicles(result.items.vehicles);
+            setTotalPages(Math.ceil(result.items.totalCount / 10));
+
+            console.log("response.data.items", result);
+          } else {
+            console.log("response.data.items", result);
+          }
+        })
+        .catch((error) => console.error(error));
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
+  useEffect(() => {
+    setPage(1);
+  }, [searchQuery]);
+
+  const filteredVehicleData = async () => {
+    console.log("searchQuery", searchQuery);
+
+    if (searchQuery.trim() === "") {
+      return;
+    }
+
+    try {
+      const result = await axios.post(
+        VEHICLE_SEARCH_URL,
+        {
           superAdminId: superAdminId,
           agencyId: agencyId,
+          searchBy: searchQuery,
           page: page,
-        });
+        },
+        {
+          headers: {
+            token: token,
+            type: "superAdmin",
+          },
+        }
+      );
 
-        const requestOptions = {
-          method: "POST",
-          headers: myHeaders,
-          body: raw,
-          redirect: "follow",
-        };
-
-        fetch(URL, requestOptions)
-          .then((response) => response.json())
-          .then((result) => {
-            console.log(result);
-            if (result.status === true) {
-              setVehicleData(result.items.vehicles);
-              setFilteredVehicles(result.items.vehicles);
-              setTotalPages(Math.ceil(result.items.totalCount / 10));
-
-              console.log("response.data.items", result);
-            } else {
-              console.log("response.data.items", result);
-            }
-          })
-          .catch((error) => console.error(error));
-      } catch (error) {
-        console.error("Error fetching data:", error);
+      if (result.data.status === true) {
+        setFilteredVehicles(result.data.items.vehicles);
+        setTotalPages(Math.ceil(result.data.items.totalCount / 10));
+        console.log("response.data.items", result.data.items);
+      } else {
+        setFilteredVehicles(result.data.items.vehicles);
+        setTotalPages(Math.ceil(result.data.items.totalCount / 10));
+        console.log("response.data.items.drivers fail", result);
       }
-    };
-
-    fetchData();
-  }, [page]);
+    } catch (error) {
+      console.log("error", error);
+    }
+  };
 
   const selectPageHandler = (selectedPage) => {
     if (
@@ -68,33 +116,33 @@ const AllVehicleData = ({ superAdminId, agencyId }) => {
   };
 
   // Function to handle search input change
-  const handleSearchInputChange = (event) => {
-    const query = event.target.value.toLowerCase();
-    setSearchQuery(query);
+  // const handleSearchInputChange = (event) => {
+  //   const query = event.target.value.toLowerCase();
+  //   setSearchQuery(query);
 
-    if (query.trim() === "") {
-      setFilteredVehicles(vehicleData); // Reset to full list if input field is cleared
-      return;
-    }
+  //   if (query.trim() === "") {
+  //     setFilteredVehicles(vehicleData); // Reset to full list if input field is cleared
+  //     return;
+  //   }
 
-    const keywords = query.split(" ");
-    const filtered = vehicleData.filter((vehicle) =>
-      keywords.every((keyword) => {
-        if (keyword === "active" || keyword === "inactive") {
-          return vehicle.status.toLowerCase() === keyword;
-        }
-        return Object.values(vehicle).some(
-          (value) =>
-            typeof value === "string" && value.toLowerCase().includes(keyword)
-        );
-      })
-    );
-    setFilteredVehicles(filtered);
-  };
+  //   const keywords = query.split(" ");
+  //   const filtered = vehicleData.filter((vehicle) =>
+  //     keywords.every((keyword) => {
+  //       if (keyword === "active" || keyword === "inactive") {
+  //         return vehicle.status.toLowerCase() === keyword;
+  //       }
+  //       return Object.values(vehicle).some(
+  //         (value) =>
+  //           typeof value === "string" && value.toLowerCase().includes(keyword)
+  //       );
+  //     })
+  //   );
+  //   setFilteredVehicles(filtered);
+  // };
   return (
     <div>
       <div className="vehicle-search-section">
-        <label for="searchby">Search </label>
+        <label htmlFor="searchby">Search </label>
 
         <div className="search-box">
           <img src={Images("search_icon")} alt="not found" />
@@ -102,7 +150,7 @@ const AllVehicleData = ({ superAdminId, agencyId }) => {
             type="text"
             placeholder="Search"
             value={searchQuery}
-            onChange={handleSearchInputChange}
+            onChange={(e) => setSearchQuery(e.target.value.toLowerCase())}
           />
         </div>
       </div>
@@ -132,15 +180,15 @@ const AllVehicleData = ({ superAdminId, agencyId }) => {
                             <td> {vehicle.brand}</td>
                             <td>{vehicle.vehicleRegistrationNo}</td>
                             <td>
-                            <div className="action_icon">
-                            <Link
+                              <div className="action_icon">
+                                <Link
                                   to={`vehicleDetail/${vehicle._id}`}
                                   state={{ vehicleData: vehicle }}
                                 >
-                                <img
-                                  src={Images("view_icon")}
-                                  alt="not found"
-                                />
+                                  <img
+                                    src={Images("view_icon")}
+                                    alt="not found"
+                                  />
                                 </Link>
                                 <img
                                   src={Images("edit_icon")}
@@ -166,7 +214,7 @@ const AllVehicleData = ({ superAdminId, agencyId }) => {
       <section className="container">
         <div className="row">
           <div className="col-md-12">
-          {vehicleData && (
+            {vehicleData && (
               <div className="pagination">
                 {/* Show previous button */}
                 <span
@@ -197,7 +245,7 @@ const AllVehicleData = ({ superAdminId, agencyId }) => {
                         </span>
                       );
                     } else {
-                      return null; // Render nothing for pages beyond totalPages
+                      return null; // Render nothing htmlFor pages beyond totalPages
                     }
                   }
                 )}
@@ -206,14 +254,15 @@ const AllVehicleData = ({ superAdminId, agencyId }) => {
                 {totalPages > 0 && (
                   <span
                     onClick={() => selectPageHandler(page + 1)}
-                    className={page === totalPages ? "pagination__disable" : "next-page"}
+                    className={
+                      page === totalPages ? "pagination__disable" : "next-page"
+                    }
                   >
                     <i className="fa-solid fa-angle-right"></i>
                   </span>
                 )}
               </div>
             )}
-
           </div>
         </div>
       </section>
