@@ -61,22 +61,22 @@
     color: #fff;
 }
 .all-vehicle-conainer th {
-    padding: 10px 50px;
+    padding: 10px 0px 10px 20px;
     font-family: Inter;
     font-size: 16px;
     font-weight: 600;
-    text-align: center;
+    text-align: left;
     color: #fff;
 }
 .all-vehicle-conainer td {
-    padding: 15px 70px;
-    text-align: center;
+    padding: 10px 0px 10px 20px;
+    text-align: left;
 }
 .all-vehicle-conainer td div.action_icon {
     align-items: center;
     display: flex;
     column-gap: 8px;
-    justify-content: center; 
+    justify-content: left; 
 }
 .all-vehicle-conainer td div.action_icon img {   
   width:22px;    

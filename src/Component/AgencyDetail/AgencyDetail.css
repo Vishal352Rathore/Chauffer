@@ -19,7 +19,7 @@
     background-color: white;
     color: #1A2A84;
     list-style-type: none;
-    border: 1px solid black;
+    border: 1px solid #1A2A84;
     border-radius: 20px 20px 0px 0px;
     cursor: pointer;
     transition: background-color 0.3s, color 0.3s;

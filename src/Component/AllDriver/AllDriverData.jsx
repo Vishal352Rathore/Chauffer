@@ -145,7 +145,7 @@ const AllDriverData = ({ superAdminId, agencyId }) => {
                 </thead>
                 <tbody>
                   {filteredDrivers &&
-                    filteredDrivers.map((driver, index) => {
+                   filteredDrivers.length ? filteredDrivers.map((driver, index) => {
                       return (
                         <tr key={driver._id}>
                           <>
@@ -184,7 +184,7 @@ const AllDriverData = ({ superAdminId, agencyId }) => {
                           </>
                         </tr>
                       );
-                    })}
+                    }) : <div> <p> No Driver found</p> </div>}
                 </tbody>
               </table>
             </div>

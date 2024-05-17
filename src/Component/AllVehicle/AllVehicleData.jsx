@@ -171,7 +171,7 @@ const AllVehicleData = ({ superAdminId, agencyId }) => {
                 </thead>
                 <tbody>
                   {filteredVehicles &&
-                    filteredVehicles.map((vehicle, index) => {
+                   filteredVehicles.length > 0 ? filteredVehicles.map((vehicle, index) => {
                       return (
                         <tr key={vehicle._id}>
                           <>
@@ -203,7 +203,7 @@ const AllVehicleData = ({ superAdminId, agencyId }) => {
                           </>
                         </tr>
                       );
-                    })}
+                    }): <div> <p> No Vehicle found</p> </div>}
                 </tbody>
               </table>
             </div>
