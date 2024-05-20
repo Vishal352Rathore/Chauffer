@@ -40,7 +40,7 @@ const AddDiscount = () => {
           <div className="row add-driver-form">
   
             <div className="col-md-6">
-              <label htmlfor="discountName" class="form-label">
+              <label htmlFor="discountName" className="form-label">
                 Discount Coupon Name
               </label>
               <input
@@ -54,7 +54,7 @@ const AddDiscount = () => {
               />
             </div>
             <div class="col-md-6">
-              <label htmlfor="vehicleVariant" class="form-label">
+              <label htmlFor="vehicleVariant" className="form-label">
                 DIscount Offer
               </label>
               <input
@@ -69,7 +69,7 @@ const AddDiscount = () => {
             </div>
        
             <div class="col-md-6">
-              <label htmlfor="From" class="form-label">
+              <label htmlFor="From" className="form-label">
                 From
               </label>
               <input
@@ -87,7 +87,7 @@ const AddDiscount = () => {
             </div>
 
             <div class="col-md-6">
-              <label htmlfor="To" class="form-label">
+              <label htmlFor="To" className="form-label">
                 To
               </label>
               <input
@@ -111,7 +111,7 @@ const AddDiscount = () => {
             </div>
 
             <div class="col-md-6">
-                <div htmlfor="discoutType" class="label">
+                <div htmlFor="discoutType" className="label">
                   Discount Type
                 </div>
                 <select
@@ -129,7 +129,7 @@ const AddDiscount = () => {
               </div>
 
             <div class="col-md-6">
-              <label htmlfor="offAmount" class="form-label">
+              <label htmlFor="offAmount" className="form-label">
                Off Amount
               </label>
               <input

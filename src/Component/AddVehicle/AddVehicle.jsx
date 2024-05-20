@@ -28,9 +28,9 @@ const AddVehicle = () => {
     superAdminId: "",
     agencyId: "",
   });
-  
+
   const [selectedFiles, setSelectedFiles] = useState(
-    Array.from({ length: 5 }, () => null)
+    Array.from({ length: 5 }, () => ({ file: null, error: null }))
   );
 
   const [imagePreviews, setImagePreviews] = useState(
@@ -43,15 +43,19 @@ const AddVehicle = () => {
 
     const file = files[0];
     const updatedFiles = [...selectedFiles];
-    updatedFiles[index] = file;
-    setSelectedFiles(updatedFiles);
+    updatedFiles[index].file = file;
+    updatedFiles[index].error = null;
 
     if (!file.type.startsWith("image/")) {
-      console.error("Selected file is not an image.");
-      setSelectedFiles("");
+      console.error("Selected file is not an image");
+      const newSelectedFiles = [...selectedFiles];
+      newSelectedFiles[index].file = null;
+      newSelectedFiles[index].error = "Selected file is not an image";
+      setSelectedFiles(newSelectedFiles);
       return;
+    } else {
+      setSelectedFiles(updatedFiles);
     }
-
     const reader = new FileReader();
     reader.onload = function (event) {
       const imageDataUrl = event.target.result;
@@ -76,7 +80,28 @@ const AddVehicle = () => {
     addVehicleData.superAdminId = localStorage.getItem("superAdminId");
     addVehicleData.agencyId = localStorage.getItem("agencyId");
     console.log("addVehicleData", addVehicleData);
-    AddVehicle();
+
+    let isValid = validationSchema();
+
+    console.log("isValid", isValid);
+
+    if (isValid) {
+      AddVehicle();
+    }
+  };
+
+  const validationSchema = () => {
+    const updatedSelectedFiles = selectedFiles.map((fileObj, index) => {
+      if (fileObj.file === null) {
+        selectedFiles[index].error = "File is required";
+      } else {
+        selectedFiles[index].error = null;
+      }
+      return fileObj;
+    });
+
+    setSelectedFiles(updatedSelectedFiles);
+    return selectedFiles.every((fileObj) => fileObj.file !== null);
   };
 
   const AddVehicle = async () => {
@@ -154,16 +179,17 @@ const AddVehicle = () => {
         <form onSubmit={handleSubmit}>
           <div className="row add-driver-form">
             <div className="col-md-6">
-              <label htmlfor="vehicleType" class="form-label">
+              <label htmlFor="vehicleType" className="form-label">
                 Vehicle Type
               </label>
               <select
-                class="form-select"
+                className="form-select"
                 aria-label="Default select example"
                 id="vehicleType"
                 name="vehicleType"
                 value={addVehicleData.vehicleType}
                 onChange={handleChange}
+                required
               >
                 <option>Vehicle Select Class</option>
                 <option value="Sedan">Sedan</option>
@@ -173,76 +199,81 @@ const AddVehicle = () => {
             </div>
 
             <div className="col-md-6">
-              <label htmlfor="vehicleBrand" class="form-label">
+              <label htmlFor="vehicleBrand" className="form-label">
                 Vehicle Brand
               </label>
               <input
                 type="text"
-                class="form-control"
+                className="form-control"
                 placeholder="Vehicle Brand"
                 name="vehicleBrand"
                 id="vehicleBrand"
                 value={addVehicleData.vehicleBrand}
                 onChange={handleChange}
+                required
               />
             </div>
-            <div class="col-md-6">
-              <label htmlfor="vehicleVariant" class="form-label">
+            <div className="col-md-6">
+              <label htmlFor="vehicleVariant" className="form-label">
                 Vehicle Variant
               </label>
               <input
                 type="text"
-                class="form-control"
+                className="form-control"
                 placeholder="Vehicle Variant"
                 name="vehicleVariant"
                 id="vehicleVariant"
                 value={addVehicleData.vehicleVariant}
                 onChange={handleChange}
+                required
               />
             </div>
 
-            <div class="col-md-6">
-              <label htmlfor="vehicleCapcity" class="form-label">
+            <div className="col-md-6">
+              <label htmlFor="vehicleCapcity" className="form-label">
                 Capacity
               </label>
               <input
                 type="number"
-                class="form-control"
+                className="form-control"
                 placeholder="Vehicle Capacity"
                 name="vehicleCapcity"
                 id="vehicleCapcity"
                 value={addVehicleData.vehicleCapcity}
                 onChange={handleChange}
+                required
               />
             </div>
 
-            <div class="col-md-6">
-              <label htmlfor="vehicleColor" class="form-label">
+            <div className="col-md-6">
+              <label htmlFor="vehicleColor" className="form-label">
                 Colour
               </label>
               <input
                 type="text"
-                class="form-control"
+                className="form-control"
                 placeholder="Vehicles Colour"
                 name="vehicleColor"
                 id="vehicleColor"
                 value={addVehicleData.vehicleColor}
                 onChange={handleChange}
+                required
               />
             </div>
 
-            <div class="col-md-6">
-              <label htmlfor="vehiclesCharges" class="form-label">
+            <div className="col-md-6">
+              <label htmlFor="vehiclesCharges" className="form-label">
                 Charges / km
               </label>
               <input
                 type="number"
-                class="form-control"
+                className="form-control"
                 placeholder="Vehicle Charges"
                 name="vehicleCharges"
                 id="vehicleCharges"
                 value={addVehicleData.vehicleCharges}
                 onChange={handleChange}
+                required
               />
             </div>
           </div>
@@ -254,14 +285,14 @@ const AddVehicle = () => {
           <div className="row  add-driver-form">
             <div className="col-md-4">
               <div className="upload-container">
-                {selectedFiles[0] ? (
-                  <label className="filelabel" htmlFor="vehicleImage-2">
+                {selectedFiles[0].file ? (
+                  <label className="filelabel" htmlFor="FileInput-0">
                     <img
                       src={imagePreviews[0] || "#"}
                       alt="images"
                       id="imgpreview"
                     />
-                    {selectedFiles[0].name}
+                    {selectedFiles[0].file.name}
                   </label>
                 ) : (
                   <label className="filelabel" htmlFor="FileInput-0">
@@ -277,71 +308,70 @@ const AddVehicle = () => {
                   onChange={(event) => handleFileSelect(event, 0)} // Pass index to handleFileSelect
                 />
               </div>
+              {selectedFiles[0].error && (
+                <p className="error-message">{selectedFiles[0].error}</p>
+              )}
             </div>
 
             <div className="col-md-4">
               <div className="upload-container">
-                {selectedFiles[1] ? (
-                  <label className="filelabel" htmlFor="vehicleImage-2">
+                {selectedFiles[1].file ? (
+                  <label className="filelabel" htmlFor="FileInput-1">
                     <img
                       src={imagePreviews[1] || "#"}
                       alt="images"
                       id="imgpreview"
                     />
-                    {selectedFiles[1].name}
+                    {selectedFiles[1].file.name}
                   </label>
                 ) : (
-                  <div>
-                    <label className="filelabel" htmlFor="FileInput-1">
-                      <img
-                        src={Images("upload_document_icon")}
-                        alt="not-found"
-                      />
-                      <p>Upload Document</p>
-                    </label>
-                    <input
-                      className="FileUpload1"
-                      id="FileInput-1"
-                      name="booking_attachment-1"
-                      type="file"
-                      onChange={(event) => handleFileSelect(event, 1)} // Pass index to handleFileSelect
-                    />
-                  </div>
+                  <label className="filelabel" htmlFor="FileInput-1">
+                    <img src={Images("upload_document_icon")} alt="not-found" />
+                    <p>Upload Document</p>
+                  </label>
                 )}
+                <input
+                  className="FileUpload1"
+                  id="FileInput-1"
+                  name="booking_attachment-1"
+                  type="file"
+                  onChange={(event) => handleFileSelect(event, 1)} // Pass index to handleFileSelect
+                />
               </div>
+              {selectedFiles[1].error && (
+                <p className="error-message">{selectedFiles[1].error}</p>
+              )}
             </div>
 
             <div className="col-md-4">
               <div className="upload-container">
-                {selectedFiles[2] ? (
-                  <label className="filelabel" htmlFor="vehicleImage-2">
+                {selectedFiles[2].file ? (
+                  <label className="filelabel" htmlFor="FileInput-2">
                     <img
                       src={imagePreviews[2] || "#"}
                       alt="images"
                       id="imgpreview"
                     />
-                    {selectedFiles[2].name}
+                    {selectedFiles[2].file.name}
                   </label>
                 ) : (
-                  <div>
-                    <label className="filelabel" htmlFor="FileInput-2">
-                      <p>{selectedFiles[2] && selectedFiles[2].name}</p>
-                      <img
-                        src={Images("upload_document_icon")}
-                        alt="not-found"
-                      />
-                      <p>Upload Document</p>
-                    </label>
-                    <input
-                      className="FileUpload1"
-                      id="FileInput-2"
-                      name="booking_attachment-2"
-                      type="file"
-                      onChange={(event) => handleFileSelect(event, 2)} // Pass index to handleFileSelect
-                    />
-                  </div>
+                  <label className="filelabel" htmlFor="FileInput-2">
+                    <p>{selectedFiles[2].file && selectedFiles[2].file.name}</p>
+                    <img src={Images("upload_document_icon")} alt="not-found" />
+                    <p>Upload Document</p>
+                  </label>
                 )}
+                <input
+                  className="FileUpload1"
+                  id="FileInput-2"
+                  name="booking_attachment-2"
+                  type="file"
+                  onChange={(event) => handleFileSelect(event, 2)} // Pass index to handleFileSelect
+                />
               </div>
+              {selectedFiles[2].error && (
+                <p className="error-message">{selectedFiles[2].error}</p>
+              )}
             </div>
           </div>
           <div className="row  add-driver-form">
@@ -353,58 +383,61 @@ const AddVehicle = () => {
           </div>
 
           <div className="row  add-driver-form">
-            <div class="col-md-6">
-              <label htmlfor="vehicleNo" class="form-label">
+            <div className="col-md-6">
+              <label htmlFor="vehicleNo" className="form-label">
                 Vehicle Number
               </label>
               <input
                 type="text"
-                class="form-control"
+                className="form-control"
                 placeholder="Vehicle Number"
                 name="vehicleNo"
                 id="vehicleNo"
                 value={addVehicleData.vehicleNo}
                 onChange={handleChange}
+                required
               />
             </div>
 
             <div className="col-md-6">
-              <label htmlfor="vehicleRegistrationNo" class="form-label">
+              <label htmlFor="vehicleRegistrationNo" className="form-label">
                 Vehicle Registration Number
               </label>
               <input
                 type="text"
-                class="form-control"
+                className="form-control"
                 placeholder="Vehicle Registration Number"
                 name="vehicleRegistrationNo"
                 id="vehicleRegistrationNo"
                 value={addVehicleData.vehicleRegistrationNo}
                 onChange={handleChange}
+                required
               />
             </div>
           </div>
           <div className="row  add-driver-form">
-            <div class="col-md-6">
-              <label htmlfor="vehicleChassisNo" class="form-label">
+            <div className="col-md-6">
+              <label htmlFor="vehicleChassisNo" className="form-label">
                 Vehicle Chassis Number
               </label>
               <input
                 type="text"
-                class="form-control"
+                className="form-control"
                 placeholder="Vehicle Chassis Number"
                 name="vehicleChassisNo"
                 id="vehicleChassisNo"
                 value={addVehicleData.vehicleChassisNo}
                 onChange={handleChange}
+                required
               />
             </div>
-            <div class="col-md-6">
-              <label htmlfor="vehicleLastService" class="form-label">
+            <div className="col-md-6">
+              <label htmlFor="vehicleLastService" className="form-label">
                 Vehicle Last Servicing
               </label>
               <input
                 type="date"
-                class="form-control"
+                className="form-control"
                 placeholder=""
                 name="vehicleLastService"
                 id="vehicleLastService"
@@ -430,36 +463,6 @@ const AddVehicle = () => {
                   <button>Add+</button>
                 </div>
               </div>
-              <div className="upload-container">
-                {selectedFiles[3] ? (
-                  <label className="filelabel" htmlFor="vehicleImage-2">
-                    <img
-                      src={imagePreviews[3] || "#"}
-                      alt="images"
-                      id="imgpreview"
-                    />
-                    {selectedFiles[3].name}
-                  </label>
-                ) : (
-                  <div>
-                    <label className="filelabel img-doc" htmlFor="FileInput-3">
-                      <p>{selectedFiles[3] && selectedFiles[3].name}</p>
-                      <img
-                        src={Images("upload_document_icon")}
-                        alt="not-found"
-                      />
-                      <p>Upload Document</p>
-                    </label>
-                    <input
-                      className="FileUpload1"
-                      id="FileInput-3"
-                      name="booking_attachment-3"
-                      type="file"
-                      onChange={(event) => handleFileSelect(event, 3)} // Pass index to handleFileSelect
-                    />
-                  </div>
-                )}
-              </div>
             </div>
             <div className="col-md-6">
               <div className="vehicleregdoc">
@@ -471,36 +474,68 @@ const AddVehicle = () => {
                   <button>Add+</button>
                 </div>
               </div>
+            </div>
+
+            <div className="col-md-6">
               <div className="upload-container">
-                {selectedFiles[4] ? (
-                  <label className="filelabel" htmlFor="vehicleImage-2">
+                {selectedFiles[3].file ? (
+                  <label className="filelabel" htmlFor="FileInput-3">
+                    <img
+                      src={imagePreviews[3] || "#"}
+                      alt="images"
+                      id="imgpreview"
+                    />
+                    {selectedFiles[3].file.name}
+                  </label>
+                ) : (
+                  <label className="filelabel img-doc" htmlFor="FileInput-3">
+                    <p>{selectedFiles[3].file && selectedFiles[3].file.name}</p>
+                    <img src={Images("upload_document_icon")} alt="not-found" />
+                    <p>Upload Document</p>
+                  </label>
+                )}
+                <input
+                  className="FileUpload1"
+                  id="FileInput-3"
+                  name="booking_attachment-3"
+                  type="file"
+                  onChange={(event) => handleFileSelect(event, 3)} // Pass index to handleFileSelect
+                />
+              </div>
+              {selectedFiles[3].error && (
+                <p className="error-message">{selectedFiles[3].error}</p>
+              )}
+            </div>
+
+            <div className="col-md-6">
+              <div className="upload-container">
+                {selectedFiles[4].file ? (
+                  <label className="filelabel" htmlFor="FileInput-4">
                     <img
                       src={imagePreviews[4] || "#"}
                       alt="images"
                       id="imgpreview"
                     />
-                    {selectedFiles[4].name}
+                    {selectedFiles[4].file.name}
                   </label>
                 ) : (
-                  <div>
-                    <label className="filelabel img-doc" htmlFor="FileInput-4">
-                      <p>{selectedFiles[4] && selectedFiles[4].name}</p>
-                      <img
-                        src={Images("upload_document_icon")}
-                        alt="not-found"
-                      />
-                      <p>Upload Document</p>
-                    </label>
-                    <input
-                      className="FileUpload1"
-                      id="FileInput-4"
-                      name="booking_attachment-4"
-                      type="file"
-                      onChange={(event) => handleFileSelect(event, 4)} // Pass index to handleFileSelect
-                    />
-                  </div>
+                  <label className="filelabel img-doc" htmlFor="FileInput-4">
+                    <p>{selectedFiles[4].file && selectedFiles[4].file.name}</p>
+                    <img src={Images("upload_document_icon")} alt="not-found" />
+                    <p>Upload Document</p>
+                  </label>
                 )}
+                <input
+                  className="FileUpload1"
+                  id="FileInput-4"
+                  name="booking_attachment-4"
+                  type="file"
+                  onChange={(event) => handleFileSelect(event, 4)} // Pass index to handleFileSelect
+                />
               </div>
+              {selectedFiles[4].error && (
+                <p className="error-message">{selectedFiles[4].error}</p>
+              )}
             </div>
           </div>
 
