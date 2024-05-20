@@ -1,7 +1,7 @@
-import React from "react";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Images from "../Images";
-import axios from "axios";
+import UseApi from "../Hooks/UseApi"; // Ensure the correct path to the hook
+import './AllDriver.css'
 
 const AllDriverData = ({ superAdminId, agencyId }) => {
   const [driverData, setDriverData] = useState(null);
@@ -10,8 +10,25 @@ const AllDriverData = ({ superAdminId, agencyId }) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredDrivers, setFilteredDrivers] = useState(null);
   const token = localStorage.getItem("token");
+
   const URL = process.env.REACT_APP_DRIVER_LIST_API_URL;
   const DRIVER_SEARCH_URL = process.env.REACT_APP_DRIVER_SEARCH_API_URL;
+
+  const { loading, error, data, callApi } = UseApi();
+  console.log("ALL Driver API DATA:", data);
+
+  
+  useEffect(() => {
+    if (searchQuery.trim() === "") {
+      fetchData();
+    } else {
+      fetchSearchData();
+    }
+  }, [page,searchQuery]);
+  
+  useEffect(() => {
+    setPage(1);
+  }, [searchQuery]);
 
   const fetchData = async () => {
     const raw = JSON.stringify({
@@ -20,121 +37,83 @@ const AllDriverData = ({ superAdminId, agencyId }) => {
       page: page,
     });
 
-    const myHeaders = new Headers();
-    myHeaders.append("token", token);
-    myHeaders.append("type", "superAdmin");
-    myHeaders.append("Content-Type", "application/json");
-
-    const requestOptions = {
-      method: "POST",
-      headers: myHeaders,
-      body: raw,
-      redirect: "follow",
+    const headers = {
+      "Content-Type": "application/json",
+      "token": token,
+      "type": "superAdmin",
     };
 
-    try {
-      fetch(URL, requestOptions)
-        .then((response) => response.json())
-        .then((result) => {
-          if (result.status === true) {
-            setDriverData(result.items.drivers);
-            setFilteredDrivers(result.items.drivers);
-            setTotalPages(Math.ceil(result.items.totalCount / 10));
-            console.log("response.data.items", result);
-          } else {
-            console.log("response.data.items", result);
-          }
-        })
-        .catch((error) => console.error("error", error));
-    } catch (error) {
-      console.log("error", error);
-    }
+    await callApi({
+      url: URL,
+      method: "POST",
+      headers: headers,
+      body: raw,
+    }).then(()=>{
+
+      console.log("dataFromThen",data);
+      if (data && data.status) {
+        setDriverData(data.items.drivers);
+        setFilteredDrivers(data.items.drivers);
+        setTotalPages(Math.ceil(data.items.totalCount / 10));
+        console.log("response.data.items", data);
+      } else if (error) {
+        console.error("ERROR:", error);
+        alert("Error occurred while fetching driver data");
+      }
+
+    })
+
+    
   };
 
-  useEffect(() => {
-    if(searchQuery.trim() === ""){
-      fetchData();
-    }else{
-      filteredDriverData()
+  const fetchSearchData = async () => {
+
+    if (searchQuery.trim() === "") {
+      return;
     }
-  }, [page]);
+
+    const raw = JSON.stringify({
+      superAdminId: superAdminId,
+      agencyId: agencyId,
+      searchBy: searchQuery,
+      page: page,
+    });
+
+    const headers = {
+      "Content-Type": "application/json",
+      "token": token,
+      "type": "superAdmin",
+    };
+
+    await callApi({
+      url: DRIVER_SEARCH_URL,
+      method: "POST",
+      headers: headers,
+      body: raw,
+    }).then(()=>{
+      if (data && data.status) {
+        setFilteredDrivers(data.items.drivers);
+        setTotalPages(Math.ceil(data.items.totalCount / 10));
+        console.log("response.data.items", data.items);
+      } else {
+        setFilteredDrivers([]);
+        setTotalPages(1);
+        console.error("Failed to fetch filtered driver data", data);
+      }
+    })
+
+
+  };
+
 
   const selectPageHandler = (selectedPage) => {
-    if (
-      selectedPage >= 1 &&
-      selectedPage <= totalPages &&
-      selectedPage !== page
-    ) {
+    if (selectedPage >= 1 && selectedPage <= totalPages && selectedPage !== page) {
       setPage(selectedPage);
       console.log("selectedPage", selectedPage);
     }
   };
 
-  // Function to handle search input change
-  // const handleSearchInputChange = (event) => {
-  //   // const query = event.target.value.toLowerCase();
-  //   // setSearchQuery(query);
-  //   // if (searchQuery.trim() === "") {
-  //   //   setFilteredDrivers(driverData); // Reset to full list if input field is cleared
-  //   //   return;
-  //   // }
-  //   // const keywords = query.split(" ");
-  //   //  filteredDriverData(query);
-  //   // const filtered = driverData.filter((driver) =>
-  //   //   keywords.every((keyword) => {
-  //   //     if (keyword === "active" || keyword === "inactive") {
-  //   //       return driver.status.toLowerCase() === keyword;
-  //   //     }
-  //   //     return Object.values(driver).some(
-  //   //       (value) =>
-  //   //         typeof value === "string" && value.toLowerCase().includes(keyword)
-  //   //     );
-  //   //   })
-  //   // );
-  // };
 
-  useEffect(() => {
-    filteredDriverData();
-  }, [searchQuery]);
-
-  const filteredDriverData = async () => {
-    console.log("searchQuery", searchQuery);
-
-    if (searchQuery.trim() === "") {
-      setPage(1);
-      return;
-    }
-
-    try {
-      const result = await axios.post(
-        DRIVER_SEARCH_URL,
-        {
-          superAdminId: superAdminId,
-          agencyId: agencyId,
-          searchBy: searchQuery,
-          page: page,
-        },
-        {
-          headers: {
-            token: token,
-            type: "superAdmin",
-          },
-        }
-      );
-
-      if (result.data.status === true) {
-        setFilteredDrivers(result.data.items.drivers);
-        setTotalPages(Math.ceil(result.data.items.totalCount / 10));
-        console.log("response.data.items", result.data.items);
-      } else {
-        setFilteredDrivers(result.data.items.drivers);
-        setTotalPages(Math.ceil(result.data.items.totalCount / 10));
-        console.log("response.data.items.drivers fail", result);
-      }
-    } catch (error) {
-      console.log("error", error);
-    }
-  };
 
   return (
     <div>
@@ -150,7 +129,7 @@ const AllDriverData = ({ superAdminId, agencyId }) => {
           />
         </div>
       </div>
-      <div className="all-driver-conainer">
+      <div className="all-driver-container">
         <div className="container-fluid">
           <div className="row">
             <div className="col-md-12">
@@ -167,41 +146,27 @@ const AllDriverData = ({ superAdminId, agencyId }) => {
                 </thead>
                 <tbody>
                   {filteredDrivers &&
-                    filteredDrivers.map((driver, index) => {
-                      return (
-                        <tr key={driver._id}>
-                          <>
-                            <td> {index + 1 + (page - 1) * 10}</td>
-                            <td> {driver.drivername}</td>
-                            <td>{driver.email}</td>
-                            <td>{driver.createdAt}</td>
-                            {driver.status && driver.status === "active" ? (
-                              <td>
-                                <button style={{ background: "#5DCA95" }}>
-                                  Done
-                                </button>
-                              </td>
-                            ) : (
-                              <td>
-                                <button>Pending</button>
-                              </td>
-                            )}
-                            <td>
-                              <div className="action_icon">
-                                <img
-                                  src={Images("view_icon")}
-                                  alt="not found"
-                                />
-                                <img
-                                  src={Images("delete_icon")}
-                                  alt="not found"
-                                />
-                              </div>
-                            </td>
-                          </>
-                        </tr>
-                      );
-                    })}
+                    filteredDrivers.map((driver, index) => (
+                      <tr key={driver._id}>
+                        <td>{index + 1 + (page - 1) * 10}</td>
+                        <td>{driver.drivername}</td>
+                        <td>{driver.email}</td>
+                        <td>{driver.createdAt}</td>
+                        <td>
+                          {driver.status === "active" ? (
+                            <button style={{ background: "#5DCA95" }}>Done</button>
+                          ) : (
+                            <button>Pending</button>
+                          )}
+                        </td>
+                        <td>
+                          <div className="action_icon">
+                            <img src={Images("view_icon")} alt="not found" />
+                            <img src={Images("delete_icon")} alt="not found" />
+                          </div>
+                        </td>
+                      </tr>
+                    ))}
                 </tbody>
               </table>
             </div>
@@ -212,33 +177,25 @@ const AllDriverData = ({ superAdminId, agencyId }) => {
         <div className="row">
           <div className="col-md-12">
             {driverData && (
-              <div className="pagination ">
+              <div className="pagination">
                 <span
                   onClick={() => selectPageHandler(page - 1)}
                   className={page > 1 ? "prev_page" : "pagination__disable"}
                 >
                   <i className="fa-solid fa-chevron-left"></i>
                 </span>
-                {[...Array(totalPages)].map((_, i) => {
-                  return (
-                    <span
-                      key={i}
-                      className={
-                        page === i + 1
-                          ? "pagination__selected"
-                          : "inactive_page"
-                      }
-                      onClick={() => selectPageHandler(i + 1)}
-                    >
-                      {i + 1}
-                    </span>
-                  );
-                })}
+                {[...Array(totalPages)].map((_, i) => (
+                  <span
+                    key={i}
+                    className={page === i + 1 ? "pagination__selected" : "inactive_page"}
+                    onClick={() => selectPageHandler(i + 1)}
+                  >
+                    {i + 1}
+                  </span>
+                ))}
                 <span
                   onClick={() => selectPageHandler(page + 1)}
-                  className={
-                    page < totalPages ? "next-page" : "pagination__disable"
-                  }
+                  className={page < totalPages ? "next-page" : "pagination__disable"}
                 >
                   <i className="fa-solid fa-angle-right"></i>
                 </span>

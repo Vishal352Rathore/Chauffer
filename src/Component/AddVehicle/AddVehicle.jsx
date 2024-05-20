@@ -3,11 +3,14 @@ import "./AddVehicle.css";
 import Images from "../Images";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import UseApi from "../Hooks/UseApi";
 
 const AddVehicle = () => {
-  const token = localStorage.getItem("token");
-  const URL = process.env.REACT_APP_VEHICLE_REGISTER_API_URL;
   const navigate = useNavigate();
+  const token = localStorage.getItem("token");
+  const [isSubmit, setIsSubmit] = useState(false);
+  const URL = process.env.REACT_APP_VEHICLE_REGISTER_API_URL;
+ 
 
   const [addVehicleData, setAddVehicleData] = useState({
     vehicleType: "",
@@ -264,18 +267,22 @@ const AddVehicle = () => {
                     {selectedFiles[0].name}
                   </label>
                 ) : (
-                  <label className="filelabel" htmlFor="FileInput-0">
+                  <div>
+                    <label className="filelabel" htmlFor="FileInput-0">
                     <img src={Images("upload_document_icon")} alt="not-found" />
                     <p>Upload Document</p>
                   </label>
-                )}
-                <input
+                  <input
                   className="FileUpload1"
                   id="FileInput-0"
                   name="booking_attachment-0"
                   type="file"
                   onChange={(event) => handleFileSelect(event, 0)} // Pass index to handleFileSelect
                 />
+                  </div>
+
+                )}
+               
               </div>
             </div>
 

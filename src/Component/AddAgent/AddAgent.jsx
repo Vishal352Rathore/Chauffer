@@ -173,30 +173,6 @@ const AddAgent = ({ agencyData }) => {
               </div>
             </div>
 
-            {/* <div className="row">
-            <div className="col-md-12">
-              <label htmlfor="agent-doc" className="form-label filelabel">
-                Document
-              </label>
-            </div>
-          </div> */}
-
-            {/* <div className="col-md-12">
-            <div className="upload-container">
-              <label className="filelabel" htmlFor="FileInput-0">
-                {selectedFile && <div>{selectedFile.name}</div>  }
-                <img src={Images("upload_document_icon")} alt="not-found" />
-                <p>Upload Document</p>
-              </label>
-              <input
-                className="FileUpload1"
-                id="FileInput-0"
-                name="booking_attachment-0"
-                type="file" // Pass index to handleFileSelect
-                onChange={handleFileSelect}
-              />
-            </div>
-          </div> */}
             <div className="row">
               <div className="col-md-4 mx-auto">
                 <button className="form-btn" type="submit">
@@ -206,37 +182,7 @@ const AddAgent = ({ agencyData }) => {
             </div>
           </form>
 
-          {/* <form>
-            <div className="row">
-              <div className="col">
-              <div class="mb-3">
-                <label for="exampleFormControlInput1" class="form-label">
-                  Owner Name
-                </label>
-                <input
-                  type="email"
-                  class="form-control"
-                  id="exampleFormControlInput1"
-                  placeholder="owner name"
-                />
-              </div>
-              <div className="col">
-              <div class="mb-3">
-                <label for="exampleFormControlInput1" class="form-label">
-                  Owner Name
-                </label>
-                <input
-                  type="email"
-                  class="form-control"
-                  id="exampleFormControlInput1"
-                  placeholder="owner name"
-                />
-              </div>
-              </div>
-              
-              </div>
-            </div>
-            </form> */}
+          
         </section>
       </div>
     </div>

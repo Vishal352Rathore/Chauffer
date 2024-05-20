@@ -57,6 +57,11 @@ table tbody tr{
     padding: 10px 0px 10px 20px;
     text-align: left;
 }
+.all-driver-conainer td:last-child{
+    padding: 10px 0px 10px 40px;
+    text-align: left;
+}
+
 /* .action-th {
     padding: ;
 } */
@@ -131,13 +136,18 @@ span.pagination__selected{
         text-align: left;
     }
 
-    .action_icon  {
-        padding: 0px 15px;
-
+    .action_icon {
+        align-items: center;
+        display: flex;
+        column-gap: 8px;
+        /* justify-content: start;
+        border:1px solid black; */
     }
-    .action_icon img{
-        width: 18px;
-        margin-right: 10px;
+    .action_icon img {   
+      width:17px;    
+    }
+    .action_icon img:last-child{
+        width:13px;
     }
 
 }

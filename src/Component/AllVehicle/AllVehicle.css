@@ -78,6 +78,7 @@
 @media only screen and (min-width: 1200px) and (max-width: 1600px) {
         
     .all-vehicle-conainer {
+        height: 526px;
         padding: 12px 20px;
     }
     .all-vehicle-conainer th {
@@ -87,6 +88,17 @@
     .all-vehicle-conainer td {
         padding: 10px 30px;
         text-align: center;
+    }
+    .all-vehicle-conainer td:last-child .action_icon{
+        padding: 0px 0px;
+        /* border: 1px solid black; */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        column-gap: 10px;
+    }
+    .all-vehicle-conainer td:last-child .action_icon img:nth-child(2){
+        width:13px;
     }
     }
 @media only screen and (min-width: 992px) and (max-width: 1199px) 

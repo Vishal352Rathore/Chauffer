@@ -38,7 +38,7 @@
     color: #fff;
 
 }
-
+/* status-btn */
 .all-agent-conainer tbody tr td:nth-child(7) button {
     background-color: #5D68CA;
     border-radius: 16px;
@@ -50,7 +50,19 @@
     border: none;
     padding: 4px 10px;
 }
-
+.all-agent-conainer tbody tr td:nth-child(7) button.approved-btn{
+    font-size: 14px;
+    padding: 5px 10px;
+} 
+.pending-btn{
+    border-radius: 10px;
+    text-align: center;
+    color: #fff;
+    font-family: Inter; 
+    font-size: 14px;
+    font-weight: 400;
+    border: none;
+}
 
 
 /* 
@@ -131,6 +143,42 @@ span.pagination__selected {
     padding: 12px 20px;
 }
 
+@media (min-width:1200px) and (max-width:1600px) {
+    
+.all-agent-conainer {
+    height: 580px;
+}
+.all-agent-conainer tbody tr td:nth-child(7) button {
+    font-size: 14px;
+    padding: 5px 15px;
+}
+.all-agent-conainer tbody tr td:nth-child(7) button.approved-btn{
+        font-size: 14px;
+        padding: 5px 10px;
+   } 
+   .pending-btn{
+        border-radius: 10px;
+        text-align: center;
+        color: #fff;
+        font-family: Inter; 
+        font-size: 14px;
+        font-weight: 400;
+        border: none;
+   }
+   .all-agent td:last-child .action_icon{
+        padding: 0px 0px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        column-gap: 10px;
+    }
+.all-agent td:last-child .action_icon img:nth-child(1){
+    width:17px;
+}
+.all-agent td:last-child .action_icon img:nth-child(2){
+    width:13px;
+}
+}
 
 @media (min-width:850px) and (max-width:991px) {
 

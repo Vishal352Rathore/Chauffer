@@ -1,14 +1,18 @@
-import React, { useState,useEffect } from "react";
+import React, { useState } from "react";
 import "./Login.css";
 import Images from "../Images";
 import { useNavigate ,Link} from "react-router-dom";
 import axios from "axios";
+import { useNetworkCheck } from "../Context/NetworkProvider";
+
 const Login = () => {
   const navigate = useNavigate();
   const [loginData, setLoginData] = useState({
     email: "",
     password: "",
   });
+  const {isOnline} = useNetworkCheck();
+ 
   const url = process.env.REACT_APP_ADMIN_LOGIN_API_URL;
   const handleChange = (e) => {
     setLoginData({ ...loginData, [e.target.name]: e.target.value });
@@ -16,11 +20,13 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+
       console.log("loginData",loginData);
+      
       const response = await axios.post(url, loginData);
       const res = response.data;
       console.log("API :", res);
-      if (res.status === true) {
+      if ( res.status === true) {
         setLoginData(res);
         localStorage.setItem("token", res.items.token);
         if(res.items.role === "superAdmin"){
@@ -37,6 +43,7 @@ const Login = () => {
        else{
         alert(res.message)
       }
+    
     } catch (err) {
       console.log("Error :", err.message);
     }

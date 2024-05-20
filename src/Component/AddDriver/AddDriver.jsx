@@ -1,24 +1,24 @@
 import React, { useState, useEffect } from "react";
 import Images from "../Images";
 import "./AddDriver.css";
-import axios from "axios";
-import * as yup from 'yup';
 import { useNavigate } from "react-router-dom";
 import Spinner from "react-bootstrap/Spinner";
+import UseApi from "../../Component/Hooks/UseApi"; // Import the custom hook
 
 const AddDriver = () => {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
-  const [isSubmit ,setIsSubmit] = useState(false);
+  const token = localStorage.getItem("token");
+  const [isSubmit, setIsSubmit] = useState(false);
   const URL = process.env.REACT_APP_DRIVER_REGISTER_API_URL;
 
   const [parentElement, setParentElement] = useState(null);
 
   useEffect(() => {
-    setParentElement(document.getElementById("home-container"))
+    setParentElement(document.getElementById("home-container"));
   }, []);
 
-  const token = localStorage.getItem("token");
+  
 
   const [driverData, setDriverData] = useState({
     driverProfile: [],
@@ -35,12 +35,16 @@ const AddDriver = () => {
   });
 
   const [selectedFiles, setSelectedFiles] = useState(
-    Array.from({ length: 4 }, () =>  ({ file: null, error: null }))
+    Array.from({ length: 4 }, () => ({ file: null, error: null }))
   );
-  
+
   const [imagePreviews, setImagePreviews] = useState(
     Array.from({ length: 4 }, () => null)
   );
+
+  const { loading, error, data, callApi } = UseApi(); // Use the custom hook
+
+  console.log("API DATA :",data);
 
   const handleFileSelect = (event, index) => {
     const files = event.target.files;
@@ -56,7 +60,7 @@ const AddDriver = () => {
 
       const newSelectedFiles = [...selectedFiles];
       newSelectedFiles[index].file = "";
-      newSelectedFiles[index].error = "Selected file is not an image" ;
+      newSelectedFiles[index].error = "Selected file is not an image";
       setSelectedFiles(newSelectedFiles);
       return;
     } else {
@@ -87,20 +91,17 @@ const AddDriver = () => {
     driverData.agencyId = localStorage.getItem("agencyId");
     console.log("driverData", driverData);
 
-   const isValid = validationSchema();
+    const isValid = validationSchema();
+    console.log("isValid", isValid);
 
-  console.log("isValid",isValid);
-
-  //  if(isValid){
-  //   DriverRegister();
-  //   setIsLoading(true);
-  //   setIsSubmit(true);
-  //   if(parentElement){
-  //     parentElement.style.filter = "blur(1.2px)";
-  //   }
-  //  }
-  
-    
+    if (isValid) {
+      DriverRegister();
+      setIsLoading(true);
+      setIsSubmit(true);
+      if (parentElement) {
+        parentElement.style.filter = "blur(1.2px)";
+      }
+    }
   };
 
   const validationSchema = () => {
@@ -112,100 +113,77 @@ const AddDriver = () => {
       }
       return fileObj;
     });
-    
+
     setSelectedFiles(updatedSelectedFiles);
-    return selectedFiles.every(fileObj => fileObj.file !== null);
+    return selectedFiles.every((fileObj) => fileObj.file !== null);
   };
 
-
-  const DriverRegister = () => {
+  const DriverRegister = async () => {
     const headers = {
-      headers: {
-        token: token,
-        type: "superAdmin",
-      },
+      token: token,
+      type: "superAdmin",
     };
 
-    const formdata = new FormData();
-    formdata.append("drivingLicence", driverData.drivingLicence);
-    formdata.append("email", driverData.email);
-    formdata.append("drivername", driverData.drivername);
-    formdata.append("mobile", driverData.mobile);
-    formdata.append("address", driverData.address);
-    formdata.append("aadharCard", driverData.governmentid);
-    formdata.append("otherDocs", driverData.other_docs);
-    formdata.append("profileImage", driverData.driverProfile);
-    formdata.append("experience", `${driverData.experience}years`);
+    const formData = new FormData();
+    formData.append("drivingLicence", driverData.drivingLicence);
+    formData.append("email", driverData.email);
+    formData.append("drivername", driverData.drivername);
+    formData.append("mobile", driverData.mobile);
+    formData.append("address", driverData.address);
+    formData.append("aadharCard", driverData.governmentid);
+    formData.append("otherDocs", driverData.other_docs);
+    formData.append("profileImage", driverData.driverProfile);
+    formData.append("experience", `${driverData.experience}years`);
 
-    if (
-      localStorage.getItem("superAdminId") !== null &&
-      localStorage.getItem("superAdminId") !== ""
-    ) {
-      formdata.append("superAdminId", driverData.superAdminId);
-    } else if (
-      localStorage.getItem("agencyId") !== null &&
-      localStorage.getItem("agencyId") !== ""
-    ) {
-      formdata.append("agencyId", driverData.agencyId);
+    if (localStorage.getItem("superAdminId")) {
+      formData.append("superAdminId", driverData.superAdminId);
+    } else if (localStorage.getItem("agencyId")) {
+      formData.append("agencyId", driverData.agencyId);
     }
 
-    try {
-      setIsLoading(true);
-      axios
-        .post(URL, formdata, headers)
-        .then((response) => {
-          console.log("response", response);
+    await callApi({
+      url: URL,
+      method: "POST",
+      headers: headers,
+      body: formData,
+    });
 
-          if (response.data.status === true) {
-            // alert(response.data.message);
-            setIsLoading(false);
-            setIsSubmit(false);
-            if (parentElement) {
-              parentElement.style.filter = "blur(0px)";
-            }
-            alertShowing(response);
-          } else {
-            alert(response.data.message);
-            setIsLoading(false);
-            setIsSubmit(false);
-            if (parentElement) {
-              parentElement.style.filter = "blur(0px)";
-            }
-          }
-        })
-        .catch((error) => {
-          if (parentElement) {
-            parentElement.style.filter = "blur(0px)";
-          }
-          setIsLoading(false);
-          setIsSubmit(false);
-          console.error(error);
-        });
-    } catch (error) {
-      if (parentElement) {
-        parentElement.style.filter = "blur(0px)";
+    
+    setIsLoading(false);
+    setIsSubmit(false);
+    if (parentElement) {
+      parentElement.style.filter = "blur(0px)";  
+    
+      const alertShowing = (response) => {
+        alert(response.message);
+        navigate("/home/allDriver");
+    };
+
+      if (data && data.status) {
+        console.log("Inside if ")
+        alertShowing(data);
+        navigate("/home/allDriver");
+      } 
+      else if (error) {
+        console.error("Error:", error);
+        alert("Error occurred while registering driver");
       }
-      console.log("error", error);
-      setIsLoading(false);
-      setIsSubmit(false);
     }
+      
+   
+
+    
   };
 
-  const alertShowing = (response) =>{
-    alert(response.data.message);
-    navigate("/home/allDriver");
-  }
+ 
 
   return (
     <div className="add-driver">
-      <Spinner
-        className={`spinner ${isLoading ? "isLoading" : ""}`}
-        animation="border"
-      />
+      {/* <Spinner className={`spinner ${loading ? "isLoading" : ""}`} animation="border" /> */}
       <section className="container-fluid">
         <div className="row">
           <div className="col-md-12">
-            <div className="form-title  margin_top_4 padding_left_20 ">
+            <div className="form-title margin_top_4 padding_left_20">
               <p>
                 Add <span>Driver</span>
               </p>
@@ -222,11 +200,7 @@ const AddDriver = () => {
                 <label htmlFor="FileInput-3">
                   <div className="profile">
                     <div className="profile-preview">
-                      <img
-                        src={imagePreviews[3] || "#"}
-                        alt="images"
-                        id="imageProfile"
-                      />
+                      <img src={imagePreviews[3] || "#"} alt="images" id="imageProfile" />
                     </div>
                   </div>
                 </label>
@@ -266,9 +240,7 @@ const AddDriver = () => {
                 onChange={handleChange}
                 required
                 pattern="[A-Z][a-z]+\s[A-Z][a-z]+"
-                onInvalid={(e) =>
-                  e.target.setCustomValidity("Please enter full Name")
-                }
+                onInvalid={(e) => e.target.setCustomValidity("Please enter full Name")}
                 onInput={(e) => e.target.setCustomValidity("")}
               />
             </div>
@@ -283,9 +255,7 @@ const AddDriver = () => {
                 onChange={handleChange}
                 required
                 pattern="[a-zA-Z0-9._%+-]+@[a-z]+\.[a-z]{2,}$"
-                onInvalid={(e) =>
-                  e.target.setCustomValidity("Please enter a valid email")
-                }
+                onInvalid={(e) => e.target.setCustomValidity("Please enter a valid email")}
                 onInput={(e) => e.target.setCustomValidity("")}
               />
             </div>
@@ -300,11 +270,7 @@ const AddDriver = () => {
                 onChange={handleChange}
                 required
                 pattern="[0-9]{10}"
-                onInvalid={(e) =>
-                  e.target.setCustomValidity(
-                    "Please enter 10 digits numeric phone no."
-                  )
-                }
+                onInvalid={(e) => e.target.setCustomValidity("Please enter 10 digits numeric phone no.")}
                 onInput={(e) => e.target.setCustomValidity("")}
               />
             </div>
@@ -318,11 +284,7 @@ const AddDriver = () => {
                 value={driverData.address}
                 onChange={handleChange}
                 required
-                onInvalid={(e) =>
-                  e.target.setCustomValidity(
-                    "Please enter your current address."
-                  )
-                }
+                onInvalid={(e) => e.target.setCustomValidity("Please enter your current address.")}
                 onInput={(e) => e.target.setCustomValidity("")}
               />
             </div>
@@ -339,11 +301,7 @@ const AddDriver = () => {
                   required
                   pattern="[0-9]{1,2}"
                   maxLength="2"
-                  onInvalid={(e) =>
-                    e.target.setCustomValidity(
-                      "Please enter a valid experience."
-                    )
-                  }
+                  onInvalid={(e) => e.target.setCustomValidity("Please enter a valid experience.")}
                   onInput={(e) => e.target.setCustomValidity("")}
                   min="1"
                   max="100"
@@ -361,13 +319,8 @@ const AddDriver = () => {
               <div className="upload-container">
                 {selectedFiles[0].file ? (
                   <label className="filelabel" htmlFor="FileInput-0">
-                    <img
-                      src={imagePreviews[0] || "#"}
-                      alt="images"
-                      id="imagePreview"
-                    />
-                     {selectedFiles[0].file.name}
-                    
+                    <img src={imagePreviews[0] || "#"} alt="images" id="imagePreview" />
+                    {selectedFiles[0].file.name}
                   </label>
                 ) : (
                   <label className="filelabel" htmlFor="FileInput-0">
@@ -383,7 +336,6 @@ const AddDriver = () => {
                   type="file"
                   onChange={(event) => handleFileSelect(event, 0)} // Pass index to handleFileSelect
                 />
-                
               </div>
               {selectedFiles[0].error && selectedFiles[0].error}
             </div>
@@ -392,11 +344,7 @@ const AddDriver = () => {
               <div className="upload-container">
                 {selectedFiles[1].file ? (
                   <label className="filelabel" htmlFor="FileInput-1">
-                    <img
-                      src={imagePreviews[1] || "#"}
-                      alt="images"
-                      id="imagePreview"
-                    />
+                    <img src={imagePreviews[1] || "#"} alt="images" id="imagePreview" />
                     {selectedFiles[1].file.name}
                   </label>
                 ) : (
@@ -411,7 +359,7 @@ const AddDriver = () => {
                   id="FileInput-1"
                   name="booking_attachment-1"
                   type="file"
-                  onChange={(event) => handleFileSelect(event, 1)} // Pass index to handleFileSelect                
+                  onChange={(event) => handleFileSelect(event, 1)} // Pass index to handleFileSelect
                 />
               </div>
               {selectedFiles[1].error && selectedFiles[1].error}
@@ -421,11 +369,7 @@ const AddDriver = () => {
               <div className="upload-container">
                 {selectedFiles[2].file ? (
                   <label className="filelabel" htmlFor="FileInput-2">
-                    <img
-                      src={imagePreviews[2] || "#"}
-                      alt="images"
-                      id="imagePreview"
-                    />
+                    <img src={imagePreviews[2] || "#"} alt="images" id="imagePreview" />
                     {selectedFiles[2].file.name}
                   </label>
                 ) : (
@@ -448,11 +392,7 @@ const AddDriver = () => {
           </div>
           <div className="row">
             <div className="col-md-4 add-driver-btn-div">
-              <button
-                className={`${isSubmit ? "submitted-btn" : "form-btn"}`}
-                type="submit"
-                disabled={isSubmit}
-              >
+              <button className={`${isSubmit ? "submitted-btn" : "form-btn"}`} type="submit" disabled={isSubmit}>
                 {isSubmit ? "Submitted" : "Submit"}
               </button>
             </div>
