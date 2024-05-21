@@ -1,3 +1,4 @@
+
 .flex-container {
   display: flex;
   height: 100vh;
@@ -15,7 +16,7 @@
   text-align: left;
   position: fixed;
   top: 0;
-  width: 14vw;
+  width: 16vw;
   height: 100vh;
   /* overflow-y: auto; */
   background-image: linear-gradient(180deg, #1A2A84 0%, #000000 188.09%);
@@ -45,15 +46,17 @@
   z-index: 99;
 }
 
-.open {
+/* .open {
   left: -268.80px;
-}
+} */
 
 .logo-container {
   display: flex;
   flex-direction: row;
 }
-
+.logo-cntainer .logo img{
+    width:60%;
+}
 .logo-container .username {
   display: flex;
   justify-content: center;
@@ -65,7 +68,9 @@
   width: 40%;
   padding-left: 10px;
 }
-
+/* .sidebar .sidebar-container{
+  width: 18vw;
+} */
 .sidebar .sidebar-container ul li {
   list-style: none;
 }
@@ -97,12 +102,36 @@
   font-size: 20px;
   font-weight: 300;
   text-align: left;
+  padding: 6px 0px 0px 14px;
 }
 
-.link-tag span img {
+.link-tag img {
   width: 24px;
 }
-
+.link-tag img.dashboard-icon{
+  width: 24px;
+}
+.link-tag img.all-rides-icon{
+  width: 18px;
+}
+.link-tag img.add-vehicle-icon{
+  width: 28px;
+}
+.link-tag img.logout-icon{
+  width: 20px;
+}
+.link-tag img.earning-icon{
+  width:22px;
+}
+.link-tag img.complaints-icon{
+  width: 24px;
+}
+.link-tag img.terms-condition-icon{
+  width: 22px;
+}
+.link-tag img.policy-icon{
+  width: 22px;
+}
 .header-position {
   height: 100%;
   position: absolute;
@@ -124,13 +153,13 @@
   .flex-container {
     min-height: 100vh;
   }
-
+ 
   .sidebar-container {
     width: 17vw;
     min-height: 100vh;
     position: fixed;
   }
-
+  
   .header-position {
 
     position: absolute;
@@ -145,26 +174,46 @@
     width: 40%;
     padding-left: 10px;
   }
-
-  .link-tag span {
-    padding-left: 10px;
+  .logo-container .username p{
     font-size: 16px;
   }
+  .link-tag span {
+    padding-left: 10px;
+    font-size: 14px;
+  }
 
-  .link-tag span img {
+  /* .link-tag span img {
     width: 24px;
     padding-right: 5px;
+  } */
+  .link-tag img {
+    width: 24px;
+  }
+  .link-tag img.dashboard-icon {
+    width: 22px;
+  }
+  .link-tag img.all-rides-icon{
+    width: 18px;
+  }
+  .link-tag img.add-vehicle-icon {
+    width: 22px;
+    padding: 0px 0px 0px 0px;
+}
+  .link-tag img.logout-icon{
+    width: 20px;
   }
 
-  .open {
+  /* .open {
     left: -260px;
-  }
+  } */
 }
 
 @media only screen and (min-width: 992px) and (max-width: 1199px) {
-
+  .logo-container .logo img{
+    width: 80px;
+  }
   .sidebar-container {
-    width: 25vw;
+    width: 20vw;
     position: fixed;
   }
 
@@ -173,23 +222,35 @@
   }
 
   .logo-container .username {
-    font-size: 20px;
-  }
-
-  .link-tag span {
     font-size: 16px;
   }
 
-  .link-tag span img {
-    width: 17px;
+  .link-tag span {
+    font-size: 14px;
+  }
+  .link-tag img {
+    width: 24px;
+  }
+  .link-tag img.dashboard-icon {
+    width: 22px;
+  }
+  .link-tag img.all-rides-icon{
+    width: 18px;
+  }
+  .link-tag img.add-vehicle-icon {
+    width: 22px;
+    padding: 0px 0px 0px 0px;
+}
+  .link-tag img.logout-icon{
+    width: 20px;
   }
   .header-position {
     left: 204.80px;
 }
 
-.open {
+/* .open {
   left: -204.80px;
-}
+} */
 
 }
 

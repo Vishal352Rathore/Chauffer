@@ -26,17 +26,19 @@ const Complaints = () => {
 
   return (
     <div className="complaint-container">
-      <section className="container-fluid">
-        <div className="row">
-          <div className="col-md-12">
-            <div className="form-title  margin_top_4 padding_left_20  ">
-              <h3>
-                Complaint <span>Details</span>
-              </h3>
+         <section className="container-fluid">
+      <div className="row">
+        <div className="col-md-12">
+          <div className="all-driver-header">
+            <div className="form-title padding_left_20">
+              <p>
+                Complaint <span>Detail</span>
+              </p>
             </div>
           </div>
         </div>
-      </section>
+      </div>
+    </section>
 
       <div className="complaint-tab">
         <div>

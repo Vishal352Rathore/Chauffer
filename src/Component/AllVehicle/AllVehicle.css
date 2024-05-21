@@ -1,7 +1,8 @@
 .all-vehicle-header {
     display: flex;
     justify-content: space-between;
-    margin-top: 4%;
+    margin-top: 2%;
+    margin-bottom: 2%;
 }
 
 .all-vehicle-header h3 {
@@ -60,56 +61,76 @@
     color: #fff;
 }
 .all-vehicle-conainer th {
-    padding: 8px 20px;
+    padding: 10px 0px 10px 20px;
     font-family: Inter;
-    font-size: 14px;
+    font-size: 16px;
     font-weight: 600;
-    text-align: center;
+    text-align: left;
     color: #fff;
 }
 .all-vehicle-conainer td {
-    padding: 15px 70px;
-    text-align: center;
+    padding: 10px 0px 10px 20px;
+    text-align: left;
 }
-
+.all-vehicle-conainer td div.action_icon {
+    align-items: center;
+    display: flex;
+    column-gap: 8px;
+    justify-content: left; 
+}
+.all-vehicle-conainer td div.action_icon img {   
+  width:22px;    
+}
+.all-vehicle-conainer td div.action_icon img:nth-child(2){
+    width:16px;
+}
+.all-vehicle-conainer td div.action_icon img:last-child{
+    width:15px;
+}
 
 
 @media only screen and (min-width: 1200px) and (max-width: 1600px) {
         
     .all-vehicle-conainer {
-        height: 525px;
+        height: 526px;
         padding: 12px 20px;
     }
     .all-vehicle-conainer th {
         padding: 10px 50px;
-        font-size: 14px;
         text-align: center;
     }
     .all-vehicle-conainer td {
         padding: 10px 30px;
-        font-size: 14px;
         text-align: center;
+    }
+    .all-vehicle-conainer td:last-child .action_icon{
+        padding: 0px 0px;
+        /* border: 1px solid black; */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        column-gap: 10px;
+    }
+    .all-vehicle-conainer td:last-child .action_icon img:nth-child(2){
+        width:13px;
     }
     }
 @media only screen and (min-width: 992px) and (max-width: 1199px) 
 {
-    .all-vehicle-conainer {
-        height: 400px;
-        padding: 12px 20px;
-    }
+    
     .all-vehicle-conainer th {
         padding: 20px 20px;
         font-size: 12px;
-        text-align: center;
     }
     .all-vehicle-conainer td {
-        padding: 8px;
+        padding: 20px 20px;
         font-size: 11px;
         text-align: center;
     } 
 
 }
 @media (min-width: 768px) and (max-width: 991px) {
+  
     .all-vehicle-conainer th {
         padding: 20px 20px;
         font-size: 12px;

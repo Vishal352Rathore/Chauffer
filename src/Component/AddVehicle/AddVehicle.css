@@ -51,14 +51,12 @@
     font-size: 11px;
     font-weight: 400;
     text-align: center;
-
 }
 
 .vehicleregdoc {
     display: flex;
     justify-content: space-between;
     align-items: center;
-
 }
 
 .input-container {
@@ -118,7 +116,6 @@
 }
 
 .add-vehicle-container .upload-container {
-    height: 160px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -127,14 +124,15 @@
 
 .add-vehicle-container .upload-container label {
     width: 200px;
-    height: 120px;
+    height: 150px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    background-color: #F9F9F9;
+    border: 1px solid #F9F9F9;
+    border-radius: 10px;
 }
-
-
 
 .add-vehicle-btn-div {
     margin: 0 auto 15px auto;
@@ -149,6 +147,7 @@ input[type=number]::-webkit-outer-spin-button {
 img#imgpreview {
     width: 100%;
     height: 100%;
+    border-radius: 10px;
 }
 
 
@@ -168,15 +167,23 @@ img#imgpreview {
     }
 
     .add-vehicle-container .upload-container {
-        width: 90%;
+        align-items: center;
         background-color: #F9F9F9;
         border-radius: 10px;
-
+        display: flex;
+        height: 160px;
+        justify-content: center;
+        width: 90%;
     }
+    
 
     .add-vehicle-container .upload-container label {
-        width: 100%;
-        border-radius: 10px;
+        width: 200px;
+        height: 120px;
+        display: flex;
+       flex-direction: column;
+       align-items: center;
+       justify-content: center;
 
     }
 
@@ -223,18 +230,32 @@ img#imgpreview {
         border-radius: 10px;
 
     }
-
+    .add-vehicle-container .upload-container {
+       
+        justify-content: center;
+        align-items: center;
+    }
     .add-vehicle-container .upload-container label {
-        width: 100%;
-        border-radius: 10px;
+            width: 200px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content:center;
+          
+
+       
 
     }
 
     .add-vehicle-container .upload-container label img {
-        width: 50%;
-        height: 50%;
+        width: 30%;
+        height: 30%;
     }
-
+    img#imgpreview {
+        width: 80%;
+        height: 80%;
+        border-radius: 6px;
+    }
     .add-vehicle-container .upload-container p {
         font-size: 14px;
     }
@@ -252,12 +273,24 @@ img#imgpreview {
 }
 
 @media (min-width: 768px) and (max-width: 991px) {
-
+    .all-vehicle-conainer {
+        height: 700px;
+        padding: 12px 20px;
+    }
     .add-vehicle-container form label {
         font-size: 9px;
         padding-bottom: 0px;
     }
-
+    .add-vehicle-container .upload-container label {
+        width: 150px;
+        height: 80px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        margin-top:30px;
+    
+    }
     .add-vehicle-container form input,
     .add-vehicle-container form .form-select {
         padding: 8px 10px 8px 10px;
@@ -265,9 +298,11 @@ img#imgpreview {
     }
 
     .add-vehicle-container .upload-container {
-        width: 90%;
-        background-color: #F9F9F9;
-        border-radius: 10px;
+            height: 100px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+   
 
     }
 
@@ -289,7 +324,7 @@ img#imgpreview {
 
     .vehicle-details {
         padding-bottom: 12px;
-        padding-top: 12px;
+        padding-top: 28px;
     }
 
     .add-btn {
@@ -345,8 +380,12 @@ img#imgpreview {
         height: 120px;
         font-size: 7px;
     }
-
+    img#imgpreview {
+        width: 80%;
+        height: 80%;
+        border-radius: 6px;
+    }
     .add-vehicle-btn-div {
-        margin: 0 auto 15px auto;
+        margin: 30px auto 15px auto;
     }
 }

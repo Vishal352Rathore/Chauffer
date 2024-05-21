@@ -1,0 +1,8 @@
+.add-discount form label {
+    font-family: Inter;
+    font-size: 16px;
+    font-weight: 300;
+    text-align: left;
+    padding-top: 15px;
+    padding-bottom: 15px;
+}

@@ -1,0 +1,31 @@
+
+.agency-detail-data{
+    padding: 35px 45px 0px 45px;
+}
+
+.tab-bar {
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    gap: 10px;
+    font-weight: bold;
+    margin: 0px 35px;
+    font-size: 13px;
+    font-weight: 700;
+  }
+  
+  .tab-bar li {
+    padding: 5px 30px;
+    background-color: white;
+    color: #1A2A84;
+    list-style-type: none;
+    border: 1px solid #1A2A84;
+    border-radius: 20px 20px 0px 0px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+  }
+  
+  .tab-bar li.selected {
+    background-color: #1A2A84;
+    color: white;
+  }

@@ -30,6 +30,7 @@ import agency_owners_icon from  "../Assetes/images/agency_owners_icon.png";
 import view_icon from "../Assetes/images/view_icon.png";
 import edit_icon from "../Assetes/images/edit_icon.png";
 import delete_icon from "../Assetes/images/delete_icon.png";
+import profile_img from "../Assetes/images/profile_img.png";
 
 const images = [
 {"admin_profile":admin_profile},
@@ -63,7 +64,8 @@ const images = [
 {"search_icon":search_icon},
 {"view_icon":view_icon},
 {"edit_icon" : edit_icon},
-{"delete_icon" : delete_icon}
+{"delete_icon" : delete_icon},
+{"profile_img" : profile_img}
 ]
 
 const Images = (image_key) => {

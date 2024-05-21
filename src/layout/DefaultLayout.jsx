@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState} from "react";
 import  {AppSidebar } from "../Component/index";
 import "./DefaultLayout.css";
 
@@ -9,17 +9,14 @@ const DefaultLayout = () => {
     setIsOpen(!isOpen);
   };
 
+
   return (
-    <div>
+    <div className="index-page">
+      <div id="home-container">
         <AppSidebar isOpen={isOpen} toggleSidebar={toggleSidebar} />
+      </div>
     </div>
   );
 };
 
 export default DefaultLayout;
-
-// element.style {
-//   position: absloute;
-//   right: -15px;
-//   z-index: 999999;
-// }

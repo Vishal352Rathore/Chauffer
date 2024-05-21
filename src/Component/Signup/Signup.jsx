@@ -1,221 +1,381 @@
 import React, { useState } from "react";
+import "bootstrap/dist/css/bootstrap.min.css";
 import "./Signup.css";
-import Images from "../Images";
-import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
-import { LoadScript, Autocomplete } from "@react-google-maps/api";
-const libraries = ["places"];
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Signup = () => {
-  const [selectedFiles, setSelectedFiles] = useState("");
-  const YOUR_GOOGLE_MAPS_API_KEY = process.env.REACT_APP_GOOGLE_MAPS_API_KEY;
+  const URL =
+    "https://chauffer-staging-tse4a.ondigitalocean.app/v1/authRouter/signUp";
   const navigate = useNavigate();
-  const [signupData, setSignupData] = useState({
-    name: "",
-    email: "",
-    mobile: "",
-    password: "",
-    uploadDocument: "",
-    city: "",
-    zipCode: "",
+  const [signupInfo, setSignupInfo] = useState({
+    AgencyName: "",
+    ContactPerson: "",
+    ContactNumber: "",
+    PhysicalAddress: "",
+    BusinessRegistration: "",
+    ContactEmail: "",
+    AgencyWebsite: "",
+    YearsInOperation: "",
+    ServiceWeCovrage: "",
+    NumberOfVehiclesInFleet: "",
+    BusinessLicensePermit: "",
+    TaxInformationNumber: "",
+    CompanyTermsAndConditions: "",
   });
-  const url = process.env.REACT_APP_AGENCY_REGISTER_API_URL;
-
-
-
-  const handlePlaceSelect = (place, name) => {
-    setSignupData((signupData) => ({
-      ...signupData,
-      [name]: place.formatted_address,
-    }));
-    // const { lat, lng } = place.geometry.location;
-    // setCoordinates(prevCoordinates =>({...prevCoordinates , [name] : `${lat()},${lng()}` }))
-    // console.log('Coordinates:name', `${name} ${lat()},${lng()}` );
-    console.log("Selected place:", place.formatted_address);
-  };
 
   const handleChange = (e) => {
-    setSignupData({ ...signupData, [e.target.name]: e.target.value });
-  };
-
-  const handleFileChange = (e) => {
-    const files = Array.from(e.target.files);
-    setSelectedFiles(files[0]);
+    setSignupInfo({ ...signupInfo, [e.target.name]: e.target.value });
+    console.log("signupInfo :" ,signupInfo);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    signupData.uploadDocument = selectedFiles;
-    console.log("signupData", signupData);
-    addAgent();
+  //  AgencyRegister();
   };
 
-  const addAgent = async () => {
-    const formdata = new FormData();
-    formdata.append("name", signupData.name);
-    formdata.append("email", signupData.email);
-    formdata.append("password", signupData.password);
-    formdata.append("mobile", signupData.mobile);
-    formdata.append("uploadDocument", signupData.uploadDocument);
-    formdata.append("city", signupData.city);
-    formdata.append("zipCode", signupData.zipCode);
-
-    const requestOptions = {
-      method: "POST",
-      body: formdata,
-      redirect: "follow",
-    };
+   const AgencyRegister = async () =>{
 
     try {
-       await fetch(url, requestOptions)
-        .then((response) => response.json())
-        .then((result) => {
-          if (result.status === true) {
-            console.log("Agency added successfully", result);
-            alert(result.message);
-            navigate("/login");
-          } else {
-            alert(result.message);
-          }
-        })
-        .catch((error) => console.error("error", error));
+      const response = await axios.post(URL, signupInfo);
 
-    } catch (err) {
-      console.log("Error :", err.message);
+      if (response.data.subCode === 200) {
+        console.log(
+          response.data.subCode,
+          response.data.message,
+          response.data
+        );
+        toast.success(response.data.message);
+        navigate("/login");
+      } else if (response.data.subCode === 201) {
+        console.log(
+          response.data.subCode,
+          response.data.message,
+          response.data
+        );
+        toast.success(response.data.message);
+      } else if (response.data.subCode === 400) {
+        console.log(
+          response.data.subCode,
+          response.data.message,
+          response.data
+        );
+        toast.success(response.data.message);
+        navigate("/login");
+      } else if (response.data.subCode === 401) {
+        console.log(
+          response.data.subCode,
+          response.data.message,
+          response.data
+        );
+        toast.success(response.data.message);
+      } else if (response.data.subCode === 403) {
+        console.log(
+          response.data.subCode,
+          response.data.message,
+          response.data
+        );
+        toast.success(response.data.message);
+      } else if (response.data.subCode === 404) {
+        console.log(
+          response.data.subCode,
+          response.data.message,
+          response.data
+        );
+        toast.success(response.data.message);
+      }
+
+      // Clear the form fields after submission
+      setSignupInfo({
+        AgencyName: "",
+        ContactPerson: "",
+        ContactEmail: "",
+        ContactNumber: "",
+        PhysicalAddress: "",
+        BusinessRegistration: "",
+        AgencyWebsite: "",
+        YearsInOperation: "",
+        ServiceWeCovrage: "",
+        NumberOfVehiclesInFleet: "",
+        BusinessLicensePermit: "",
+        TaxInformationNumber: "",
+        CompanyTermsAndConditions: "",
+      });
+      navigate("/signup");
+    } 
+    catch (error) {
+      console.error("Error:", error);
     }
-  };
+   }
+
 
   return (
-    <div className="signup-page">
-      <div className="container-fluid">
+    <div className="signup-container">
+      <section className="container">
         <div className="row">
-          <div className="col-md-6 set_postion">
-            <img src={Images("login_image")} alt="not found" />
-            <div className="signup-image">
-              <h2>Welcome back!</h2>
-              <p>You can sign in to access with your existing profile</p>
-            </div>
-          </div>
-          <div className="col-md-6">
-            <div className="signup-form-container">
-              <div className="signup-form">
-                <div className="signup-heading-container">
-
-                <div className="signup-heading">
-                  <h2>Chaffer Agency Registration</h2>
-                  <p>
-                    Please enter your Registeration information or <br />
-                    <Link to="/login">click here</Link> to Login
-                  </p>
-                </div>
-                </div>
-                <form onSubmit={handleSubmit} className="signup-container">
-                  <div className="mb-3">
-                    <label htmlFor="name"></label>
-                    <input
-                      type="text"
-                      id="name"
-                      name="name"
-                      placeholder="Full Name"
-                      value={signupData.name}
-                      onChange={handleChange}
-                    />
-                  </div>
-                  <div className="mb-3">
-                    <label htmlFor="email"></label>
-                    <input
-                      type="email"
-                      id="email"
-                      name="email"
-                      placeholder="Email address"
-                      value={signupData.email}
-                      onChange={handleChange}
-                    />
-                  </div>
-                  <div className="mb-3">
-                    <label htmlFor="mobile"></label>
-                    <input
-                      type="text"
-                      pattern="[0-9]*"
-                      id="mobile"
-                      name="mobile"
-                      placeholder="Contact number"
-                      value={signupData.mobile}
-                      onChange={handleChange}
-                    />
-                  </div>
-                  <div className="mb-3">
-                    <div className="file-upload-container">
-                      <div>{selectedFiles && selectedFiles.name}</div>
-                      <input
-                        className="FileUpload1"
-                        id="FileInput-0"
-                        name="booking_attachment-0"
-                        type="file"
-                        onChange={handleFileChange}
-                      />
-                    </div>
-                  </div>
-                  <div className="mb-3">
-                    <label htmlFor="password"></label>
-                    <input
-                      type="password"
-                      id="password"
-                      name="password"
-                      placeholder="Please enter password"
-                      value={signupData.password}
-                      onChange={handleChange}
-                      pattern="[0-9]*"
-                    />
-                  </div>
-                  <div className="mb-3">
-                    <LoadScript
-                      googleMapsApiKey={YOUR_GOOGLE_MAPS_API_KEY}
-                      libraries={libraries}
-                    >
-                      <Autocomplete
-                        onLoad={(autocomplete) => {
-                          autocomplete.addListener("place_changed", () =>
-                            handlePlaceSelect(autocomplete.getPlace(), "city")
-                          );
-                        }}
-                      >
-                        <div className="input-div">
-                          <label htmlfor="vehicleClass"></label>
-                          <input
-                            type="text"
-                            placeholder="Please select city"
-                            id="city"
-                            name="city"
-                            value={signupData.city}
-                            onChange={handleChange}
-                            required
-                          />
-                        </div>
-                      </Autocomplete>
-                    </LoadScript>
-                  </div>
-                  <div className="mb-3">
-                    <label htmlFor="zipCode"></label>
-                    <input
-                      type="text"
-                      id="zipCode"
-                      name="zipCode"
-                      placeholder="Zip Code"
-                      value={signupData.zipCode}
-                      onChange={handleChange}
-                      pattern="[0-9]*"
-                    />
-                  </div>
-                  <button type="submit" className="">
-                    Sign Up
-                  </button>
-                </form>
-              </div>
-            </div>
+          <div className="col-md-4 mx-auto py-5">
+            <h1 className="signup-title">Registration</h1>
           </div>
         </div>
-      </div>
+
+        <div className="row">
+          <div className="col-md-9 m-auto">
+            <form className="signup-form" onSubmit={handleSubmit}>
+            <p className="form-title ">
+                Agency Information
+                {/* <i className="fa-solid fa-arrow-left"></i> */}
+              </p>
+              <div className="row">
+              
+                <div className="col-md-6">
+                
+                  <label htmlFor="agencyname" className="form-label"></label>
+                  <input
+                    type="text"
+                    className="form-control "
+                    id="agencyname"
+                    placeholder="Agency Name"
+                    name="AgencyName"
+                    value={signupInfo.AgencyName}
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
+                <div className="col-md-6">
+                  <label
+                    htmlFor="businessRegistration"
+                    className="form-label"
+                  ></label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="businessRegistration"
+                    placeholder="Business Registration"
+                    name="BusinessRegistration"
+                    value={signupInfo.BusinessRegistration}
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-md-6">
+                  <label htmlFor="contactPerson" className="form-label"></label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="contactPerson"
+                    placeholder="Contact Person"
+                    name="ContactPerson"
+                    value={signupInfo.ContactPerson}
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
+                <div className="col-md-6">
+                  <label htmlFor="contactEmail" className="form-label"></label>
+                  <input
+                    type="email"
+                    className="form-control"
+                    id="contactEmail"
+                    placeholder="Contact Email"
+                    name="ContactEmail"
+                    value={signupInfo.ContactEmail}
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
+              </div>
+              <div className="row">
+                <div className="col">
+                  <label htmlFor="contactNumber" className="form-label"></label>
+                  <input
+                    type="tel"
+                    className="form-control"
+                    id="contactNumber"
+                    placeholder="Contact Number"
+                    name="ContactNumber"
+                    value={signupInfo.ContactNumber}
+                    onChange={handleChange}
+                    required
+                    maxLength="10"
+                    minLength="10"
+                  />
+                </div>
+                <div className="col">
+                  <label htmlFor="agencyWebsite" className="form-label"></label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="agencyWebsite"
+                    placeholder="Agency Website"
+                    name="AgencyWebsite"
+                    value={signupInfo.AgencyWebsite}
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-md-6">
+                  <label
+                    htmlFor="physicalAddress"
+                    className="form-label"
+                  ></label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="physicalAddress"
+                    placeholder="Physical Address"
+                    name="PhysicalAddress"
+                    value={signupInfo.PhysicalAddress}
+                    onChange={handleChange}
+                    required
+                    maxLength="120"
+                  />
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-md-12 ">
+                  <p className="form-title operation-title ">Operation Details</p>
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-md-6">
+                  <label
+                    htmlFor="yearsInOperation"
+                    className="form-label"
+                  ></label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="yearsInOperation"
+                    placeholder="Years In Operation"
+                    name="YearsInOperation"
+                    value={signupInfo.YearsInOperation}
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
+                <div className="col-md-6">
+                  <label
+                    htmlFor="numberOfVehiclesInFleet"
+                    className="form-label"
+                  ></label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="numberOfVehiclesInFleet"
+                    placeholder="Number Of Vehicles In Fleet"
+                    name="NumberOfVehiclesInFleet"
+                    value={signupInfo.NumberOfVehiclesInFleet}
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
+              </div>
+
+              <div className="row">
+                <div className="col-md-6">
+                  <label
+                    htmlFor="serviceWeCovrage"
+                    className="form-label"
+                  ></label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="serviceWeCovrage"
+                    placeholder="Service We Covrage"
+                    name="ServiceWeCovrage"
+                    value={signupInfo.ServiceWeCovrage}
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-md-12 ">
+                  <p className="form-title operation-title">License & Insurance</p>
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-md-6">
+                  <label
+                    htmlFor="businessLicensePermit"
+                    className="form-label"
+                  ></label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="businessLicensePermit"
+                    placeholder="Business License/Permit"
+                    name="BusinessLicensePermit"
+                    value={signupInfo.BusinessLicensePermit}
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
+
+                <div className="col-md-6">
+                  <label
+                    htmlFor="taxInformationNumber"
+                    className="form-label"
+                  ></label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="taxInformationNumber"
+                    placeholder="Tax Information Number"
+                    name="TaxInformationNumber"
+                    value={signupInfo.TaxInformationNumber}
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-md-12 ">
+                  <p className="form-title operation-title">Additional Information </p>
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-md-6">
+                  <label
+                    htmlFor="companyTermsAndConditions"
+                    className="form-label"
+                  ></label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="companyTermsAndConditions"
+                    placeholder="Company Terms And Conditions"
+                    name="CompanyTermsAndConditions"
+                    value={signupInfo.CompanyTermsAndConditions}
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
+              </div>
+
+              {/* <p className="termandcondition ">
+                By selecting Create account, you agree with Blacklane's 
+                <span>Terms & Conditions </span>and<span> policies</span>.
+              </p> */}
+              <div className="col-md-6 mx-auto py-5">
+              <button
+                type="submit"
+                className=" btn-create-acc"
+              >
+                Sign In
+              </button>
+              </div>
+             
+            </form>
+          </div>
+        </div>
+      </section>
     </div>
   );
 };

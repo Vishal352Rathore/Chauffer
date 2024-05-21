@@ -1,4 +1,26 @@
- .form-title {
+.value {
+    width: 100%;
+    border: 1px solid #E8E8E8;
+    color: #969696;
+    padding: 8px 20px 8px 20px;
+    border-radius: 12px;
+    font-size: 16px;
+    font-family: Inter;
+    font-size: 16px;
+    font-weight: 300;
+    text-align: left;
+  }
+
+  .label {
+    font-family: Inter;
+    font-size: 16px;
+    font-weight: 300;
+    text-align: left;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.form-title {
      font-family: Inter;
      font-size: 32px;
      font-weight: 700;
@@ -11,9 +33,10 @@
      margin: 0 !important;
  }
 
- .agent-container form {
-     margin-top: 3%;
+ .agent-container{
+    margin: 0px 70px;
  }
+
 
  .agent-container form label {
      font-family: Inter;
@@ -21,7 +44,6 @@
      font-weight: 300;
      text-align: left;
      padding-top: 20px;
-
  }
 
  .agent-container form input {
