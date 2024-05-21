@@ -112,10 +112,6 @@
     margin-top: 5%;
 }
 
-/* @media (max-width: 767px) {}
-@media (min-width: 768px) and (max-width: 991px) {}
-@media only screen and (min-width: 992px) and (max-width: 1199px) {}  */
-/* media for laptop view */
 
 @media only screen and (min-width: 1200px) and (max-width: 1600px) {
     .login-image h2 {
