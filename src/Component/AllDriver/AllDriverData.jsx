@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Images from "../Images";
 import UseApi from "../Hooks/UseApi"; // Ensure the correct path to the hook
-import './AllDriver.css'
+import "./AllDriver.css";
 
 const AllDriverData = ({ superAdminId, agencyId }) => {
   const [driverData, setDriverData] = useState(null);
@@ -17,6 +17,7 @@ const AllDriverData = ({ superAdminId, agencyId }) => {
   const { loading, error, data, callApi } = UseApi();
   console.log("ALL Driver API DATA:", data);
 
+
   
   useEffect(() => {
     if (searchQuery.trim() === "") {
@@ -24,7 +25,7 @@ const AllDriverData = ({ superAdminId, agencyId }) => {
     } else {
       fetchSearchData();
     }
-  }, [page,searchQuery]);
+  }, [ page ,searchQuery]);
   
   useEffect(() => {
     setPage(1);
@@ -49,8 +50,6 @@ const AllDriverData = ({ superAdminId, agencyId }) => {
       headers: headers,
       body: raw,
     }).then(()=>{
-
-      console.log("dataFromThen",data);
       if (data && data.status) {
         setDriverData(data.items.drivers);
         setFilteredDrivers(data.items.drivers);
@@ -67,11 +66,6 @@ const AllDriverData = ({ superAdminId, agencyId }) => {
   };
 
   const fetchSearchData = async () => {
-
-    if (searchQuery.trim() === "") {
-      return;
-    }
-
     const raw = JSON.stringify({
       superAdminId: superAdminId,
       agencyId: agencyId,
@@ -90,19 +84,17 @@ const AllDriverData = ({ superAdminId, agencyId }) => {
       method: "POST",
       headers: headers,
       body: raw,
-    }).then(()=>{
-      if (data && data.status) {
-        setFilteredDrivers(data.items.drivers);
-        setTotalPages(Math.ceil(data.items.totalCount / 10));
-        console.log("response.data.items", data.items);
-      } else {
-        setFilteredDrivers([]);
-        setTotalPages(1);
-        console.error("Failed to fetch filtered driver data", data);
-      }
-    })
+    });
 
-
+    if (data && data.status) {
+      setFilteredDrivers(data.items.drivers);
+      setTotalPages(Math.ceil(data.items.totalCount / 10));
+      console.log("response.data.items", data.items);
+    } else {
+      setFilteredDrivers([]);
+      setTotalPages(1);
+      console.error("Failed to fetch filtered driver data", data);
+    }
   };
 
 

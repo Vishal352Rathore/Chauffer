@@ -32,7 +32,8 @@ const Login = () => {
         if(res.items.role === "superAdmin"){
           localStorage.setItem("superAdminId", res.items._id);
           localStorage.setItem("agencyId", "");
-        }else if(res.items.role === "agency"){
+        }
+        else if(res.items.role === "agency"){
           localStorage.setItem("agencyId", res.items._id);
           localStorage.setItem("superAdminId", "");
         }
@@ -40,11 +41,12 @@ const Login = () => {
         setLoginData({ email: "", password: "" });
         navigate("/home");
       }
-       else{
+      else{
         alert(res.message)
       }
     
-    } catch (err) {
+    } 
+    catch(err) {
       console.log("Error :", err.message);
     }
   };

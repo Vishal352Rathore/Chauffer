@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "./AllDriver.css";
-import AllDriverData from "./AllDriverData";
+import AllDriverData from "./AllDriverData.jsx";
 
 const AllDriver = () => {
   const superAdminId = localStorage.getItem("superAdminId");

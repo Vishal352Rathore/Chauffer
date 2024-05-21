@@ -22,8 +22,8 @@ import AllAgent from "./Component/AllAgent/AllAgent";
 import AgencyDetail from "./Component/AgencyDetail/AgencyDetail";
 import { useNetworkCheck } from "./Component/Context/NetworkProvider";
 import { useState ,useEffect } from "react";
-import 'bootstrap/dist/css/bootstrap.min.css';
-import 'bootstrap/dist/js/bootstrap.bundle.min.js';
+
+
 import { setConsent } from "firebase/analytics";
 
 function App() {

@@ -179,7 +179,7 @@ const AddDriver = () => {
 
   return (
     <div className="add-driver">
-      {/* <Spinner className={`spinner ${loading ? "isLoading" : ""}`} animation="border" /> */}
+      <Spinner className={`spinner ${loading ? "isLoading" : ""}`} animation="border" />
       <section className="container-fluid">
         <div className="row">
           <div className="col-md-12">

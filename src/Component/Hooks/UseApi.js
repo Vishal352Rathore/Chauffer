@@ -19,10 +19,9 @@ const UseApi = () => {
         method,
         headers,
         data: body
-      }).then((response)=>{
-        setData(response.data);
       });
 
+      setData(response.data);
     } catch (err) {
       setError(err);
     } finally {
