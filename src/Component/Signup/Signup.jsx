@@ -7,8 +7,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const Signup = () => {
-  const URL =
-    "https://chauffer-staging-tse4a.ondigitalocean.app/v1/authRouter/signUp";
+  const URL = process.env.REACT_APP_AGENCY_REGISTER_API_URL ;
   const navigate = useNavigate();
   const [signupInfo, setSignupInfo] = useState({
     AgencyName: "",
