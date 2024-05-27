@@ -72,11 +72,11 @@ const AddVehicle = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    addVehicleData.vehicleImagesOne = selectedFiles[0];
-    addVehicleData.vehicleImagesTwo = selectedFiles[1];
-    addVehicleData.vehicleImagesThree = selectedFiles[2];
-    addVehicleData.vehicleRcDoc = selectedFiles[3];
-    addVehicleData.vehicleInsuranceDoc = selectedFiles[4];
+    addVehicleData.vehicleImagesOne = selectedFiles[0].file;
+    addVehicleData.vehicleImagesTwo = selectedFiles[1].file;
+    addVehicleData.vehicleImagesThree = selectedFiles[2].file;
+    addVehicleData.vehicleRcDoc = selectedFiles[3].file;
+    addVehicleData.vehicleInsuranceDoc = selectedFiles[4].file;
     addVehicleData.superAdminId = localStorage.getItem("superAdminId");
     addVehicleData.agencyId = localStorage.getItem("agencyId");
     console.log("addVehicleData", addVehicleData);
@@ -143,6 +143,7 @@ const AddVehicle = () => {
     formdata.append("vehicleCharges", addVehicleData.vehicleCharges);
     formdata.append("vehicleRCDocument", addVehicleData.vehicleRcDoc);
     formdata.append("vehicleImg", addVehicleData.vehicleImagesOne);
+    formdata.append("vehicleType",addVehicleData.vehicleType)
 
     try {
       axios
