@@ -23,7 +23,7 @@ const Signup = () => {
     NumberOfVehiclesInFleet: "",
     BusinessLicensePermit: "",
     TaxInformationNumber: "",
-    CompanyTermsAndConditions: "",
+    
   });
 
   const handleChange = (e) => {
@@ -101,7 +101,7 @@ const Signup = () => {
         NumberOfVehiclesInFleet: "",
         BusinessLicensePermit: "",
         TaxInformationNumber: "",
-        CompanyTermsAndConditions: "",
+       
       });
       navigate("/signup");
     } 
@@ -335,7 +335,7 @@ const Signup = () => {
                   />
                 </div>
               </div>
-              <div className="row">
+              {/* <div className="row">
                 <div className="col-md-12 ">
                   <p className="form-title operation-title">Additional Information </p>
                 </div>
@@ -357,7 +357,7 @@ const Signup = () => {
                     required
                   />
                 </div>
-              </div>
+              </div> */}
 
               {/* <p className="termandcondition ">
                 By selecting Create account, you agree with Blacklane's 
