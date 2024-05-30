@@ -26,7 +26,7 @@ const AddVehicle = () => {
     vehicleChassisNo: "",
     vehicleLastService: "",
     vehicleRcDoc: "",
-    vehicleInsuranceDoc: "",
+    vehicleInsuranceDocs: "",
     agencyId: "",
   });
 
@@ -81,7 +81,7 @@ const AddVehicle = () => {
     addVehicleData.vehicleImagesTwo = selectedFiles[1];
     addVehicleData.vehicleImagesThree = selectedFiles[2];
     addVehicleData.vehicleRcDoc = selectedFiles[3];
-    addVehicleData.vehicleInsuranceDoc = selectedFiles[4];
+    addVehicleData.vehicleInsuranceDocs = selectedFiles[4];
     addVehicleData.superAdminId = localStorage.getItem("superAdminId");
     addVehicleData.agencyId = localStorage.getItem("agencyId");
     console.log("addVehicleData", addVehicleData);
@@ -144,7 +144,7 @@ const AddVehicle = () => {
     formdata.append("color", addVehicleData.vehicleColor);
     formdata.append("capacity", addVehicleData.vehicleCapcity);
     formdata.append("vehicleCharges", addVehicleData.vehicleCharges);
-    formdata.append("vehicleRCDocument", addVehicleData.vehicleRcDoc);
+    formdata.append("vehicleRCDocuments", addVehicleData.vehicleRcDocs);
     // array
     
     formdata.append("vehicleImg", vehicleImg);

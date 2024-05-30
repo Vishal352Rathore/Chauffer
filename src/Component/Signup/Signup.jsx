@@ -151,9 +151,8 @@ const Signup = () => {
           <div className="col-md-8">
             <h1 className="signup-form-title">Sign Up</h1>
             <form className="signup-form" onSubmit={handleSubmit}>
-              <p className="form-title ">
+              <p className="form-input-title">
                 Agency Information
-                {/* <i className="fa-solid fa-arrow-left"></i> */}
               </p>
               <div className="row">
                 <div className="col-md-6">
@@ -290,13 +289,13 @@ const Signup = () => {
                     placeholder="Confirm Password"
                     onChange={handleConfirmPasswordChange}
                     onBlur={validatePasswords} // Validate on blur
-                    className="confirmpassword"
+                    className="form-control confirmpassword"
                   />
                 </div>
               </div>
               <div className="row">
                 <div className="col-md-12 ">
-                  <p className="form-title operation-title ">
+                  <p className="form-input-title operation-title ">
                     Operation Details
                   </p>
                 </div>
@@ -356,7 +355,7 @@ const Signup = () => {
               </div>
               <div className="row">
                 <div className="col-md-12 ">
-                  <p className="form-title operation-title">
+                  <p className="form-input-title operation-title">
                     License & Insurance
                   </p>
                 </div>

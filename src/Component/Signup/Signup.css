@@ -12,7 +12,7 @@
     border: unset;
 }
 
-.signup-container .login-image {
+.signup-container .set_postion .login-image {
     position: absolute;
     top: 50%;
     color: white;
@@ -22,10 +22,11 @@
     width: 100%;
 }
 
-.signup-container .login-image p {
+.signup-container .set_postion .login-image p:nth-child(1) {
     font-family: Inter;
     font-size: 24px;
     font-weight: 600;
+    padding: 0px 30px;
 }
 .signup-container .set_postion img {
     width: 100%;
@@ -37,10 +38,7 @@
     padding: 0px !important;
     overflow-x: hidden;
 }
-
-
-@media only screen and (min-width: 1200px) and (max-width: 1600px) {
-
+@media (min-width: 768px) and (max-width: 991px)  {
     .signup-container .login-image {
         position: absolute;
         top: 50%;
@@ -51,25 +49,17 @@
         width: 100%;
     }
     
-    .signup-container .login-image p {
+    .signup-container .set_postion .login-image p:nth-child(1) {
         font-family: Inter;
         font-size: 24px;
         font-weight: 600;
+        text-align: center;
+        padding: 0px 30px;
     }
 
-    .signup-form-title {
+     h1.signup-form-title {
         text-align: center;
         padding: 40px 0px;
-    }
-
-    .signup-container .login-image p {
-        font-family: Inter;
-        font-size: 24px;
-        font-weight: 400;
-        text-align: left;
-        color:#fff;
-        padding: 0px 40px;
-
     }
    .signup-container .set_postion img {
     width: 100%;
@@ -86,7 +76,7 @@
         text-align: center;
     }
 
-    .signup-form .form-title {
+    .signup-form .form-input-title {
         font-family: Inter;
         font-size: 32px;
         font-weight: 600;
@@ -94,7 +84,7 @@
 
     }
 
-    .signup-form .form-title.operation-title {
+    .signup-form .form-input-title.operation-title {
         padding: 22px 0px 0px 0px;
     }
 
@@ -107,7 +97,76 @@
     }
 
     .confirmpassword{
-        padding: 40px 0px 0px 10px;
+        padding: 34px 0px 0px 10px;
+    }
+    .signup-form button {
+        margin-top: 3%;
+        padding: 10px 0px 10px 0px;
+        font-size: 20px;
+    }
+}
+
+@media only screen and (min-width: 1200px) and (max-width: 1600px) {
+
+    .signup-container .login-image {
+        position: absolute;
+        top: 50%;
+        color: white;
+        z-index: 999;
+        bottom: unset;
+        text-align: center;
+        width: 100%;
+    }
+    
+    .signup-container .set_postion .login-image p:nth-child(1) {
+        font-family: Inter;
+        font-size: 24px;
+        font-weight: 600;
+        text-align: center;
+        padding: 0px 30px;
+    }
+
+    .signup-form-title {
+        text-align: center;
+        padding: 40px 0px;
+    }
+   .signup-container .set_postion img {
+    width: 100%;
+    object-fit: cover;
+    position: relative;
+    height: 140vh;
+   }
+
+    .signup-title {
+        font-family: Inter;
+        font-size: 48px;
+        font-weight: 600;
+        color: #000000;
+        text-align: center;
+    }
+
+    .signup-form .form-input-title {
+        font-family: Inter;
+        font-size: 32px;
+        font-weight: 600;
+        text-align: left;
+
+    }
+
+    .signup-form .form-input-title.operation-title {
+        padding: 22px 0px 0px 0px;
+    }
+
+    .signup-form input {
+        border: unset;
+        border-bottom: 1px solid #777777;
+        border-radius: unset;
+        width: 96%;
+        color: #000000;
+    }
+
+    .confirmpassword{
+        padding: 34px 0px 0px 10px;
     }
     .signup-form button {
         margin-top: 3%;
@@ -119,4 +178,164 @@
 /* mini Lp view */
 @media only screen and (min-width: 992px) and (max-width: 1199px) {}
 
-@media (min-width: 768px) and (max-width: 991px) {}
+/* *********************************************** */
+
+
+.signup-form button {
+    margin-top: 5%;
+    width: 100%;
+    padding: 12px 0px;
+    border-radius: 36px;
+    background: #B5022E;
+    color: #fff;
+    font-family: Inter;
+    font-size: 24px;
+    font-weight: 600;
+    text-align: center;
+    border: none;
+}
+
+.signup-container .set_postion .login-image {
+    position: absolute;
+    top: 50%;
+    color: white;
+    z-index: 999;
+    bottom: unset;
+    text-align: center;
+    width: 100%;
+}
+
+.signup-container .set_postion .login-image p:nth-child(1) {
+    font-family: Inter;
+    font-size: 24px;
+    font-weight: 600;
+    padding: 0px 30px;
+}
+.signup-container .set_postion img {
+    width: 100%;
+    object-fit: cover;
+    position: relative;
+}
+.signup-container .container-fluid {
+    padding: 0 !important;
+    overflow-x: hidden;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+    .signup-container .login-image {
+        top: 50%;
+        text-align: center;
+    }
+    
+    .signup-container .set_postion .login-image p:nth-child(1) {
+        font-size: 24px;
+        font-weight: 600;
+        text-align: center;
+        padding: 0px 30px;
+    }
+
+    h1.signup-form-title {
+        text-align: center;
+        padding: 40px 0px;
+    }
+
+    .signup-container .set_postion img {
+        height: 130vh;
+    }
+
+    .signup-title {
+        font-size: 48px;
+        font-weight: 600;
+        color: #000000;
+        text-align: center;
+    }
+
+    .signup-form .form-input-title {
+        font-size: 32px;
+        font-weight: 600;
+        text-align: left;
+    }
+
+    .signup-form .form-input-title.operation-title {
+        padding: 22px 0px 0px 0px;
+    }
+
+    .signup-form input {
+        border: none;
+        border-bottom: 1px solid #777777;
+        width: 96%;
+        color: #000000;
+    }
+
+    .confirmpassword {
+        padding: 34px 0px 0px 10px;
+    }
+
+    .signup-form button {
+        margin-top: 3%;
+        padding: 10px 0px;
+        font-size: 20px;
+    }
+}
+
+@media (min-width: 1200px) and (max-width: 1600px) {
+    .signup-container .login-image {
+        top: 50%;
+        text-align: center;
+    }
+
+    .signup-container .set_postion .login-image p:nth-child(1) {
+        font-size: 24px;
+        font-weight: 600;
+        text-align: center;
+        padding: 0px 30px;
+    }
+
+    .signup-form-title {
+        text-align: center;
+        padding: 40px 0px;
+    }
+
+    .signup-container .set_postion img {
+        height: 140vh;
+    }
+
+    .signup-title {
+        font-size: 48px;
+        font-weight: 600;
+        color: #000000;
+        text-align: center;
+    }
+
+    .signup-form .form-input-title {
+        font-size: 32px;
+        font-weight: 600;
+        text-align: left;
+    }
+
+    .signup-form .form-input-title.operation-title {
+        padding: 22px 0px 0px 0px;
+    }
+
+    .signup-form input {
+        border: none;
+        border-bottom: 1px solid #777777;
+        width: 96%;
+        color: #000000;
+    }
+
+    .confirmpassword {
+        padding: 34px 0px 0px 10px;
+    }
+
+    .signup-form button {
+        margin-top: 3%;
+        padding: 10px 0px;
+        font-size: 20px;
+    }
+}
+
+/* Placeholder for min-width: 992px and max-width: 1199px */
+@media (min-width: 992px) and (max-width: 1199px) {
+    /* Add your styles here if needed */
+}

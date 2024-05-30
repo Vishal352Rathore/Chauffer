@@ -20,7 +20,7 @@
     font-size: 24px;
     font-weight: 600;
 }
-.set_postion img {
+.login-page .set_postion img {
     width: 100%;
     height: 100vh;
     object-fit: cover;
