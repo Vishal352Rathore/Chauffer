@@ -145,8 +145,7 @@ const AddVehicle = () => {
     formdata.append("vehicleRCDocument", addVehicleData.vehicleRcDoc);
     formdata.append("vehicleImg",  addVehicleData.vehicleImagesOne);
     formdata.append("vehicleInsuranceDocs", addVehicleData.vehicleInsuranceDoc);
-
-    
+    formdata.append("vehicleType",addVehicleData.vehicleType)
 
     try {
       axios
