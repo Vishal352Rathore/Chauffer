@@ -72,22 +72,22 @@ const AddAgent = ({ agencyData }) => {
           <form onSubmit={handleSubmit}>
             <div class="row">
               <div class="col-md-6">
-              <div class="label">Name</div>
-               <div class="value">{agencyData.name}</div>
+              <div class="label">Contact Person Name</div>
+               <div class="value">{agencyData.ContactPerson}</div>
               </div>
               <div class="col-md-6">
               <div class="label">Email</div>
-               <div class="value">{agencyData.email}</div>
+               <div class="value">{agencyData.ContactEmail}</div>
               </div>
             </div>
             <div class="row">
               <div class="col-md-6">
               <div class="label">Contact No</div>
-               <div class="value">{agencyData.mobile}</div>
+               <div class="value">{agencyData.ContactNumber}</div>
               </div>
               <div class="col-md-6">
               <div class="label">City</div>
-               <div class="value">{agencyData.city}</div>
+               <div class="value">{agencyData.PhysicalAddress}</div>
               </div>
             </div>
             <div class="row">
