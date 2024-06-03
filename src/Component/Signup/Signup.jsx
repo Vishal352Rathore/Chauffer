@@ -5,48 +5,73 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Images from "../Images";
 
 const Signup = () => {
   const URL = process.env.REACT_APP_AGENCY_REGISTER_API_URL ;
   const navigate = useNavigate();
   const [signupInfo, setSignupInfo] = useState({
     AgencyName: "",
+    BusinessRegistrationNumber: "",
     ContactPerson: "",
-    ContactNumber: "",
-    PhysicalAddress: "",
-    BusinessRegistration: "",
     ContactEmail: "",
+    ContactNumber: "",
     AgencyWebsite: "",
+    PhysicalAddress: "",
+    password: "",
     YearsInOperation: "",
-    ServiceWeCovrage: "",
     NumberOfVehiclesInFleet: "",
+    ServiceWeCovrage: "",
     BusinessLicensePermit: "",
     TaxInformationNumber: "",
-    CompanyTermsAndConditions: "",
   });
+  const [ConfirmPassword, setConfirmPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const handleConfirmPasswordChange = (e) => {
+    setConfirmPassword(e.target.value);
+  };
 
   const handleChange = (e) => {
     setSignupInfo({ ...signupInfo, [e.target.name]: e.target.value });
-    console.log("signupInfo :" ,signupInfo);
+    
   };
 
+  const validatePasswords = () => {
+    if (signupInfo.Password !== ConfirmPassword) {
+      setErrorMessage("Passwords do not match");
+    } else {
+      setErrorMessage("");
+    }
+  };
   const handleSubmit = async (e) => {
     e.preventDefault();
-  //  AgencyRegister();
+    validatePasswords();
+    if (signupInfo.Password === ConfirmPassword) {
+      // Proceed with form submission or further processing
+      console.log("Passwords match. Form submitted.");
+    }
+    console.log("signupInfo :", signupInfo);
+    AgencyRegister();
+
   };
 
-   const AgencyRegister = async () =>{
-
+  const AgencyRegister = async () => {
     try {
       const response = await axios.post(URL, signupInfo);
-
+      if (signupInfo.Password === ConfirmPassword) {
+        // Proceed with form submission or further processing
+        console.log("Passwords match. Form submitted.");
+      }
       if (response.data.subCode === 200) {
         console.log(
           response.data.subCode,
           response.data.message,
           response.data
         );
+        alert("Data Register successfully");
         toast.success(response.data.message);
+        console.log("Registered Data :");
         navigate("/login");
       } else if (response.data.subCode === 201) {
         console.log(
@@ -89,51 +114,52 @@ const Signup = () => {
       // Clear the form fields after submission
       setSignupInfo({
         AgencyName: "",
+        BusinessRegistrationNumber: "",
         ContactPerson: "",
         ContactEmail: "",
         ContactNumber: "",
-        PhysicalAddress: "",
-        BusinessRegistration: "",
         AgencyWebsite: "",
+        PhysicalAddress: "",
+        password: "",
         YearsInOperation: "",
-        ServiceWeCovrage: "",
         NumberOfVehiclesInFleet: "",
+        ServiceWeCovrage: "",
         BusinessLicensePermit: "",
         TaxInformationNumber: "",
-        CompanyTermsAndConditions: "",
       });
       navigate("/signup");
-    } 
-    catch (error) {
+    } catch (error) {
       console.error("Error:", error);
     }
-   }
-
+  };
 
   return (
     <div className="signup-container">
-      <section className="container">
+      <section className="container-fluid">
         <div className="row">
-          <div className="col-md-4 mx-auto py-5">
-            <h1 className="signup-title">Registration</h1>
+          <div className="col-md-4 set_postion">
+            <img src={Images("signup_banner")} alt="not found" />
+            <div className="login-image">
+              <p>
+                Join our community by registering with your name, email, and
+                password. Confirm your email to activate your account. Welcome
+                aboard!
+              </p>
+            </div>
           </div>
-        </div>
 
-        <div className="row">
-          <div className="col-md-9 m-auto">
+          <div className="col-md-8">
+            <h1 className="signup-form-title">Sign Up</h1>
             <form className="signup-form" onSubmit={handleSubmit}>
-            <p className="form-title ">
+              <p className="form-input-title">
                 Agency Information
-                {/* <i className="fa-solid fa-arrow-left"></i> */}
               </p>
               <div className="row">
-              
                 <div className="col-md-6">
-                
                   <label htmlFor="agencyname" className="form-label"></label>
                   <input
                     type="text"
-                    className="form-control "
+                    className="form-control"
                     id="agencyname"
                     placeholder="Agency Name"
                     name="AgencyName"
@@ -151,9 +177,9 @@ const Signup = () => {
                     type="text"
                     className="form-control"
                     id="businessRegistration"
-                    placeholder="Business Registration"
-                    name="BusinessRegistration"
-                    value={signupInfo.BusinessRegistration}
+                    placeholder="Business Registration No."
+                    name="BusinessRegistrationNumber"
+                    value={signupInfo.BusinessRegistrationNumber}
                     onChange={handleChange}
                     required
                   />
@@ -188,7 +214,7 @@ const Signup = () => {
                 </div>
               </div>
               <div className="row">
-                <div className="col">
+                <div className="col-md-6">
                   <label htmlFor="contactNumber" className="form-label"></label>
                   <input
                     type="tel"
@@ -203,7 +229,7 @@ const Signup = () => {
                     minLength="10"
                   />
                 </div>
-                <div className="col">
+                <div className="col-md-6">
                   <label htmlFor="agencyWebsite" className="form-label"></label>
                   <input
                     type="text"
@@ -217,6 +243,7 @@ const Signup = () => {
                   />
                 </div>
               </div>
+
               <div className="row">
                 <div className="col-md-6">
                   <label
@@ -235,10 +262,42 @@ const Signup = () => {
                     maxLength="120"
                   />
                 </div>
+                <div className="col-md-6">
+                  <label
+                    htmlFor="Password"
+                    className="form-label"
+                  ></label>
+                  <input
+                    type="password"
+                    className="form-control"
+                    id="Password"
+                    placeholder="Password"
+                    name="password"
+                    value={signupInfo.password}
+                    onChange={handleChange}
+                    required
+                    maxLength="20"
+                  />
+                </div>
+              </div>
+              {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
+              <div className="row">
+                <div className="col-md-6">
+                  <input
+                    type="password"
+                    value={ConfirmPassword}
+                    placeholder="Confirm Password"
+                    onChange={handleConfirmPasswordChange}
+                    onBlur={validatePasswords} // Validate on blur
+                    className="form-control confirmpassword"
+                  />
+                </div>
               </div>
               <div className="row">
                 <div className="col-md-12 ">
-                  <p className="form-title operation-title ">Operation Details</p>
+                  <p className="form-input-title operation-title ">
+                    Operation Details
+                  </p>
                 </div>
               </div>
               <div className="row">
@@ -296,7 +355,9 @@ const Signup = () => {
               </div>
               <div className="row">
                 <div className="col-md-12 ">
-                  <p className="form-title operation-title">License & Insurance</p>
+                  <p className="form-input-title operation-title">
+                    License & Insurance
+                  </p>
                 </div>
               </div>
               <div className="row">
@@ -334,43 +395,11 @@ const Signup = () => {
                   />
                 </div>
               </div>
-              <div className="row">
-                <div className="col-md-12 ">
-                  <p className="form-title operation-title">Additional Information </p>
-                </div>
-              </div>
-              <div className="row">
-                <div className="col-md-6">
-                  <label
-                    htmlFor="companyTermsAndConditions"
-                    className="form-label"
-                  ></label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="companyTermsAndConditions"
-                    placeholder="Company Terms And Conditions"
-                    name="CompanyTermsAndConditions"
-                    value={signupInfo.CompanyTermsAndConditions}
-                    onChange={handleChange}
-                    required
-                  />
-                </div>
-              </div>
-
-              {/* <p className="termandcondition ">
-                By selecting Create account, you agree with Blacklane's 
-                <span>Terms & Conditions </span>and<span> policies</span>.
-              </p> */}
               <div className="col-md-6 mx-auto py-5">
-              <button
-                type="submit"
-                className=" btn-create-acc"
-              >
-                Sign In
-              </button>
+                <button type="submit" className=" btn-create-acc">
+                  Sign In
+                </button>
               </div>
-             
             </form>
           </div>
         </div>

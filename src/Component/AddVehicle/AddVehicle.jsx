@@ -10,7 +10,9 @@ const AddVehicle = () => {
   const navigate = useNavigate();
 
   const [addVehicleData, setAddVehicleData] = useState({
-    vehicleType: "",
+    superAdminId: "",
+    vehicleName: "",
+    // vehicleType:"",
     vehicleBrand: "",
     vehicleVariant: "",
     vehicleCapcity: "",
@@ -24,11 +26,14 @@ const AddVehicle = () => {
     vehicleChassisNo: "",
     vehicleLastService: "",
     vehicleRcDoc: "",
-    vehicleInsuranceDoc: "",
-    superAdminId: "",
+    vehicleInsuranceDocs: "",
     agencyId: "",
   });
 
+    const vehicleImg = [addVehicleData.vehicleImagesOne , addVehicleData.vehicleImagesTwo , addVehicleData.vehicleImagesThree]
+
+    console.log("Type Of : ",typeof(vehicleImg));
+    console.log("vehicleImg :", vehicleImg);
   const [selectedFiles, setSelectedFiles] = useState(
     Array.from({ length: 5 }, () => ({ file: null, error: null }))
   );
@@ -128,14 +133,11 @@ const AddVehicle = () => {
     ) {
       formdata.append("agencyId", addVehicleData.agencyId);
     }
-    formdata.append("vehicleName", addVehicleData.vehicleType);
-    formdata.append("vehicleType", addVehicleData.vehicleType);
+    // type
+    formdata.append("vehicleType", addVehicleData.vehicleName);
     formdata.append("vehicleNoPlate", addVehicleData.vehicleNo);
     formdata.append("vehicleChechisNo", addVehicleData.vehicleChassisNo);
-    formdata.append(
-      "vehicleRegistrationNo",
-      addVehicleData.vehicleRegistrationNo
-    );
+    formdata.append("vehicleRegistrationNo",addVehicleData.vehicleRegistrationNo);
     formdata.append("vehicleLastServising", addVehicleData.vehicleLastService);
     formdata.append("model", addVehicleData.vehicleVariant);
     formdata.append("brand", addVehicleData.vehicleBrand);
@@ -182,13 +184,14 @@ const AddVehicle = () => {
         <form onSubmit={handleSubmit}>
           <div className="row add-driver-form">
             <div className="col-md-6">
-              <label htmlFor="vehicleType" className="form-label">
-                Vehicle Type
+
+              <label htmlFor="vehicleName" className="form-label">
+                Vehicle Name
               </label>
               <select
                 className="form-select"
                 aria-label="Default select example"
-                id="vehicleType"
+                id="vehicleName"
                 name="vehicleType"
                 value={addVehicleData.vehicleType}
                 onChange={handleChange}

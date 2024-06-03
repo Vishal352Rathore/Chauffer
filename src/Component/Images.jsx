@@ -31,6 +31,7 @@ import view_icon from "../Assetes/images/view_icon.png";
 import edit_icon from "../Assetes/images/edit_icon.png";
 import delete_icon from "../Assetes/images/delete_icon.png";
 import profile_img from "../Assetes/images/profile_img.png";
+import signup_banner from "../Assetes/images/signup_banner (4).png";
 
 const images = [
 {"admin_profile":admin_profile},
@@ -65,7 +66,8 @@ const images = [
 {"view_icon":view_icon},
 {"edit_icon" : edit_icon},
 {"delete_icon" : delete_icon},
-{"profile_img" : profile_img}
+{"profile_img" : profile_img},
+{"signup_banner" : signup_banner}
 ]
 
 const Images = (image_key) => {

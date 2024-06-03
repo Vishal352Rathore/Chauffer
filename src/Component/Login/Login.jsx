@@ -16,7 +16,6 @@ const Login = () => {
   const handleChange = (e) => {
     setLoginData({ ...loginData, [e.target.name]: e.target.value });
   };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -24,7 +23,6 @@ const Login = () => {
       const response = await axios.post(url, loginData);
       const res = response.data;
       console.log("Login API Response :", res);
-      
       if (res.status === true ) {
         setLoginData(res);
         localStorage.setItem("token", res.items.token);
@@ -51,7 +49,6 @@ const Login = () => {
       console.log("Error :", err.message);
     }
   };
-
   return (
     <div className="login-page">
       <div className="container-fluid">
@@ -68,13 +65,11 @@ const Login = () => {
               <div className="login-form">
                 <div>
                   <h2>Log In</h2>
-
                   {/* <p>
                     Please enter your login information or <br />
                     <a onClick={()=>navigate('/signUp')} href="">click here</a> to
                     register
                   </p> */}
-                  
                 </div>
                 <form onSubmit={handleSubmit}>
                   <div className="mb-3">
