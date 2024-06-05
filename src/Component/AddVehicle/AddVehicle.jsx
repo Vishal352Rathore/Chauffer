@@ -9,28 +9,35 @@ const AddVehicle = () => {
   const URL = process.env.REACT_APP_VEHICLE_REGISTER_API_URL;
   const navigate = useNavigate();
 
+  
   const [addVehicleData, setAddVehicleData] = useState({
     superAdminId: "",
-    vehicleName: "",
-    // vehicleType:"",
-    vehicleBrand: "",
-    vehicleVariant: "",
-    vehicleCapcity: "",
-    vehicleColor: "",
+    vehicleDetails: "", 
+    vehicleName:"",
+    vehicleClass: "", // changed field name 
+    vehicleNoPlate: "",
+    vehicleChechisNo: "",
+    vehicleRegistrationNo: "",
+    vehicleLastServicing:"",
+    model:"",//vehicleVariant: "",
+    brand: "",
+    color: "",
+    capacity:"",
     vehicleCharges: "",
+    // vehicleImg:"",
+    vehicleRCDocument:"",
+    vehicleInsuranceDocs:"",
+    
+    // vehicleCapcity: "",
+    
+    
     vehicleImagesOne: "",
     vehicleImagesTwo: "",
     vehicleImagesThree: "",
-    vehicleNo: "",
-    vehicleRegistrationNo: "",
-    vehicleChassisNo: "",
-    vehicleLastService: "",
-    vehicleRcDoc: "",
-    vehicleInsuranceDocs: "",
     agencyId: "",
   });
 
-    const vehicleImg = [addVehicleData.vehicleImagesOne , addVehicleData.vehicleImagesTwo , addVehicleData.vehicleImagesThree]
+    let vehicleImg = [addVehicleData.vehicleImagesOne , addVehicleData.vehicleImagesTwo , addVehicleData.vehicleImagesThree]
 
     console.log("Type Of : ",typeof(vehicleImg));
     console.log("vehicleImg :", vehicleImg);
@@ -58,7 +65,8 @@ const AddVehicle = () => {
       newSelectedFiles[index].error = "Selected file is not an image";
       setSelectedFiles(newSelectedFiles);
       return;
-    } else {
+    }
+    else {
       setSelectedFiles(updatedFiles);
     }
     const reader = new FileReader();
@@ -80,7 +88,7 @@ const AddVehicle = () => {
     addVehicleData.vehicleImagesOne = selectedFiles[0];
     addVehicleData.vehicleImagesTwo = selectedFiles[1];
     addVehicleData.vehicleImagesThree = selectedFiles[2];
-    addVehicleData.vehicleRcDoc = selectedFiles[3];
+    addVehicleData.vehicleRCDocument = selectedFiles[3];
     addVehicleData.vehicleInsuranceDocs = selectedFiles[4];
     addVehicleData.superAdminId = localStorage.getItem("superAdminId");
     addVehicleData.agencyId = localStorage.getItem("agencyId");
@@ -134,17 +142,19 @@ const AddVehicle = () => {
       formdata.append("agencyId", addVehicleData.agencyId);
     }
     // type
-    formdata.append("vehicleType", addVehicleData.vehicleName);
-    formdata.append("vehicleNoPlate", addVehicleData.vehicleNo);
-    formdata.append("vehicleChechisNo", addVehicleData.vehicleChassisNo);
+    formdata.append("vehicleType", addVehicleData.vehicleClass)
+    formdata.append("vehicleName", addVehicleData.vehicleName);
+    formdata.append("vehicleNoPlate", addVehicleData.vehicleNoPlate);
+    formdata.append("vehicleChechisNo", addVehicleData.vehicleChechisNo);
     formdata.append("vehicleRegistrationNo",addVehicleData.vehicleRegistrationNo);
-    formdata.append("vehicleLastServising", addVehicleData.vehicleLastService);
-    formdata.append("model", addVehicleData.vehicleVariant);
-    formdata.append("brand", addVehicleData.vehicleBrand);
-    formdata.append("color", addVehicleData.vehicleColor);
-    formdata.append("capacity", addVehicleData.vehicleCapcity);
+    formdata.append("vehicleLastServising", addVehicleData.vehicleLastServicing);
+    formdata.append("model", addVehicleData.model);
+    formdata.append("brand", addVehicleData.brand);
+    formdata.append("color", addVehicleData.color);
+    formdata.append("capacity", addVehicleData.capacity);
     formdata.append("vehicleCharges", addVehicleData.vehicleCharges);
-    formdata.append("vehicleRCDocuments", addVehicleData.vehicleRcDocs);
+    formdata.append("vehicleRCDocument" , addVehicleData.vehicleRCDocument);
+    formdata.append("vehicleRCDocuments", addVehicleData.vehicleInsuranceDocs);
     // array
     
     formdata.append("vehicleImg", vehicleImg);
@@ -185,13 +195,13 @@ const AddVehicle = () => {
           <div className="row add-driver-form">
             <div className="col-md-6">
 
-              <label htmlFor="vehicleName" className="form-label">
-                Vehicle Name
+              <label htmlFor="vehicleType" className="form-label">
+                Vehicle Class
               </label>
               <select
                 className="form-select"
                 aria-label="Default select example"
-                id="vehicleName"
+                id="vehicleType"
                 name="vehicleType"
                 value={addVehicleData.vehicleType}
                 onChange={handleChange}
