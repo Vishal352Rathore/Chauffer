@@ -18,7 +18,9 @@ const AllVehicle = () => {
                   {/* form title ,p,span css in AddDriver.css */}
                 </p>
               </div>
-              <div className="add-driver-navigate-btn-div">
+              {
+                agencyId ? (
+                  <div className="add-driver-navigate-btn-div">
                 <span>
                   <Link className="add-driver-btn" to="addVehicle">
                     {" "}
@@ -26,6 +28,8 @@ const AllVehicle = () => {
                   </Link>{" "}
                 </span>
               </div>
+                ):""
+              }
             </div>
           </div>
         </div>
