@@ -85,11 +85,11 @@ const AddVehicle = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    addVehicleData.vehicleImagesOne = selectedFiles[0];
-    addVehicleData.vehicleImagesTwo = selectedFiles[1];
-    addVehicleData.vehicleImagesThree = selectedFiles[2];
-    addVehicleData.vehicleRCDocument = selectedFiles[3];
-    addVehicleData.vehicleInsuranceDocs = selectedFiles[4];
+    addVehicleData.vehicleImagesOne = [selectedFiles[0].file ,selectedFiles[1].file ,selectedFiles[2].file];
+    addVehicleData.vehicleImagesTwo = selectedFiles[1].file;
+    addVehicleData.vehicleImagesThree = selectedFiles[2].file;
+    addVehicleData.vehicleRcDoc = selectedFiles[3].file;
+    addVehicleData.vehicleInsuranceDoc = selectedFiles[4].file;
     addVehicleData.superAdminId = localStorage.getItem("superAdminId");
     addVehicleData.agencyId = localStorage.getItem("agencyId");
     console.log("addVehicleData", addVehicleData);
@@ -125,9 +125,9 @@ const AddVehicle = () => {
       },
     };
 
-    const myHeaders = new Headers();
-    myHeaders.append("token", token);
-    myHeaders.append("type", "superAdmin");
+    // const myHeaders = new Headers();
+    // myHeaders.append("token", token);
+    // myHeaders.append("type", "superAdmin");
 
     const formdata = new FormData();
     if (
@@ -168,7 +168,7 @@ const AddVehicle = () => {
             alert(response.data.message);
             navigate("/home/allVehicle");
           } else {
-            alert(response.message);
+            alert(response.data.message);
           }
         })
         .catch((error) => console.log(error));

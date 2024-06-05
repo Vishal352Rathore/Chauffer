@@ -9,6 +9,11 @@
     bottom: unset;
     text-align: center;
     width: 100%;
+    /* padding-left: 140px; */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 .login-image h2 {
     font-family: Inter;

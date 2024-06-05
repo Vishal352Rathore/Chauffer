@@ -139,7 +139,7 @@ const AllAgent = () => {
                     <th>Email</th>
                     <th>Contact No</th>
                     <th>City</th>
-                    <th>Zip Code</th>
+                    {/* <th>Zip Code</th> */}
                     <th>Status</th>
                     <th>Action</th>
                   </tr>
@@ -151,11 +151,11 @@ const AllAgent = () => {
                         <tr key={agency._id}>
                           <>
                             <td>{index + 1 + (page - 1) * 10}</td>
-                            <td> {agency.name}</td>
-                            <td>{agency.email}</td>
-                            <td>{agency.mobile}</td>
-                            <td>{agency.city}</td>
-                            <td>{agency.zipCode}</td>
+                            <td> {agency.ContactPerson}</td>
+                            <td>{agency.ContactEmail}</td>
+                            <td>{agency.ContactNumber}</td>
+                            <td>{agency.PhysicalAddress}</td>
+                              {/* <td>{agency.zipCode}</td> */}
                             {agency.status && agency.status === "active" ? (
                               <td>
                                 <button style={{ background: "#5DCA95" }} className="status-btn approved-btn">

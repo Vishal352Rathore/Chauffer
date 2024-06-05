@@ -8,7 +8,7 @@ import "react-toastify/dist/ReactToastify.css";
 import Images from "../Images";
 
 const Signup = () => {
-  const URL = process.env.REACT_APP_AGENCY_REGISTER_API_URL;
+  const URL = process.env.REACT_APP_AGENCY_REGISTER_API_URL ;
   const navigate = useNavigate();
   const [signupInfo, setSignupInfo] = useState({
     AgencyName: "",
