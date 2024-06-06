@@ -26,6 +26,8 @@ const Login = () => {
       if (res.status === true ) {
         setLoginData(res);
         localStorage.setItem("token", res.items.token);
+        localStorage.setItem("AgencyName" ,res.items.AgencyName);
+
         if(res.items.role === "superAdmin")
           {
           localStorage.setItem("superAdminId", res.items._id);
@@ -49,6 +51,7 @@ const Login = () => {
       console.log("Error :", err.message);
     }
   };
+
   return (
     <div className="login-page">
       <div className="container-fluid">

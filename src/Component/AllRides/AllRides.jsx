@@ -56,7 +56,7 @@ const AllRides = () => {
           method: "GET",
           headers: headers,
         });
-        console.error("response for ride", response);
+        console.log("response for ride", response);
         setRideData(response.data.items);
       } else {
       }

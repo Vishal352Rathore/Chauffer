@@ -70,37 +70,37 @@ const AddAgent = ({ agencyData }) => {
       <div className="agent-container">
         <section className="container-fluid">
           <form onSubmit={handleSubmit}>
-            <div class="row">
-              <div class="col-md-6">
-              <div class="label">Contact Person Name</div>
-               <div class="value">{agencyData.ContactPerson}</div>
+            <div className="row">
+              <div className="col-md-6">
+              <div className="label">Contact Person Name</div>
+               <div className="value">{agencyData.ContactPerson}</div>
               </div>
-              <div class="col-md-6">
-              <div class="label">Email</div>
-               <div class="value">{agencyData.ContactEmail}</div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-6">
-              <div class="label">Contact No</div>
-               <div class="value">{agencyData.ContactNumber}</div>
-              </div>
-              <div class="col-md-6">
-              <div class="label">City</div>
-               <div class="value">{agencyData.PhysicalAddress}</div>
+              <div className="col-md-6">
+              <div className="label">Email</div>
+               <div className="value">{agencyData.ContactEmail}</div>
               </div>
             </div>
-            <div class="row">
-              <div class="col-md-6">
-              <div class="label">Zipcode</div>
-               <div class="value">{agencyData.zipCode}</div>
+            <div className="row">
+              <div className="col-md-6">
+              <div className="label">Contact No</div>
+               <div className="value">{agencyData.ContactNumber}</div>
               </div>
-              <div class="col-md-6">
+              <div className="col-md-6">
+              <div className="label">City</div>
+               <div className="value">{agencyData.PhysicalAddress}</div>
+              </div>
+            </div>
+            <div className="row">
+              <div className="col-md-6">
+              <div className="label">Business Registration Number</div>
+               <div className="value">{agencyData.BusinessRegistrationNumber}</div>
+              </div>
+              <div className="col-md-6">
                 <div htmlfor="serviceArea" class="label">
                   Selected Status
                 </div>
                 <select
-                  class="value"
+                  className="value"
                   aria-label="Default select example"
                   id="status"
                   name="status"
