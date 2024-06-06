@@ -72,7 +72,7 @@ const AddVehicle = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    addVehicleData.vehicleImagesOne = [selectedFiles[0].file ,selectedFiles[1].file ,selectedFiles[2].file];
+    addVehicleData.vehicleImagesOne = selectedFiles[0].file ;
     addVehicleData.vehicleImagesTwo = selectedFiles[1].file;
     addVehicleData.vehicleImagesThree = selectedFiles[2].file;
     addVehicleData.vehicleRcDoc = selectedFiles[3].file;
@@ -144,15 +144,17 @@ const AddVehicle = () => {
     formdata.append("vehicleCharges", addVehicleData.vehicleCharges);
     formdata.append("vehicleRCDocument", addVehicleData.vehicleRcDoc);
     formdata.append("vehicleImg",  addVehicleData.vehicleImagesOne);
+    formdata.append("vehicleImg",  addVehicleData.vehicleImagesTwo);
+    formdata.append("vehicleImg",  addVehicleData.vehicleImagesThree);
     formdata.append("vehicleInsuranceDocs", addVehicleData.vehicleInsuranceDoc);
-    formdata.append("vehicleType",addVehicleData.vehicleType)
 
+    console.log([...formdata.entries()]);
     try {
       axios
         .post(URL, formdata, headers)
         .then((response) => {
           console.log("response", response);
-          if (response.data.status === true) {
+          if (response.status === 200) {
             alert(response.data.message);
             navigate("/home/allVehicle");
           } else {
@@ -282,7 +284,7 @@ const AddVehicle = () => {
           </div>
           <div className="row  add-driver-form">
             <div className="col-md-12">
-              <label for="document">Add Car Images</label>
+              <label htmlFor="document">Add Car Images</label>
             </div>
           </div>
           <div className="row  add-driver-form">
