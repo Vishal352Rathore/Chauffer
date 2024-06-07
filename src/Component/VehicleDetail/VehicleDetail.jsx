@@ -6,8 +6,7 @@ import axios from "axios";
 
 const VehicleDetail = ({agencyData}) => {
 
-  const  AGENCYVEHICLE_STATUS_CHANGE_URL = process.env.AGENCYVEHICLE_STATUS_CHANGE_API_URL
-
+  const  AGENCYVEHICLE_STATUS_CHANGE_URL = process.env.REACT_APP_AGENCYVEHICLE_STATUS_CHANGE_API_URL
   const { vehicleId} = useParams();
   console.log("vehicleId:",vehicleId)
   const navigate = useNavigate();
@@ -33,7 +32,7 @@ setAddVehicleStatus({...vehicleStatus ,[e.targer.name]:e.target.value});
       const response = await axios.post(
         AGENCYVEHICLE_STATUS_CHANGE_URL,
         {
-          agencyId: agencyData._id,
+          vehicleId: agencyData._id,
           agencyStatus: vehicleStatus.isApproved,
         },
         {

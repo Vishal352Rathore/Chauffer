@@ -8,56 +8,38 @@ const AddVehicle = () => {
   const token = localStorage.getItem("token");
   const URL = process.env.REACT_APP_VEHICLE_REGISTER_API_URL;
   const navigate = useNavigate();
-
-  
   const [addVehicleData, setAddVehicleData] = useState({
-    superAdminId: "",
-    vehicleDetails: "", 
-    vehicleName:"",
-    vehicleClass: "", // changed field name 
-    vehicleNoPlate: "",
-    vehicleChechisNo: "",
-    vehicleRegistrationNo: "",
-    vehicleLastServicing:"",
-    model:"",//vehicleVariant: "",
-    brand: "",
-    color: "",
-    capacity:"",
+    vehicleType: "",
+    vehicleBrand: "",
+    vehicleVariant: "",
+    vehicleCapcity: "",
+    vehicleColor: "",
     vehicleCharges: "",
-    // vehicleImg:"",
-    vehicleRCDocument:"",
-    vehicleInsuranceDocs:"",
-    
-    // vehicleCapcity: "",
-    
-    
     vehicleImagesOne: "",
     vehicleImagesTwo: "",
     vehicleImagesThree: "",
+    vehicleNo: "",
+    vehicleRegistrationNo: "",
+    vehicleChassisNo: "",
+    vehicleLastService: "",
+    vehicleRcDoc: "",
+    vehicleInsuranceDoc: "",
+    superAdminId: "",
     agencyId: "",
   });
-
-    let vehicleImg = [addVehicleData.vehicleImagesOne , addVehicleData.vehicleImagesTwo , addVehicleData.vehicleImagesThree]
-
-    console.log("Type Of : ",typeof(vehicleImg));
-    console.log("vehicleImg :", vehicleImg);
   const [selectedFiles, setSelectedFiles] = useState(
     Array.from({ length: 5 }, () => ({ file: null, error: null }))
   );
-
   const [imagePreviews, setImagePreviews] = useState(
     Array.from({ length: 5 }, () => null)
   );
-
   const handleFileSelect = (event, index) => {
     const files = event.target.files;
     if (files.length === 0) return;
-
     const file = files[0];
     const updatedFiles = [...selectedFiles];
     updatedFiles[index].file = file;
     updatedFiles[index].error = null;
-
     if (!file.type.startsWith("image/")) {
       console.error("Selected file is not an image");
       const newSelectedFiles = [...selectedFiles];
@@ -65,8 +47,7 @@ const AddVehicle = () => {
       newSelectedFiles[index].error = "Selected file is not an image";
       setSelectedFiles(newSelectedFiles);
       return;
-    }
-    else {
+    } else {
       setSelectedFiles(updatedFiles);
     }
     const reader = new FileReader();
@@ -78,31 +59,25 @@ const AddVehicle = () => {
     };
     reader.readAsDataURL(file);
   };
-
   const handleChange = (e) => {
     setAddVehicleData({ ...addVehicleData, [e.target.name]: e.target.value });
   };
-
   const handleSubmit = (e) => {
     e.preventDefault();
-    addVehicleData.vehicleImagesOne = [selectedFiles[0].file ,selectedFiles[1].file ,selectedFiles[2].file];
-    // addVehicleData.vehicleImagesTwo = selectedFiles[1].file;
-    // addVehicleData.vehicleImagesThree = selectedFiles[2].file;
+    addVehicleData.vehicleImagesOne = selectedFiles[0].file ;
+    addVehicleData.vehicleImagesTwo = selectedFiles[1].file;
+    addVehicleData.vehicleImagesThree = selectedFiles[2].file;
     addVehicleData.vehicleRcDoc = selectedFiles[3].file;
-    addVehicleData.vehicleInsuranceDocs = selectedFiles[4].file;
+    addVehicleData.vehicleInsuranceDoc = selectedFiles[4].file;
     addVehicleData.superAdminId = localStorage.getItem("superAdminId");
     addVehicleData.agencyId = localStorage.getItem("agencyId");
     console.log("addVehicleData", addVehicleData);
-
     let isValid = validationSchema();
-
     console.log("isValid", isValid);
-
     if (isValid) {
       AddVehicle();
     }
   };
-
   const validationSchema = () => {
     const updatedSelectedFiles = selectedFiles.map((fileObj, index) => {
       if (fileObj.file === null) {
@@ -112,11 +87,9 @@ const AddVehicle = () => {
       }
       return fileObj;
     });
-
     setSelectedFiles(updatedSelectedFiles);
     return selectedFiles.every((fileObj) => fileObj.file !== null);
   };
-
   const AddVehicle = async () => {
     const headers = {
       headers: {
@@ -124,11 +97,7 @@ const AddVehicle = () => {
         type: "superAdmin",
       },
     };
-
-    // const myHeaders = new Headers();
-    // myHeaders.append("token", token);
-    // myHeaders.append("type", "superAdmin");
-
+    
     const formdata = new FormData();
     if (
       localStorage.getItem("superAdminId") !== null &&
@@ -141,30 +110,32 @@ const AddVehicle = () => {
     ) {
       formdata.append("agencyId", addVehicleData.agencyId);
     }
-    // type
-    formdata.append("vehicleType", addVehicleData.vehicleClass)
-    formdata.append("vehicleName", addVehicleData.vehicleName);
-    formdata.append("vehicleNoPlate", addVehicleData.vehicleNoPlate);
-    formdata.append("vehicleChechisNo", addVehicleData.vehicleChechisNo);
-    formdata.append("vehicleRegistrationNo",addVehicleData.vehicleRegistrationNo);
-    formdata.append("vehicleLastServising", addVehicleData.vehicleLastServicing);
-    formdata.append("model", addVehicleData.model);
-    formdata.append("brand", addVehicleData.brand);
-    formdata.append("color", addVehicleData.color);
-    formdata.append("capacity", addVehicleData.capacity);
+    formdata.append("vehicleName", addVehicleData.vehicleType);
+    formdata.append("vehicleType", addVehicleData.vehicleType);
+    formdata.append("vehicleNoPlate", addVehicleData.vehicleNo);
+    formdata.append("vehicleChechisNo", addVehicleData.vehicleChassisNo);
+    formdata.append(
+      "vehicleRegistrationNo",
+      addVehicleData.vehicleRegistrationNo
+    );
+    formdata.append("vehicleLastServising", addVehicleData.vehicleLastService);
+    formdata.append("model", addVehicleData.vehicleVariant);
+    formdata.append("brand", addVehicleData.vehicleBrand);
+    formdata.append("color", addVehicleData.vehicleColor);
+    formdata.append("capacity", addVehicleData.vehicleCapcity);
     formdata.append("vehicleCharges", addVehicleData.vehicleCharges);
-    formdata.append("vehicleRCDocument" , addVehicleData.vehicleRCDocument);
-    formdata.append("vehicleRCDocuments", addVehicleData.vehicleInsuranceDocs);
-    // array
-    
-    formdata.append("vehicleImg", vehicleImg);
-
+    formdata.append("vehicleRCDocument", addVehicleData.vehicleRcDoc);
+    formdata.append("vehicleImg",  addVehicleData.vehicleImagesOne);
+    formdata.append("vehicleImg",  addVehicleData.vehicleImagesTwo);
+    formdata.append("vehicleImg",  addVehicleData.vehicleImagesThree);
+    formdata.append("vehicleInsuranceDocs", addVehicleData.vehicleInsuranceDoc);
+    console.log([...formdata.entries()]);
     try {
       axios
         .post(URL, formdata, headers)
         .then((response) => {
-          console.log("Add Vehicle response", response);
-          if (response.data.status === true) {
+          console.log("response", response);
+          if (response.status === 200) {
             alert(response.data.message);
             navigate("/home/allVehicle");
           } else {

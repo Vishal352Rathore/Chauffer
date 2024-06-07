@@ -1,13 +1,12 @@
 
-
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState,useRef } from "react";
 import { Link } from "react-router-dom";
 import "./AppSidebar.css";
 import Images from "../Images";
 import AppHeader from "./AppHeader";
 import AppContent from "./AppContent";
 import 'bootstrap/dist/css/bootstrap.min.css';
-
+import 'bootstrap/dist/js/bootstrap.bundle.min';
 
 const AppSidebar = ({ isOpen, toggleSidebar }) => {
   const isAdmin = () => {
@@ -16,8 +15,6 @@ const AppSidebar = ({ isOpen, toggleSidebar }) => {
     }
   };
 
-  // const userName = localStorage.getItem("AgencyName")
-
 
   var divWidth = null;
 
@@ -25,7 +22,9 @@ const AppSidebar = ({ isOpen, toggleSidebar }) => {
     `calc(99.90vw - ${divWidth}px)`
   );
   const [sidebarWidth, setSidebarWidth] = useState();
-  const AgencyName = localStorage.getItem("AgencyName")
+  const AgencyName = localStorage.getItem("AgencyName");
+  
+
   useEffect(() => {
     divWidth = document
       .querySelector(".sidebar-container")
@@ -34,12 +33,23 @@ const AppSidebar = ({ isOpen, toggleSidebar }) => {
     setDynamicWidth(isOpen ? `99.90vw` : `calc(99.90vw - ${divWidth}px)`);
   }, [isOpen]);
 
+  const handleRemove = ()=>{
+    localStorage.removeItem("token");
+    localStorage.removeItem("AgencyName");
+    localStorage.removeItem("email")
+  }
+
   return (
     <div
       className="flex-container sidebar"
       style={{ left: isOpen ? `-${sidebarWidth}` : "" }}
     >
-      <div className="sidebar-container">
+
+<div>
+
+</div>
+
+      <div className={`sidebar-container sidebar ${isOpen ? 'sidebar-open' : ''}`}>
         <ul>
           <div className="dashboard-container ">
             <li>
@@ -179,18 +189,15 @@ const AppSidebar = ({ isOpen, toggleSidebar }) => {
           </div>
           <div className="menu logout">
             <li>
-              {/* <!-- Button trigger modal --> */}
-               {/* Button trigger modal */}
-          <button
-            type="button"
-            className="btn btn-primary"
-            data-bs-toggle="modal"
-            data-bs-target="#exampleModal"
-          >
-            <img src={Images("logout_icon")} alt="not found" className="logout-icon" />
-                  <span>Logout
-                </span>{" "}
-          </button>
+            <button
+                type="button"
+                className="btn btn-link link-tag"
+                data-bs-toggle="modal"
+                data-bs-target="#logoutModal"
+                onClick={()=>handleRemove}
+              >
+                Logout
+              </button>
               {/* <Link to="logout" className="link-tag">
                 Logout
               </Link> */}
@@ -213,46 +220,55 @@ const AppSidebar = ({ isOpen, toggleSidebar }) => {
         <div className="app-content-container">
             {/* Modal */}
             <div
-            className="modal fade"
-            id="exampleModal"
-            tabIndex="-1"
-            aria-labelledby="exampleModalLabel"
-            aria-hidden="true"
-          >
-            <div className="modal-dialog" role="document">
-              <div className="modal-content">
-                <div className="modal-header">
-                  <h5 className="modal-title" id="exampleModalLabel">
-                    Modal title
-                  </h5>
-                  <button
-                    type="button"
-                    className="btn-close"
-                    data-bs-dismiss="modal"
-                    aria-label="Close"
-                  >
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                </div>
-                <div className="modal-body">body data</div>
-                <div className="modal-footer">
-                  <button
-                    type="button"
-                    className="btn btn-secondary"
-                    data-bs-dismiss="modal"
-                  >
-                    Close
-                  </button>
-                  <button type="button" className="btn btn-primary">
-                    Save changes
-                  </button>
-                </div>
-              </div>
+        className="modal fade"
+        id="logoutModal"
+        data-bs-backdrop="static"
+        data-bs-keyboard="false"
+        tabIndex="-1"
+        aria-labelledby="logoutModalLabel"
+        aria-hidden="true"
+      >
+        <div className="modal-dialog">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h1 className="modal-title fs-5" id="logoutModalLabel">
+                Confirm Logout
+              </h1>
+              <button
+                type="button"
+                className="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div className="modal-body">
+              Are you sure you want to logout? This process will end your session.
+            </div>
+            <div className="modal-footer">
+              <button
+                type="button"
+                className="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                className="btn btn-danger"
+                
+                data-bs-dismiss="modal"
+              >
+                Logout
+              </button>
             </div>
           </div>
+        </div>
+      </div>
           <AppContent />
         </div>
       </div>
+        
+       
     </div>
   );
 };

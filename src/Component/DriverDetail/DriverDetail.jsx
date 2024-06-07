@@ -15,7 +15,7 @@ const DriverDetail = ({agencyData}) => {
   const { driverData } =  location.state;
  console.log("driverData",driverData); 
   
- const AGENCYDRIVER_STATUS_CHANGE_URL = process.env.AGENCYDRIVER_STATUS_CHANGE_API_URL
+ const AGENCYDRIVER_STATUS_CHANGE_URL = process.env.REACT_APP_AGENCYDRIVER_STATUS_CHANGE_API_URL
   
   const [DriverStatus , setDriverStatus] = useState({
     isApproved: ""

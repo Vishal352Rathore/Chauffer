@@ -21,7 +21,7 @@ import VehicleDetail from "./Component/VehicleDetail/VehicleDetail";
 import DriverDetail from "./Component/DriverDetail/DriverDetail";
 import { Discount } from "./Component/Discount/Discount";
 import AddDiscount from "./Component/AddDiscount/AddDiscount";
-// import  Logout  from "./Component/Login/Logout";
+
 
 function App() {
 
@@ -32,6 +32,7 @@ function App() {
           <Route index element={<Login />} />
           <Route path="login" element={<Login />} />
           <Route path="signUp" element={<Signup/>}/>
+          
           
           <Route path="/home" element={<DefaultLayout />}>
             <Route index element={<Dashboard />} />
@@ -53,8 +54,6 @@ function App() {
             <Route path="complaints/complaintForm" element={<ComplaintForm />} />
             <Route path="terms&Condition" element={<TermsAndCondition />} />
             <Route path="policy" element={<Policy />} />
-            {/* <Route path="logout" element={<Logout/>}/> */}
-
           </Route>
         </Routes>
       </BrowserRouter>
