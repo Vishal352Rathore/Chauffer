@@ -3,9 +3,12 @@ import { useState, useEffect } from "react";
 import Images from "../Images";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import "./AllDriver.css";
+import "../AllDriver/AllDriver.css";
 
-const AllDriverData = ({ superAdminId, agencyId }) => {
+const AllDriverForApproval = () => {
+  const superAdminId = localStorage.getItem("superAdminId");
+  const agencyId = localStorage.getItem("agencyId");
+
   const [driverData, setDriverData] = useState(null);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
@@ -113,31 +116,8 @@ const AllDriverData = ({ superAdminId, agencyId }) => {
       console.log("error", error);
     }
   };
-
   return (
     <div>
-
-<section className="container-fluid">
-        <div className="row">
-          <div className="col-md-12">
-            <div className="all-driver-header">
-              <div className="form-title  padding_left_20  ">
-                <p>
-                  All <span>Drivers</span>
-                </p>
-              </div>
-              <div className="add-driver-navigate-btn-div">
-                <span>
-                  <Link to="addDriver" className="add-driver-btn">
-                    {" "}
-                    Add Driver
-                  </Link>{" "}
-                </span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
       <div className="search-box-section">
         <label htmlFor="searchby">Search :</label>
         <div className="search-box">
@@ -166,8 +146,8 @@ const AllDriverData = ({ superAdminId, agencyId }) => {
                   </tr>
                 </thead>
                 <tbody>
-                  {filteredDrivers &&
-                   filteredDrivers.length ? filteredDrivers.map((driver, index) => {
+                  {filteredDrivers && filteredDrivers.length ? (
+                    filteredDrivers.map((driver, index) => {
                       return (
                         <tr key={driver._id}>
                           <>
@@ -206,7 +186,13 @@ const AllDriverData = ({ superAdminId, agencyId }) => {
                           </>
                         </tr>
                       );
-                    }) : <div> <p> No Driver found</p> </div>}
+                    })
+                  ) : (
+                    <div>
+                      {" "}
+                      <p> No Driver found</p>{" "}
+                    </div>
+                  )}
                 </tbody>
               </table>
             </div>
@@ -256,14 +242,15 @@ const AllDriverData = ({ superAdminId, agencyId }) => {
                 {totalPages > 0 && (
                   <span
                     onClick={() => selectPageHandler(page + 1)}
-                    className={page === totalPages ? "pagination__disable" : "next-page"}
+                    className={
+                      page === totalPages ? "pagination__disable" : "next-page"
+                    }
                   >
                     <i className="fa-solid fa-angle-right"></i>
                   </span>
                 )}
               </div>
             )}
-
           </div>
         </div>
       </section>
@@ -271,4 +258,4 @@ const AllDriverData = ({ superAdminId, agencyId }) => {
   );
 };
 
-export default AllDriverData;
+export default AllDriverForApproval;
