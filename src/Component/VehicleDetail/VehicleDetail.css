@@ -40,4 +40,25 @@
         border: 1px solid #F9F9F9;
         border-radius: 10px;
     }
+    .statusform {
+        padding: 0 0 20px 0;
+    }
+    .statusform .statusformtitle{
+        padding: 40px 0px 10px 0px;
+        font-weight: 500;
+        color:navy;
+    }
+    .statusform .statusformtitle select.vehiclestatusvalue{
+        width: 200px;
+        height: 150px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background-color: #F9F9F9;
+        border: 1px solid #F9F9F9;
+        border-radius: 10px;
+        padding: 13px 20px ;
+        font-size: 16px;
+    }
 }

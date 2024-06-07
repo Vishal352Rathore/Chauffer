@@ -91,10 +91,10 @@ const AddAgent = ({ agencyData }) => {
               </div>
             </div>
             <div class="row">
-              <div class="col-md-6">
+              {/* <div class="col-md-6">
               <div class="label">Zipcode</div>
                <div class="value">{agencyData.zipCode}</div>
-              </div>
+              </div> */}
               <div class="col-md-6">
                 <div htmlfor="serviceArea" class="label">
                   Selected Status

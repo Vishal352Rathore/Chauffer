@@ -23,6 +23,7 @@ const Login = () => {
       const response = await axios.post(url, loginData);
       const res = response.data;
       console.log("Login API Response :", res);
+      
       if (res.status === true ) {
         setLoginData(res);
         localStorage.setItem("token", res.items.token);
@@ -30,12 +31,14 @@ const Login = () => {
           {
           localStorage.setItem("superAdminId", res.items._id);
           localStorage.setItem("agencyId", "");
+          localStorage.setItem("AgencyName",res.items.AgencyName)
           toast.success(res.message);
           }
         else if(res.items.role === "agency")
           {
           localStorage.setItem("agencyId", res.items._id);
           localStorage.setItem("superAdminId", "");
+          localStorage.setItem("AgencyName",res.items.AgencyName)
           toast.success(res.message);
           }
         console.log("login successfully", res);

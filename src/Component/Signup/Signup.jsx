@@ -38,7 +38,7 @@ const Signup = () => {
   };
 
   const validatePasswords = () => {
-    if (signupInfo.Password !== ConfirmPassword) {
+    if (signupInfo.password !== ConfirmPassword) {
       setErrorMessage("Passwords do not match");
     } else {
       setErrorMessage("");
@@ -47,7 +47,7 @@ const Signup = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     validatePasswords();
-    if (signupInfo.Password === ConfirmPassword) {
+    if (signupInfo.password === ConfirmPassword) {
       // Proceed with form submission or further processing
       console.log("Passwords match. Form submitted.");
     }
@@ -59,7 +59,7 @@ const Signup = () => {
   const AgencyRegister = async () => {
     try {
       const response = await axios.post(URL, signupInfo);
-      if (signupInfo.Password === ConfirmPassword) {
+      if (signupInfo.password === ConfirmPassword) {
         // Proceed with form submission or further processing
         console.log("Passwords match. Form submitted.");
       }
@@ -69,7 +69,7 @@ const Signup = () => {
           response.data.message,
           response.data
         );
-        alert("Data Register successfully");
+        // alert("Data Register successfully");
         toast.success(response.data.message);
         console.log("Registered Data :");
         navigate("/login");
@@ -127,7 +127,7 @@ const Signup = () => {
         BusinessLicensePermit: "",
         TaxInformationNumber: "",
       });
-      navigate("/signup");
+      navigate("/");
     } catch (error) {
       console.error("Error:", error);
     }
@@ -280,7 +280,7 @@ const Signup = () => {
                   />
                 </div>
               </div>
-              {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
+              {/* {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>} */}
               <div className="row">
                 <div className="col-md-6">
                   <input
@@ -345,7 +345,7 @@ const Signup = () => {
                     type="text"
                     className="form-control"
                     id="serviceWeCovrage"
-                    placeholder="Service We Covrage"
+                    placeholder="Service Area"
                     name="ServiceWeCovrage"
                     value={signupInfo.ServiceWeCovrage}
                     onChange={handleChange}

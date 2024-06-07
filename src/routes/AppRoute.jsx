@@ -1,5 +1,5 @@
 import React from "react";
-import { Routes, Route, Outlet } from "react-router-dom";
+import { Routes, Route} from "react-router-dom";
 import Dashboard from "../Component/Dashboard/Dashboard";
 import AllRides from "../Component/AllRides/AllRides";
 import AllDriver from "../Component/AllDriver/AllDriver";
@@ -13,6 +13,7 @@ import Policy from "../Component/Policy/Policy";
 import RideDetails from "../Component/RideDetails/RideDetails";
 import ComplaintForm from "../Component/ComplaintForm/ComplaintForm";
 import AllVehicle from "../Component/AllVehicle/AllVehicle";
+import { Logout } from "../Component/Login/Logout";
 
 const AppRoute = () => {
  
@@ -33,6 +34,7 @@ const AppRoute = () => {
                 <Route path='/complaintForm' element={<ComplaintForm/>} />
                 <Route path='/terms&Condition' element={<TermsAndCondition/>} />
                 <Route path='/policy' element={<Policy/>} />
+               
 
             </Routes>
     </div>

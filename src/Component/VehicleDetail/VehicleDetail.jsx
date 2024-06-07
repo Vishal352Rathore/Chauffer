@@ -1,13 +1,61 @@
-import React from 'react'
-import { useParams ,useLocation } from "react-router-dom";
+import React, { useState } from 'react'
+import { useParams ,useLocation, useNavigate } from "react-router-dom";
 import './VehicleDetail.css'
+import axios from "axios";
 
-const VehicleDetail = () => {
 
-  const { vehicleId } = useParams();
+const VehicleDetail = ({agencyData}) => {
+
+  const  AGENCYVEHICLE_STATUS_CHANGE_URL = process.env.AGENCYVEHICLE_STATUS_CHANGE_API_URL
+
+  const { vehicleId} = useParams();
+  console.log("vehicleId:",vehicleId)
+  const navigate = useNavigate();
   const location = useLocation()
-  const { vehicleData } =  location.state
+  const token = localStorage.getItem("token")
+  const { vehicleData } =  location.state;
+  const [vehicleStatus , setAddVehicleStatus] = useState({
+    isApproved : ""
+  });
  console.log("vehicleData",vehicleData);  
+
+ const handleChange = (e)=>{
+setAddVehicleStatus({...vehicleStatus ,[e.targer.name]:e.target.value});
+ }
+
+  const handleSubmit = (e)=>{
+    e.preventDefault();
+    ApiCalling();
+  }
+
+  const ApiCalling = async () => {
+    try {
+      const response = await axios.post(
+        AGENCYVEHICLE_STATUS_CHANGE_URL,
+        {
+          agencyId: agencyData._id,
+          agencyStatus: vehicleStatus.isApproved,
+        },
+        {
+          headers: {
+            token: token,
+            type: "superAdmin",
+          },
+        }
+      );
+
+      if (response.data.status === true) {
+        console.log("response.data.items", response.items);
+        alert(response.data.message);
+        navigate("/home/allAgent");
+      } else {
+        alert(response.data.message);
+        console.log("response.data.items.drivers fail", response);
+      }
+    } catch (error) {
+      console.log("error", error);
+    }
+  };
 
   return (
     <div className="vehicle-detail">
@@ -183,16 +231,43 @@ const VehicleDetail = () => {
               </div>
             </div>
           </div>
+        
+          <form onSubmit={handleSubmit} className='statusform'> 
+          <h4 className='statusformtitle'>Vehicle Status approved/pending </h4>
+            <div className='container'>
+            <div className='row'>
 
-            {/* <div className="row">
+            <div class="col-md-6">
+             
+                <label htmlfor="vehiclestatus" class="label">
+                  Selected Status
+                </label>
+                <br/>
+                <select
+                  className="value vehiclestatusvalue"
+                  aria-label="Default select example"
+                  id="vehiclestatus"
+                  name="isApproved"
+                  value={vehicleStatus.isApproved}
+                  onChange={handleChange}
+                >
+                  <option>Vehicle Select Class</option>
+                  <option value="active">Approve</option>
+                  <option value="inactive">Reject</option>
+                </select>
+              </div>
+            </div>
+            </div>
+            <div className="row">
               <div className="col-md-4 mx-auto">
                 <button className="form-btn" type="submit">
                   Submit
                 </button>
               </div>
-            </div> */}
+            </div>
+          </form>  
           </div>
-          {/* </form> */}
+        
 
         </section>
       </div>

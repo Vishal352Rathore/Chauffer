@@ -86,10 +86,10 @@ const AddVehicle = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     addVehicleData.vehicleImagesOne = [selectedFiles[0].file ,selectedFiles[1].file ,selectedFiles[2].file];
-    addVehicleData.vehicleImagesTwo = selectedFiles[1].file;
-    addVehicleData.vehicleImagesThree = selectedFiles[2].file;
+    // addVehicleData.vehicleImagesTwo = selectedFiles[1].file;
+    // addVehicleData.vehicleImagesThree = selectedFiles[2].file;
     addVehicleData.vehicleRcDoc = selectedFiles[3].file;
-    addVehicleData.vehicleInsuranceDoc = selectedFiles[4].file;
+    addVehicleData.vehicleInsuranceDocs = selectedFiles[4].file;
     addVehicleData.superAdminId = localStorage.getItem("superAdminId");
     addVehicleData.agencyId = localStorage.getItem("agencyId");
     console.log("addVehicleData", addVehicleData);
@@ -163,7 +163,7 @@ const AddVehicle = () => {
       axios
         .post(URL, formdata, headers)
         .then((response) => {
-          console.log("response", response);
+          console.log("Add Vehicle response", response);
           if (response.data.status === true) {
             alert(response.data.message);
             navigate("/home/allVehicle");

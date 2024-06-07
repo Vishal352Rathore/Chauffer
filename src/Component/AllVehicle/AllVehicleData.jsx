@@ -13,7 +13,7 @@ const AllVehicleData = ({ superAdminId, agencyId }) => {
   const token = localStorage.getItem("token");
   const URL = process.env.REACT_APP_VEHICLE_LIST_API_URL;
   const VEHICLE_SEARCH_URL = process.env.REACT_APP_VEHICLE_SEARCH_API_URL;
-
+  
   useEffect(() => {
     if (searchQuery.trim() === "") {
       fetchData();
@@ -166,7 +166,9 @@ const AllVehicleData = ({ superAdminId, agencyId }) => {
                     <th>Vehicle No. </th>
                     <th>Vehicle Brand</th>
                     <th>Registration No</th>
+                    <th>Status</th>
                     <th>Action</th>
+                    
                   </tr>
                 </thead>
                 <tbody>
@@ -179,6 +181,7 @@ const AllVehicleData = ({ superAdminId, agencyId }) => {
                             <td> {vehicle.vehicleNoPlate}</td>
                             <td> {vehicle.brand}</td>
                             <td>{vehicle.vehicleRegistrationNo}</td>
+                            <td>{}</td>
                             <td>
                               <div className="action_icon">
                                 <Link
