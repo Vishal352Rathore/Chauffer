@@ -154,7 +154,7 @@ const AddVehicle = () => {
         .post(URL, formdata, headers)
         .then((response) => {
           console.log("response", response);
-          if (response.status === 200) {
+          if (response.data.status === true) {
             alert(response.data.message);
             navigate("/home/allVehicle");
           } else {
