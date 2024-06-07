@@ -118,6 +118,28 @@ const AllDriverForApproval = () => {
   };
   return (
     <div>
+      <section className="container-fluid">
+        <div className="row">
+          <div className="col-md-12">
+            <div className="all-driver-header">
+              <div className="form-title  padding_left_20  ">
+                <p>
+                  All <span>Drivers</span>
+                </p>
+              </div>
+              <div className="add-driver-navigate-btn-div">
+                <span>
+                  <Link to="addDriver" className="add-driver-btn">
+                    {" "}
+                    Add Driver
+                  </Link>{" "}
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <div className="search-box-section">
         <label htmlFor="searchby">Search :</label>
         <div className="search-box">
