@@ -10,9 +10,7 @@ const AddVehicle = () => {
   const navigate = useNavigate();
 
   const [addVehicleData, setAddVehicleData] = useState({
-    superAdminId: "",
-    vehicleName: "",
-    // vehicleType:"",
+    vehicleType: "",
     vehicleBrand: "",
     vehicleVariant: "",
     vehicleCapcity: "",
@@ -26,14 +24,11 @@ const AddVehicle = () => {
     vehicleChassisNo: "",
     vehicleLastService: "",
     vehicleRcDoc: "",
-    vehicleInsuranceDocs: "",
+    vehicleInsuranceDoc: "",
+    superAdminId: "",
     agencyId: "",
   });
 
-    const vehicleImg = [addVehicleData.vehicleImagesOne , addVehicleData.vehicleImagesTwo , addVehicleData.vehicleImagesThree]
-
-    console.log("Type Of : ",typeof(vehicleImg));
-    console.log("vehicleImg :", vehicleImg);
   const [selectedFiles, setSelectedFiles] = useState(
     Array.from({ length: 5 }, () => ({ file: null, error: null }))
   );
@@ -77,7 +72,7 @@ const AddVehicle = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    addVehicleData.vehicleImagesOne = [selectedFiles[0].file ,selectedFiles[1].file ,selectedFiles[2].file];
+    addVehicleData.vehicleImagesOne = selectedFiles[0].file ;
     addVehicleData.vehicleImagesTwo = selectedFiles[1].file;
     addVehicleData.vehicleImagesThree = selectedFiles[2].file;
     addVehicleData.vehicleRcDoc = selectedFiles[3].file;
@@ -133,11 +128,14 @@ const AddVehicle = () => {
     ) {
       formdata.append("agencyId", addVehicleData.agencyId);
     }
-    // type
-    formdata.append("vehicleType", addVehicleData.vehicleName);
+    formdata.append("vehicleName", addVehicleData.vehicleType);
+    formdata.append("vehicleType", addVehicleData.vehicleType);
     formdata.append("vehicleNoPlate", addVehicleData.vehicleNo);
     formdata.append("vehicleChechisNo", addVehicleData.vehicleChassisNo);
-    formdata.append("vehicleRegistrationNo",addVehicleData.vehicleRegistrationNo);
+    formdata.append(
+      "vehicleRegistrationNo",
+      addVehicleData.vehicleRegistrationNo
+    );
     formdata.append("vehicleLastServising", addVehicleData.vehicleLastService);
     formdata.append("model", addVehicleData.vehicleVariant);
     formdata.append("brand", addVehicleData.vehicleBrand);
@@ -146,9 +144,11 @@ const AddVehicle = () => {
     formdata.append("vehicleCharges", addVehicleData.vehicleCharges);
     formdata.append("vehicleRCDocument", addVehicleData.vehicleRcDoc);
     formdata.append("vehicleImg",  addVehicleData.vehicleImagesOne);
+    formdata.append("vehicleImg",  addVehicleData.vehicleImagesTwo);
+    formdata.append("vehicleImg",  addVehicleData.vehicleImagesThree);
     formdata.append("vehicleInsuranceDocs", addVehicleData.vehicleInsuranceDoc);
-    formdata.append("vehicleType",addVehicleData.vehicleType)
 
+    console.log([...formdata.entries()]);
     try {
       axios
         .post(URL, formdata, headers)
@@ -184,14 +184,13 @@ const AddVehicle = () => {
         <form onSubmit={handleSubmit}>
           <div className="row add-driver-form">
             <div className="col-md-6">
-
-              <label htmlFor="vehicleName" className="form-label">
-                Vehicle Name
+              <label htmlFor="vehicleType" className="form-label">
+                Vehicle Type
               </label>
               <select
                 className="form-select"
                 aria-label="Default select example"
-                id="vehicleName"
+                id="vehicleType"
                 name="vehicleType"
                 value={addVehicleData.vehicleType}
                 onChange={handleChange}
@@ -285,7 +284,7 @@ const AddVehicle = () => {
           </div>
           <div className="row  add-driver-form">
             <div className="col-md-12">
-              <label for="document">Add Car Images</label>
+              <label htmlFor="document">Add Car Images</label>
             </div>
           </div>
           <div className="row  add-driver-form">
