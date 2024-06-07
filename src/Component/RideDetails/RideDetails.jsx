@@ -1,8 +1,16 @@
 import React from "react";
 import Images from "../Images";
 import './RideDetails.css'
+import { useParams ,useLocation } from "react-router-dom";
+
 
 const RideDetails = () => {
+
+  const { rideId } = useParams();
+  const location = useLocation()
+  const { rideData } =  location.state
+ console.log("rideData",rideData);  
+
   return (
     <div className="ride-detail">
         <section className="container-fluid">
@@ -28,17 +36,17 @@ const RideDetails = () => {
               <table>
                 <tr>
                   <th>Name</th>
-                  <td></td>
+                  <td>{rideData.firstName}</td>
                 </tr>
                 <tr>
                   {" "}
                   <th>Email</th>
-                  <td></td>
+                  <td>{rideData.email}</td>
                 </tr>
                 <tr>
                   {" "}
                   <th>Phone</th>
-                  <td></td>
+                  <td>{rideData.phoneNumber}</td>
                 </tr>
                 <tr>
                   {" "}

@@ -7,6 +7,7 @@ import { Provider } from 'react-redux';
 import { Store } from "./Redux/Store/Store";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import 'bootstrap/dist/css/bootstrap.css';
 
 
 Store.subscribe(()=>console.log("store",Store))

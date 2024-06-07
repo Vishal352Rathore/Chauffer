@@ -16,6 +16,9 @@ const AppSidebar = ({ isOpen, toggleSidebar }) => {
     }
   };
 
+  // const userName = localStorage.getItem("AgencyName")
+
+
   var divWidth = null;
 
   const [dynamicWidth, setDynamicWidth] = useState(
