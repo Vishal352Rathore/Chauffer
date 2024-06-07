@@ -165,9 +165,8 @@ const AddVehicle = () => {
         <form onSubmit={handleSubmit}>
           <div className="row add-driver-form">
             <div className="col-md-6">
-
               <label htmlFor="vehicleType" className="form-label">
-                Vehicle Class
+                Vehicle Type
               </label>
               <select
                 className="form-select"
@@ -266,7 +265,7 @@ const AddVehicle = () => {
           </div>
           <div className="row  add-driver-form">
             <div className="col-md-12">
-              <label for="document">Add Car Images</label>
+              <label htmlFor="document">Add Car Images</label>
             </div>
           </div>
           <div className="row  add-driver-form">

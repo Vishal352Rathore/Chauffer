@@ -219,7 +219,7 @@ setAddVehicleStatus({...vehicleStatus ,[e.targer.name]:e.target.value});
                 {vehicleData.vehicleRCDocument ? (
                   <label className="filelabel" htmlFor="FileInput-0">
                     <img
-                      src={vehicleData.vehicleRCDocument || "#"}
+                      src={vehicleData.vehicleInsuranceDocs || "#"}
                       alt="images"
                       id="imagePreview"
                     />

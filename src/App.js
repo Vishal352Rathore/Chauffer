@@ -21,8 +21,10 @@ import VehicleDetail from "./Component/VehicleDetail/VehicleDetail";
 import DriverDetail from "./Component/DriverDetail/DriverDetail";
 import { Discount } from "./Component/Discount/Discount";
 import AddDiscount from "./Component/AddDiscount/AddDiscount";
-
-
+import AllVehicleForApproval from "./Component/VehicleApproval/AllVehicleForApproval.jsx"
+import ApproveVehicle from "./Component/VehicleApproval/ApproveVehicle";
+import AllDriverForApproval from "./Component/DriverApproval/AllDriverForApproval.jsx";
+import DriverApproval from "./Component/DriverApproval/DriverApproval.jsx";
 function App() {
 
   return (
@@ -40,10 +42,20 @@ function App() {
             <Route path="allRides" element={<AllRides />} />
             <Route path="allRides/rideDetails/:rideId" element={<RideDetails />} />
             <Route path="allDriver" element={<AllDriver />} />
+            <Route path="allDriverForApproval" element={<AllDriverForApproval />} />
+
             <Route path="allDriver/driverDetail/:driverId" element={<DriverDetail />} /> 
+            <Route path="allVehicleForApproval/approveDriver/:driverId" element={<DriverApproval />} /> 
+
+            
             <Route path="allDriver/addDriver" element={<AddDriver />} />
-            <Route path="allVehicle" element={<AllVehicle />} />
+
+            <Route path="allVehicle" element={<AllVehicleForApproval />} />
+            <Route path="allVehicleForApproval" element={<AllVehicleForApproval />} />
+
             <Route path="allVehicle/vehicleDetail/:vehicleId" element={<VehicleDetail />} /> 
+            <Route path="allVehicleForApproval/approveVehicle/:vehicleId" element={<ApproveVehicle />} /> 
+
             <Route path="allVehicle/addVehicle" element={<AddVehicle />} />
             <Route path="allAgent" element={<AllAgent />} /> 
             <Route path="allAgent/agencyDetail/:agencyId" element={<AgencyDetail />} /> 

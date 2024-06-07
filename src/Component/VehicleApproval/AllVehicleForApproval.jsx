@@ -1,74 +1,66 @@
-import React from "react";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
+import "../AllVehicle/AllVehicle.css";
 import Images from "../Images";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import "./AllDriver.css";
 
-const AllDriverData = ({ superAdminId, agencyId }) => {
-  const [driverData, setDriverData] = useState(null);
+const AllVehicleForApproval = () => {
+  const superAdminId = localStorage.getItem("superAdminId");
+  const agencyId = localStorage.getItem("agencyId");
+  const [vehicleData, setVehicleData] = useState(null);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
-  const [filteredDrivers, setFilteredDrivers] = useState(null);
+  const [filteredVehicles, setFilteredVehicles] = useState(null);
   const token = localStorage.getItem("token");
-  const URL = process.env.REACT_APP_DRIVER_LIST_API_URL;
-  const DRIVER_SEARCH_URL = process.env.REACT_APP_DRIVER_SEARCH_API_URL;
-
-  const fetchData = async () => {
-    const raw = JSON.stringify({
-      superAdminId: superAdminId,
-      agencyId: agencyId,
-      page: page,
-    });
-
-    const myHeaders = new Headers();
-    myHeaders.append("token", token);
-    myHeaders.append("type", "superAdmin");
-    myHeaders.append("Content-Type", "application/json");
-
-    const requestOptions = {
-      method: "POST",
-      headers: myHeaders,
-      body: raw,
-      redirect: "follow",
-    };
-
-    try {
-      fetch(URL, requestOptions)
-        .then((response) => response.json())
-        .then((result) => {
-          if (result.status === true) {
-            setDriverData(result.items.drivers);
-            setFilteredDrivers(result.items.drivers);
-            setTotalPages(Math.ceil(result.items.totalCount / 10));
-            console.log("response.data.items", result);
-          } else {
-            console.log("response.data.items", result);
-          }
-        })
-        .catch((error) => console.error("error", error));
-    } catch (error) {
-      console.log("error", error);
-    }
-  };
+  const URL = process.env.REACT_APP_VEHICLE_LIST_API_URL;
+  const VEHICLE_SEARCH_URL = process.env.REACT_APP_VEHICLE_SEARCH_API_URL;
 
   useEffect(() => {
     if (searchQuery.trim() === "") {
       fetchData();
     } else {
-      filteredDriverData();
+      filteredVehicleData();
     }
   }, [page, searchQuery]);
 
-  const selectPageHandler = (selectedPage) => {
-    if (
-      selectedPage >= 1 &&
-      selectedPage <= totalPages &&
-      selectedPage !== page
-    ) {
-      setPage(selectedPage);
-      console.log("selectedPage", selectedPage);
+  const fetchData = async () => {
+    try {
+      const myHeaders = new Headers();
+      myHeaders.append("token", token);
+      myHeaders.append("type", "superAdmin");
+      myHeaders.append("Content-Type", "application/json");
+
+      const raw = JSON.stringify({
+        superAdminId: superAdminId,
+        agencyId: agencyId,
+        page: page,
+      });
+
+      const requestOptions = {
+        method: "POST",
+        headers: myHeaders,
+        body: raw,
+        redirect: "follow",
+      };
+
+      fetch(URL, requestOptions)
+        .then((response) => response.json())
+        .then((result) => {
+          console.log(result);
+          if (result.status === true) {
+            setVehicleData(result.items.vehicles);
+            setFilteredVehicles(result.items.vehicles);
+            setTotalPages(Math.ceil(result.items.totalCount / 10));
+
+            console.log("response.data.items", result);
+          } else {
+            console.log("response.data.items", result);
+          }
+        })
+        .catch((error) => console.error(error));
+    } catch (error) {
+      console.error("Error fetching data:", error);
     }
   };
 
@@ -76,7 +68,7 @@ const AllDriverData = ({ superAdminId, agencyId }) => {
     setPage(1);
   }, [searchQuery]);
 
-  const filteredDriverData = async () => {
+  const filteredVehicleData = async () => {
     console.log("searchQuery", searchQuery);
 
     if (searchQuery.trim() === "") {
@@ -85,7 +77,7 @@ const AllDriverData = ({ superAdminId, agencyId }) => {
 
     try {
       const result = await axios.post(
-        DRIVER_SEARCH_URL,
+        VEHICLE_SEARCH_URL,
         {
           superAdminId: superAdminId,
           agencyId: agencyId,
@@ -101,11 +93,11 @@ const AllDriverData = ({ superAdminId, agencyId }) => {
       );
 
       if (result.data.status === true) {
-        setFilteredDrivers(result.data.items.drivers);
+        setFilteredVehicles(result.data.items.vehicles);
         setTotalPages(Math.ceil(result.data.items.totalCount / 10));
         console.log("response.data.items", result.data.items);
       } else {
-        setFilteredDrivers(result.data.items.drivers);
+        setFilteredVehicles(result.data.items.vehicles);
         setTotalPages(Math.ceil(result.data.items.totalCount / 10));
         console.log("response.data.items.drivers fail", result);
       }
@@ -114,68 +106,86 @@ const AllDriverData = ({ superAdminId, agencyId }) => {
     }
   };
 
+  const selectPageHandler = (selectedPage) => {
+    if (
+      selectedPage >= 1 &&
+      selectedPage <= totalPages &&
+      selectedPage !== page
+    ) {
+      setPage(selectedPage);
+      console.log("selectedPage", selectedPage);
+    }
+  };
+
   return (
     <div>
-      
-      <div className="search-box-section">
-        <label htmlFor="searchby">Search :</label>
+      <section className="container-fluid">
+        <div className="row">
+          <div className="col-md-12">
+            <div className="all-vehicle-header">
+              <div className="form-title  padding_left_20  ">
+                <p>
+                Vehicle <span>Approval</span>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div className="vehicle-search-section">
+        <label htmlFor="searchby">Search </label>
+
         <div className="search-box">
           <img src={Images("search_icon")} alt="not found" />
           <input
             type="text"
-            placeholder="Search..."
+            placeholder="Search"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value.toLowerCase())}
           />
         </div>
       </div>
-      <div className="all-driver-conainer">
+
+      <div className="all-vehicle-conainer">
         <div className="container-fluid">
           <div className="row">
-            <div className="col-md-12">
+            <div className="col">
               <table>
                 <thead>
                   <tr>
                     <th>S No.</th>
-                    <th>Driver name </th>
-                    <th>Email Id</th>
-                    <th>Created</th>
-                    <th>Status</th>
+                    <th>Vehicle No. </th>
+                    <th>Vehicle Brand</th>
+                    <th>Registration No</th>
                     <th>Action</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {filteredDrivers &&
-                   filteredDrivers.length ? filteredDrivers.map((driver, index) => {
+                  {filteredVehicles && filteredVehicles.length > 0 ? (
+                    filteredVehicles.map((vehicle, index) => {
                       return (
-                        <tr key={driver._id}>
+                        <tr key={vehicle._id}>
                           <>
-                            <td> {index + 1 + (page - 1) * 10}</td>
-                            <td> {driver.drivername}</td>
-                            <td>{driver.email}</td>
-                            <td>{driver.createdAt}</td>
-                            {driver.status && driver.status === "active" ? (
-                              <td>
-                                <button style={{ background: "#5DCA95" }}>
-                                  Done
-                                </button>
-                              </td>
-                            ) : (
-                              <td>
-                                <button>Pending</button>
-                              </td>
-                            )}
+                            <td>{index + 1 + (page - 1) * 10}</td>
+                            <td> {vehicle.vehicleNoPlate}</td>
+                            <td> {vehicle.brand}</td>
+                            <td>{vehicle.vehicleRegistrationNo}</td>
                             <td>
                               <div className="action_icon">
                                 <Link
-                                  to={`driverDetail/${driver._id}`}
-                                  state={{ driverData: driver }}
+                                  to={`vehicleDetail/${vehicle._id}`}
+                                  state={{ vehicleData: vehicle }}
                                 >
                                   <img
                                     src={Images("view_icon")}
                                     alt="not found"
                                   />
                                 </Link>
+                                <img
+                                  src={Images("edit_icon")}
+                                  alt="not found"
+                                />
                                 <img
                                   src={Images("delete_icon")}
                                   alt="not found"
@@ -185,17 +195,24 @@ const AllDriverData = ({ superAdminId, agencyId }) => {
                           </>
                         </tr>
                       );
-                    }) : <div> <p> No Driver found</p> </div>}
+                    })
+                  ) : (
+                    <div>
+                      {" "}
+                      <p> No Vehicle found</p>{" "}
+                    </div>
+                  )}
                 </tbody>
               </table>
             </div>
           </div>
         </div>
       </div>
+
       <section className="container">
         <div className="row">
           <div className="col-md-12">
-            {driverData && (
+            {vehicleData && (
               <div className="pagination">
                 {/* Show previous button */}
                 <span
@@ -226,7 +243,7 @@ const AllDriverData = ({ superAdminId, agencyId }) => {
                         </span>
                       );
                     } else {
-                      return null; // Render nothing for pages beyond totalPages
+                      return null; // Render nothing htmlFor pages beyond totalPages
                     }
                   }
                 )}
@@ -235,14 +252,15 @@ const AllDriverData = ({ superAdminId, agencyId }) => {
                 {totalPages > 0 && (
                   <span
                     onClick={() => selectPageHandler(page + 1)}
-                    className={page === totalPages ? "pagination__disable" : "next-page"}
+                    className={
+                      page === totalPages ? "pagination__disable" : "next-page"
+                    }
                   >
                     <i className="fa-solid fa-angle-right"></i>
                   </span>
                 )}
               </div>
             )}
-
           </div>
         </div>
       </section>
@@ -250,4 +268,4 @@ const AllDriverData = ({ superAdminId, agencyId }) => {
   );
 };
 
-export default AllDriverData;
+export default AllVehicleForApproval;
