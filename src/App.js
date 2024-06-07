@@ -21,7 +21,7 @@ import VehicleDetail from "./Component/VehicleDetail/VehicleDetail";
 import DriverDetail from "./Component/DriverDetail/DriverDetail";
 import { Discount } from "./Component/Discount/Discount";
 import AddDiscount from "./Component/AddDiscount/AddDiscount";
-import AllVehicleForApproval from "./Component/VehicleApproval/ApproveVehicle.jsx"
+import AllVehicleForApproval from "./Component/VehicleApproval/AllVehicleForApproval.jsx"
 import ApproveVehicle from "./Component/VehicleApproval/ApproveVehicle";
 import AllDriverForApproval from "./Component/DriverApproval/AllDriverForApproval.jsx";
 import DriverApproval from "./Component/DriverApproval/DriverApproval.jsx";
@@ -48,7 +48,7 @@ function App() {
             
             <Route path="allDriver/addDriver" element={<AddDriver />} />
 
-            <Route path="allVehicle" element={<AllVehicle />} />
+            <Route path="allVehicle" element={<AllVehicleForApproval />} />
             <Route path="allVehicleForApproval" element={<AllVehicleForApproval />} />
 
             <Route path="allVehicle/vehicleDetail/:vehicleId" element={<VehicleDetail />} /> 
