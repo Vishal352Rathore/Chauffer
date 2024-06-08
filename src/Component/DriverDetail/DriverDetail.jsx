@@ -119,23 +119,6 @@ const DriverDetail = ({agencyData}) => {
                 </div>
               </div>
 
-              {/* <div class="col-md-6">
-                <label htmlfor="serviceArea" class="form-label">
-                  Selected Status
-                </label>
-                <select
-                  class="form-select"
-                  aria-label="Default select example"
-                  id="status"
-                  name="status"
-                  value={driverData.status}
-                  onChange={handleChange}
-                >
-                  <option>Vehicle Select Class</option>
-                  <option value="active">Approve</option>
-                  <option value="inactive">Reject</option>
-                </select>
-              </div> */}
             </div>
 
             <div className="row">
@@ -208,38 +191,15 @@ const DriverDetail = ({agencyData}) => {
               </div>
             </div>
 
-          <form onSubmit={handleSubmit} className='statusform'> 
-          <h4 className='statusformtitle'>Driver Status approved/pending </h4>
-            <div className='container'>
-            <div className='row'>
-            <div class="col-md-6">
-                <label htmlfor="serviceArea" class="form-label">
-                  Selected Status
-                </label>
-                <select
-                  class="form-select"
-                  aria-label="Default select example"
-                  className="value vehiclestatusvalue"
-                  id="Driverstatus"
-                  name="isApproved"
-                  value={DriverStatus.isApproved}
-                  onChange={handleChange}
-                >
-                  <option>Vehicle Select Class</option>
-                  <option value="active">Approve</option>
-                  <option value="inactive">Reject</option>
-                </select>
-              </div>
-            </div>
-            </div>
+          
+          
             <div className="row">
-              <div className="col-md-4 mx-auto">
+              <div className="col-md-4 mx-auto my-3">
                 <button className="form-btn" type="submit">
                   Submit
                 </button>
               </div>
             </div>
-          </form> 
           </div>
           {/* </form> */}
         </section>

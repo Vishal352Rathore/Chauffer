@@ -42,15 +42,16 @@ function App() {
             <Route path="allRides" element={<AllRides />} />
             <Route path="allRides/rideDetails/:rideId" element={<RideDetails />} />
             <Route path="allDriver" element={<AllDriver />} />
-            <Route path="allDriverForApproval" element={<AllDriverForApproval />} />
+            
 
-            <Route path="allDriver/driverDetail/:driverId" element={<DriverDetail />} /> 
-            <Route path="allVehicleForApproval/approveDriver/:driverId" element={<DriverApproval />} /> 
+            <Route path="allDriver/driverDetail/:driverId" element={<DriverDetail />} />
+            <Route path="allDriverForApproval" element={<AllDriverForApproval />} /> 
+            <Route path="allDriverForApproval/approveDriver/:driverId" element={<DriverApproval />} /> 
 
             
             <Route path="allDriver/addDriver" element={<AddDriver />} />
 
-            <Route path="allVehicle" element={<AllVehicleForApproval />} />
+            <Route path="allVehicle" element={<AllVehicle/>} />
             <Route path="allVehicleForApproval" element={<AllVehicleForApproval />} />
 
             <Route path="allVehicle/vehicleDetail/:vehicleId" element={<VehicleDetail />} /> 

@@ -124,17 +124,10 @@ const AllDriverForApproval = () => {
             <div className="all-driver-header">
               <div className="form-title  padding_left_20  ">
                 <p>
-                  All <span>Drivers</span>
+                Drivers<span> Approval</span>
                 </p>
               </div>
-              <div className="add-driver-navigate-btn-div">
-                <span>
-                  <Link to="addDriver" className="add-driver-btn">
-                    {" "}
-                    Add Driver
-                  </Link>{" "}
-                </span>
-              </div>
+          
             </div>
           </div>
         </div>
@@ -191,7 +184,7 @@ const AllDriverForApproval = () => {
                             <td>
                               <div className="action_icon">
                                 <Link
-                                  to={`driverDetail/${driver._id}`}
+                                  to={`approveDriver/${driver._id}`}
                                   state={{ driverData: driver }}
                                 >
                                   <img
