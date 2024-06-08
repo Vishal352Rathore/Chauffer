@@ -193,7 +193,8 @@ const AddDriver = () => {
     formdata.append("aadharCard", driverData.governmentid);
     formdata.append("otherDocs", driverData.other_docs);
     formdata.append("profileImage", driverData.driverProfile);
-    formdata.append("experience", `${driverData.experience}years`);
+    formdata.append("experience", `${driverData.experience} years`);
+
 
     if (
       localStorage.getItem("superAdminId") !== null &&
@@ -259,10 +260,11 @@ const AddDriver = () => {
 
   return (
     <div className="add-driver">
-      {/* <Spinner
+      <Spinner
         className={`spinner ${isLoading ? "isLoading" : ""}`}
         animation="border"
-      /> */}
+      />
+
       <section className="container-fluid">
         <div className="row">
           <div className="col-md-12">

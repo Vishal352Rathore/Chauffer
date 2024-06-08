@@ -14,6 +14,14 @@ const AllVehicleData = ({ superAdminId, agencyId }) => {
   const URL = process.env.REACT_APP_VEHICLE_LIST_API_URL;
   const VEHICLE_SEARCH_URL = process.env.REACT_APP_VEHICLE_SEARCH_API_URL;
 
+  const [toogleDropdown, setToogleDropdown] = useState(false);
+  const [toogleOpen, setToogleOpen] = useState(false);
+  const [toogleLogoutPopup, setToogleLogoutPopup] = useState(false);
+
+  const [vehicleId, setVehicleId] = useState(null);
+  const VEHICLE_DELETE_URL = `${process.env.REACT_APP_VEHICLE_DELETE_API_URL}/:${vehicleId}`;
+
+
   useEffect(() => {
     if (searchQuery.trim() === "") {
       fetchData();
@@ -115,6 +123,29 @@ const AllVehicleData = ({ superAdminId, agencyId }) => {
     }
   };
 
+  const handleDelete = () => {
+    console.log("ID",vehicleId)
+
+    console.log("VEHICLE_DELETE_URL",VEHICLE_DELETE_URL)
+    try {
+      axios
+        .delete(VEHICLE_DELETE_URL, {
+          headers: {
+            token: token,
+            type: "superAdmin",
+          },
+        })
+        .then((res) => {
+          setToogleDropdown(false);
+          setToogleOpen(false);
+          setVehicleId(null)
+          console.log(res);
+        });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   // Function to handle search input change
   // const handleSearchInputChange = (event) => {
   //   const query = event.target.value.toLowerCase();
@@ -170,8 +201,8 @@ const AllVehicleData = ({ superAdminId, agencyId }) => {
                   </tr>
                 </thead>
                 <tbody>
-                  {filteredVehicles &&
-                   filteredVehicles.length > 0 ? filteredVehicles.map((vehicle, index) => {
+                  {filteredVehicles && filteredVehicles.length > 0 ? (
+                    filteredVehicles.map((vehicle, index) => {
                       return (
                         <tr key={vehicle._id}>
                           <>
@@ -197,19 +228,61 @@ const AllVehicleData = ({ superAdminId, agencyId }) => {
                                 <img
                                   src={Images("delete_icon")}
                                   alt="not found"
+                                  onClick={() =>{setVehicleId(vehicle._id); setToogleLogoutPopup(true)}}
                                 />
                               </div>
                             </td>
                           </>
                         </tr>
                       );
-                    }): <div> <p> No Vehicle found</p> </div>}
+                    })
+                  ) : (
+                    <div>
+                      {" "}
+                      <p> No Vehicle found</p>{" "}
+                    </div>
+                  )}
                 </tbody>
               </table>
             </div>
           </div>
         </div>
       </div>
+
+      {toogleLogoutPopup && (
+        <div className="container">
+          <div className="row">
+            <div className="col-md-3 mx-auto">
+              <div className="popup-container">
+                <div className="popup-modal">
+                  <div className="popup-content">
+                    <div className="popup-title-content">
+                      <h5>Confirm Delete</h5>
+                      <span onClick={() => setToogleLogoutPopup(false)}>
+                        <i className="fa-solid fa-xmark"></i>
+                      </span>
+                    </div>
+                    <p>Are you sure you want to Delete ?</p>
+                  </div>
+                  <div className="popup-buttons">
+                    <button
+                      className="btn btn-secondary"
+                      onClick={() => {
+                        setToogleLogoutPopup(!toogleLogoutPopup);
+                      }}
+                    >
+                      Close
+                    </button>
+                    <button className="btn btn-primary" onClick={handleDelete}>
+                      Delete
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       <section className="container">
         <div className="row">

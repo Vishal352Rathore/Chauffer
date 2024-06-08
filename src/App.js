@@ -48,7 +48,7 @@ function App() {
             
             <Route path="allDriver/addDriver" element={<AddDriver />} />
 
-            <Route path="allVehicle" element={<AllVehicleForApproval />} />
+            <Route path="allVehicle" element={<AllVehicle />} />
             <Route path="allVehicleForApproval" element={<AllVehicleForApproval />} />
 
             <Route path="allVehicle/vehicleDetail/:vehicleId" element={<VehicleDetail />} /> 

@@ -27,6 +27,7 @@ const AddVehicle = () => {
     vehicleInsuranceDoc: "",
     superAdminId: "",
     agencyId: "",
+    driverId:""
   });
 
   const [selectedFiles, setSelectedFiles] = useState(
@@ -37,6 +38,7 @@ const AddVehicle = () => {
     Array.from({ length: 5 }, () => null)
   );
 
+  
   const handleFileSelect = (event, index) => {
     const files = event.target.files;
     if (files.length === 0) return;
@@ -112,10 +114,6 @@ const AddVehicle = () => {
       },
     };
 
-    // const myHeaders = new Headers();
-    // myHeaders.append("token", token);
-    // myHeaders.append("type", "superAdmin");
-
     const formdata = new FormData();
     if (
       localStorage.getItem("superAdminId") !== null &&
@@ -147,6 +145,8 @@ const AddVehicle = () => {
     formdata.append("vehicleImg",  addVehicleData.vehicleImagesTwo);
     formdata.append("vehicleImg",  addVehicleData.vehicleImagesThree);
     formdata.append("vehicleInsuranceDocs", addVehicleData.vehicleInsuranceDoc);
+    formdata.append("driverId", "6654766feabb8fe30a8659c0");
+
 
     console.log([...formdata.entries()]);
     try {
@@ -541,6 +541,26 @@ const AddVehicle = () => {
               {selectedFiles[4].error && (
                 <p className="error-message">{selectedFiles[4].error}</p>
               )}
+            </div>
+
+            <div className="col-md-6">
+              <label htmlFor="driverId" className="form-label">
+               Driver
+              </label>
+              <select
+                className="form-select"
+                aria-label="Default select example"
+                id="driverId"
+                name="driverId"
+                value={addVehicleData.driverId}
+                onChange={handleChange}
+                required
+              >
+                <option>Select Driver</option>
+                <option value="Sedan">Sedan</option>
+                <option value="HatchBack">HatchBack</option>
+                <option value="SUV">SUV</option>
+              </select>
             </div>
           </div>
 

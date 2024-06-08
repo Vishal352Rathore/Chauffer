@@ -3,12 +3,12 @@
     top: 50%;
     left: 42%;
     z-index: 999;
-    display: none;
+    display: none !important;
     filter: blur(0);
 }
 
 .isLoading {
-    display: block;
+    display: block !important;
 }
 
 .add-driver {
