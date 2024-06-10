@@ -14,13 +14,10 @@ const AllVehicleData = ({ superAdminId, agencyId }) => {
   const URL = process.env.REACT_APP_VEHICLE_LIST_API_URL;
   const VEHICLE_SEARCH_URL = process.env.REACT_APP_VEHICLE_SEARCH_API_URL;
 
-  const [toogleDropdown, setToogleDropdown] = useState(false);
-  const [toogleOpen, setToogleOpen] = useState(false);
   const [toogleLogoutPopup, setToogleLogoutPopup] = useState(false);
 
   const [vehicleId, setVehicleId] = useState(null);
-  const VEHICLE_DELETE_URL = `${process.env.REACT_APP_VEHICLE_DELETE_API_URL}/:${vehicleId}`;
-
+  const VEHICLE_DELETE_URL = `${process.env.REACT_APP_VEHICLE_DELETE_API_URL}/${vehicleId}`;
 
   useEffect(() => {
     if (searchQuery.trim() === "") {
@@ -124,9 +121,7 @@ const AllVehicleData = ({ superAdminId, agencyId }) => {
   };
 
   const handleDelete = () => {
-    console.log("ID",vehicleId)
-
-    console.log("VEHICLE_DELETE_URL",VEHICLE_DELETE_URL)
+    console.log("VEHICLE_DELETE_URL", VEHICLE_DELETE_URL);
     try {
       axios
         .delete(VEHICLE_DELETE_URL, {
@@ -136,9 +131,9 @@ const AllVehicleData = ({ superAdminId, agencyId }) => {
           },
         })
         .then((res) => {
-          setToogleDropdown(false);
-          setToogleOpen(false);
-          setVehicleId(null)
+          setToogleLogoutPopup(!toogleLogoutPopup);
+          setVehicleId(null);
+          fetchData();
           console.log(res);
         });
     } catch (error) {
@@ -201,6 +196,7 @@ const AllVehicleData = ({ superAdminId, agencyId }) => {
                   </tr>
                 </thead>
                 <tbody>
+
                   {filteredVehicles && filteredVehicles.length > 0 ? (
                     filteredVehicles.map((vehicle, index) => {
                       return (
@@ -221,14 +217,19 @@ const AllVehicleData = ({ superAdminId, agencyId }) => {
                                     alt="not found"
                                   />
                                 </Link>
-                                <img
-                                  src={Images("edit_icon")}
-                                  alt="not found"
-                                />
+                                <Link to="addVehicle" state={{ vehicleData: vehicle }}>
+                                  <img
+                                    src={Images("edit_icon")}
+                                    alt="not found"
+                                  />
+                                </Link>
                                 <img
                                   src={Images("delete_icon")}
                                   alt="not found"
-                                  onClick={() =>{setVehicleId(vehicle._id); setToogleLogoutPopup(true)}}
+                                  onClick={() => {
+                                    setVehicleId(vehicle._id);
+                                    setToogleLogoutPopup(true);
+                                  }}
                                 />
                               </div>
                             </td>

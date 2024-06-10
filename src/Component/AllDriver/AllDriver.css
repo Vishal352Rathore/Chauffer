@@ -1,3 +1,56 @@
+.popup-container{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+}
+.popup-modal{
+    background: rgb(239, 239, 244);
+    padding: 20px ;
+    border-radius: 5px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+    width: 400px;
+    text-align: center;
+}
+.popup-modal .popup-content {
+  display: flex;
+  justify-content: start;
+  flex-direction: column;
+  text-align: left;
+}
+.popup-modal .popup-content .popup-title-content{
+  display: flex;
+  justify-content: space-between;
+}
+.popup-modal .popup-content p{
+  padding: 0px 0px 14px 0px;
+}
+.popup-modal .popup-buttons{
+  display: flex;
+  justify-content: end;
+  column-gap: 20px;
+}
+.popup-modal .popup-buttons button:nth-child(2){
+  background: #B5022E;
+  border: unset;
+}
+.backgroundDisable{
+  filter: blur(1.2);
+  pointer-events: none;
+}
+.backgroundEnable{
+  pointer-events: default;
+}
+
+
+
+
 .all-driver-header {
     display: flex;
     align-items: center;
