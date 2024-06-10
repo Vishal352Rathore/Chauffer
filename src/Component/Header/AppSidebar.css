@@ -22,14 +22,6 @@
   background-image: linear-gradient(180deg, #1A2A84 0%, #000000 188.09%);
 }
 
-/* ::-webkit-scrollbar {
-  width: 0;  
-  background: transparent;  
-} */
-
-/* ::-webkit-scrollbar-thumb {
-  background: transparent; 
-} */
 
 
 .component-show {
@@ -45,10 +37,6 @@
   transition: left 0.3s ease;
   z-index: 99;
 }
-
-/* .open {
-  left: -268.80px;
-} */
 
 .logo-container {
   display: flex;
@@ -105,32 +93,57 @@
   padding: 6px 0px 0px 14px;
 }
 .link-tag.active-link{
-  color:blue;
+  color:rgb(49, 49, 240);
   text-decoration: none;
-  border: 1px solid red;
+  text-shadow: 3px 3px 4px rgb(85, 85, 107);
+  font-weight: 300;
 }
-.link-tag img {
-  width: 24px;
+
+.add-vehicle-icon {
+  font-size: 18px !important;
+  color: #fff;
 }
-.link-tag img.dashboard-icon{
-  width: 24px;
+.link-tag .dashboard-icon{
+  font-size: 16px;
+  color: #fff;
 }
-.link-tag img.all-rides-icon{
-  width: 18px;
+.link-tag .agent-icon, .link-tag .complaints-icon, .link-tag .terms-condition-icon,
+.link-tag .logout-icon{
+  color: #fff ;
 }
-.link-tag img.add-vehicle-icon{
-  width: 28px;
+.link-tag .logout-icon{
+  color: #fff !important;
 }
-.link-tag img.logout-icon{
+.add-vehicle-icon.active-link, .dashboard-icon.active-link , 
+.link-tag .agent-icon.active-link, .link-tag .complaints-icon.active-link ,
+.link-tag .terms-condition-icon.active-link,
+.link-tag button.policy-icon .logout-icons.active-link
+{
+  font-size: 18px !important;
+  color: rgb(46, 46, 211);
+}
+.link-tag .logout-icons.active-link{
+  font-size: 18px !important;
+  color: white !important;
+}
+
+.link-tag .all-rides-icon{
+  font-size: 16px;
+}
+.link-tag .add-vehicle-icon{
+  font-size: 14px;
   width: 20px;
 }
-.link-tag img.earning-icon{
+.link-tag .earning-icon{
   width:22px;
 }
-.link-tag img.complaints-icon{
+.link-tag .earning-icon{
+  width:22px;
+}
+.link-tag .complaints-icon{
   width: 24px;
 }
-.link-tag img.terms-condition-icon{
+.link-tag .terms-condition-icon{
   width: 22px;
 }
 .link-tag img.policy-icon{
@@ -213,6 +226,7 @@
 .backgroundEnable{
   pointer-events: default;
 }
+
 /* Media for laptop view */
 @media only screen and (min-width: 1200px) and (max-width: 1600px) {
   .flex-container {
