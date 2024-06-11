@@ -2,12 +2,13 @@ import React, { useState, useEffect } from "react";
 import "./AddVehicle.css";
 import Images from "../Images";
 import axios from "axios";
-import { useNavigate ,useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import Spinner from "react-bootstrap/Spinner";
 
 const AddVehicle = () => {
   const token = localStorage.getItem("token");
   const URL = process.env.REACT_APP_VEHICLE_REGISTER_API_URL;
+  const UN_ALLOTED_DRIVER_URL = process.env.REACT_APP_UNALLOTED_DRIVER_API_URL;
   const navigate = useNavigate();
 
   const [isLoading, setIsLoading] = useState(false);
@@ -15,8 +16,11 @@ const AddVehicle = () => {
 
   const [parentElement, setParentElement] = useState(null);
 
-  const location = useLocation()
-  const { vehicleData } =  location.state === null ? null :  location.state ;
+  const location = useLocation();
+  const { vehicleData } = location.state === null ? null : location.state;
+
+
+  const [unAllotedDrivers, setUnAllotedDrivers] = useState(null);
 
   useEffect(() => {
     setParentElement(document.getElementById("home-container"));
@@ -45,20 +49,17 @@ const AddVehicle = () => {
 
   useEffect(() => {
     if (vehicleData) {
-      setAddVehicleData(prevState => ({
+      setAddVehicleData((prevState) => ({
         ...prevState,
-        ...vehicleData
+        ...vehicleData,
       }));
 
-     FileSetUp();
-
+      FileSetUp();
     }
   }, [vehicleData]);
 
-  console.log("addVehicleData",addVehicleData);  
 
-
-  const FileSetUp = () =>{
+  const FileSetUp = () => {
     const newSelectedFiles = [...selectedFiles];
     newSelectedFiles[0].file = vehicleData.vehicleImg[0];
     newSelectedFiles[1].file = vehicleData.vehicleImg[1];
@@ -68,18 +69,15 @@ const AddVehicle = () => {
 
     setSelectedFiles(newSelectedFiles);
 
- 
-      const updatedPreviews = [...imagePreviews];
-      updatedPreviews[0] =  vehicleData.vehicleImg[0];
-      updatedPreviews[1] = vehicleData.vehicleImg[1];
-      updatedPreviews[2] = vehicleData.vehicleImg[2];
-      updatedPreviews[3] = vehicleData.vehicleRCDocument;
-      updatedPreviews[4] = vehicleData.vehicleInsuranceDocs;
+    const updatedPreviews = [...imagePreviews];
+    updatedPreviews[0] = vehicleData.vehicleImg[0];
+    updatedPreviews[1] = vehicleData.vehicleImg[1];
+    updatedPreviews[2] = vehicleData.vehicleImg[2];
+    updatedPreviews[3] = vehicleData.vehicleRCDocument;
+    updatedPreviews[4] = vehicleData.vehicleInsuranceDocs;
 
-      setImagePreviews(updatedPreviews);
- 
-
-  }
+    setImagePreviews(updatedPreviews);
+  };
 
   const [selectedFiles, setSelectedFiles] = useState(
     Array.from({ length: 5 }, () => ({ file: null, error: null }))
@@ -128,7 +126,7 @@ const AddVehicle = () => {
     addVehicleData.vehicleImagesTwo = selectedFiles[1].file;
     addVehicleData.vehicleImagesThree = selectedFiles[2].file;
     addVehicleData.vehicleRcDoc = selectedFiles[3].file;
-    addVehicleData.vehicleInsuranceDoc = selectedFiles[4].file;
+    addVehicleData.vehicleInsuranceDocs = selectedFiles[4].file;
     addVehicleData.superAdminId = localStorage.getItem("superAdminId");
     addVehicleData.agencyId = localStorage.getItem("agencyId");
     console.log("addVehicleData", addVehicleData);
@@ -138,7 +136,7 @@ const AddVehicle = () => {
     console.log("isValid", isValid);
 
     if (isValid) {
-      AddVehicle();
+      vehicleData === null ? AddVehicle() : EditVehicle();
       setIsLoading(true);
       setIsSubmit(true);
       if (parentElement) {
@@ -190,7 +188,10 @@ const AddVehicle = () => {
       "vehicleRegistrationNo",
       addVehicleData.vehicleRegistrationNo
     );
-    formdata.append("vehicleLastServising", addVehicleData.vehicleLastServising);
+    formdata.append(
+      "vehicleLastServising",
+      addVehicleData.vehicleLastServising
+    );
     formdata.append("model", addVehicleData.model);
     formdata.append("brand", addVehicleData.brand);
     formdata.append("color", addVehicleData.color);
@@ -200,8 +201,11 @@ const AddVehicle = () => {
     formdata.append("vehicleImg", addVehicleData.vehicleImagesOne);
     formdata.append("vehicleImg", addVehicleData.vehicleImagesTwo);
     formdata.append("vehicleImg", addVehicleData.vehicleImagesThree);
-    formdata.append("vehicleInsuranceDocs", addVehicleData.vehicleInsuranceDocs);
-    formdata.append("driverId", "6654766feabb8fe30a8659c0");
+    formdata.append(
+      "vehicleInsuranceDocs",
+      addVehicleData.vehicleInsuranceDocs
+    );
+    formdata.append("driverId", addVehicleData.driverId);
 
     console.log([...formdata.entries()]);
     try {
@@ -248,6 +252,38 @@ const AddVehicle = () => {
     }
   };
 
+  const EditVehicle = async () => {
+    console.log("Editing API calling");
+  };
+
+
+ useEffect(() => {
+  getUnallotedDrivers();
+ }, [])
+ 
+
+  const getUnallotedDrivers = async () => {
+    const headers = {
+      headers: {
+        token: token,
+        type: "superAdmin",
+      },
+    };
+
+    try {
+      await axios
+        .get(UN_ALLOTED_DRIVER_URL, headers)
+        .then((res) => {
+          setUnAllotedDrivers(res.data.items);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    } catch (error) {
+      console.log("Error from try catch", error);
+    }
+  };
+
   return (
     <div className="add-vehicle-container">
       <Spinner
@@ -260,7 +296,7 @@ const AddVehicle = () => {
           <div className="col-md-12">
             <div className="form-title margin_top_4 padding_left_20">
               <p>
-                Add <span>Vehicle</span>
+                {vehicleData === null ? "Add" : "Edit"} <span>Vehicle</span>
               </p>
             </div>
           </div>
@@ -550,9 +586,9 @@ const AddVehicle = () => {
             <div className="col-md-6">
               <div className="vehicleregdoc">
                 <label htmlFor="VehicleRegDoc">Vehicle RC Document</label>
-                <div className="add-btn">
+                {/* <div className="add-btn">
                   <button>Add+</button>
-                </div>
+                </div> */}
               </div>
             </div>
             <div className="col-md-6">
@@ -561,9 +597,9 @@ const AddVehicle = () => {
                   Vehicle Insurance Document
                 </label>
 
-                <div className="add-btn">
+                {/* <div className="add-btn">
                   <button>Add+</button>
-                </div>
+                </div> */}
               </div>
             </div>
 
@@ -642,10 +678,12 @@ const AddVehicle = () => {
                 onChange={handleChange}
                 required
               >
-                <option>Select Driver</option>
-                <option value="Sedan">Mahesh</option>
-                <option value="HatchBack">Suresh</option>
-                <option value="SUV">Sunil</option>
+                <option value="">Select Driver</option>
+                {unAllotedDrivers && unAllotedDrivers.map((driver) => (
+                  <option key={driver._id} value={driver._id}>
+                    {driver.drivername}
+                  </option>
+                ))}
               </select>
             </div>
           </div>

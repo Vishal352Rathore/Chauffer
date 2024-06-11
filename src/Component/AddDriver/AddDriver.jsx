@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Images from "../Images";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate ,useLocation } from "react-router-dom";
 import Spinner from "react-bootstrap/Spinner";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -20,9 +20,13 @@ const AddDriver = () => {
     setParentElement(document.getElementById("home-container"));
   }, []);
 
+  const location = useLocation();
+  const { driverData } = location.state === null ? null : location.state;
+  console.log("driverData",driverData);
+
   const token = localStorage.getItem("token");
 
-  const [driverData, setDriverData] = useState({
+  const [addDriverData, setAddDriverData] = useState({
     driverProfile: [],
     drivername: "",
     email: "",
@@ -85,7 +89,7 @@ const AddDriver = () => {
 
   const handleChange = (event) => {
     const { name, value } = event.target;
-    setDriverData({ ...driverData, [name]: value });
+    setAddDriverData({ ...addDriverData, [name]: value });
     validateField(name, value);
   };
 
@@ -152,7 +156,7 @@ const AddDriver = () => {
     console.log("isValid", isValid);
 
     if (isValid) {
-      DriverRegister();
+      driverData === null ? DriverRegister(): DriverEdit();
       setIsLoading(true);
       setIsSubmit(true);
       if (parentElement) {
@@ -253,9 +257,43 @@ const AddDriver = () => {
     }
   };
 
+  const DriverEdit = ()=>{
+    console.log("Editing API calling");
+  }
+
   const alertShowing = (response) => {
     toast.success(response.message);
     navigate("/home/allDriver");
+  };
+
+  useEffect(() => {
+    if (driverData) {
+      setAddDriverData((prevState) => ({
+        ...prevState,
+        ...driverData,
+      }));
+
+      FileSetUp();
+    }
+  }, [driverData]);
+
+
+  const FileSetUp = () => {
+    const newSelectedFiles = [...selectedFiles];
+    newSelectedFiles[0].file = driverData.aadharCard;
+    newSelectedFiles[1].file = driverData.drivingLicence;
+    newSelectedFiles[2].file = driverData.otherDocs;
+    newSelectedFiles[3].file = driverData.profileImage;
+
+    setSelectedFiles(newSelectedFiles);
+
+    const updatedPreviews = [...imagePreviews];
+    updatedPreviews[0] = driverData.aadharCard;
+    updatedPreviews[1] = driverData.drivingLicence;
+    updatedPreviews[2] = driverData.otherDocs;
+    updatedPreviews[3] = driverData.profileImage;
+
+    setImagePreviews(updatedPreviews);
   };
 
   return (
@@ -270,7 +308,7 @@ const AddDriver = () => {
           <div className="col-md-12">
             <div className="form-title  margin_top_4 padding_left_20 ">
               <p>
-                Add <span>Driver</span>
+                {driverData=== null ?"Add":"Edit"} <span>Driver</span>
               </p>
             </div>
           </div>
@@ -327,7 +365,7 @@ const AddDriver = () => {
                 id="drivername"
                 name="drivername"
                 placeholder="Driver Name"
-                value={driverData.drivername}
+                value={addDriverData.drivername}
                 onChange={handleChange}
                 required
                 onInvalid={(e) =>
@@ -346,7 +384,7 @@ const AddDriver = () => {
                 id="email"
                 name="email"
                 placeholder="Enter Your Email"
-                value={driverData.email}
+                value={addDriverData.email}
                 onChange={handleChange}
                 required
                 pattern="[a-zA-Z0-9._%+-]+@[a-z]+\.[a-z]{2,}$"
@@ -366,7 +404,7 @@ const AddDriver = () => {
                 id="mobile"
                 name="mobile"
                 placeholder="Enter Your Phone No"
-                value={driverData.mobile}
+                value={addDriverData.mobile}
                 onChange={handleChange}
                 maxLength={10}
                 onKeyDown={handleKeyDown}
@@ -383,7 +421,7 @@ const AddDriver = () => {
                 id="address"
                 name="address"
                 placeholder="Enter Your Address"
-                value={driverData.address}
+                value={addDriverData.address}
                 onChange={handleChange}
                 required
                 onInvalid={(e) =>
@@ -401,7 +439,7 @@ const AddDriver = () => {
                   type="number"
                   id="experience"
                   name="experience"
-                  value={driverData.experience}
+                  value={addDriverData.experience}
                   onChange={handleChange}
                   placeholder="Enter Your Experience"
                   required

@@ -20,7 +20,7 @@ const AllVehicle = () => {
               </div>
               <div className="add-driver-navigate-btn-div">
                 <span>
-                  <Link className="add-driver-btn" to="addVehicle">
+                  <Link className="add-driver-btn" to="addVehicle" state={{ vehicleData: null }}>
                     {" "}
                     Add Vehicle
                   </Link>{" "}

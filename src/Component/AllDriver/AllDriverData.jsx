@@ -201,6 +201,12 @@ const AllDriverData = ({ superAdminId, agencyId }) => {
                                     alt="not found"
                                   />
                                 </Link>
+                                <Link to="addDriver" state={{ driverData: driver }}>
+                                  <img
+                                    src={Images("edit_icon")}
+                                    alt="not found"
+                                  />
+                                </Link>
                                 <img
                                   src={Images("delete_icon")}
                                   alt="not found"
