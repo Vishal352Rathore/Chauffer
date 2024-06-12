@@ -135,10 +135,10 @@ const AllAgent = () => {
                 <thead>
                   <tr>
                     <th>S No.</th>
-                    <th>Agency name </th>
+                    <th>Contact Person</th>
                     <th>Email</th>
                     <th>Contact No</th>
-                    <th>City</th>
+                    <th>Address</th>
                     {/* <th>Zip Code</th> */}
                     <th>Status</th>
                     <th>Action</th>

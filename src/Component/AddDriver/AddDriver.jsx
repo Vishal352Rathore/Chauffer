@@ -143,13 +143,13 @@ const AddDriver = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    driverData.driverProfile = selectedFiles[3].file;
-    driverData.drivingLicence = selectedFiles[0].file;
-    driverData.governmentid = selectedFiles[1].file;
-    driverData.other_docs = selectedFiles[2].file;
-    driverData.superAdminId = localStorage.getItem("superAdminId");
-    driverData.agencyId = localStorage.getItem("agencyId");
-    console.log("driverData", driverData);
+    addDriverData.driverProfile = selectedFiles[3].file;
+    addDriverData.drivingLicence = selectedFiles[0].file;
+    addDriverData.governmentid = selectedFiles[1].file;
+    addDriverData.other_docs = selectedFiles[2].file;
+    addDriverData.superAdminId = localStorage.getItem("superAdminId");
+    addDriverData.agencyId = localStorage.getItem("agencyId");
+    console.log("addDriverData", addDriverData);
 
     let isValid = validationSchema();
 
@@ -189,27 +189,27 @@ const AddDriver = () => {
     };
 
     const formdata = new FormData();
-    formdata.append("drivingLicence", driverData.drivingLicence);
-    formdata.append("email", driverData.email);
-    formdata.append("drivername", driverData.drivername);
-    formdata.append("mobile", driverData.mobile);
-    formdata.append("address", driverData.address);
-    formdata.append("aadharCard", driverData.governmentid);
-    formdata.append("otherDocs", driverData.other_docs);
-    formdata.append("profileImage", driverData.driverProfile);
-    formdata.append("experience", `${driverData.experience} years`);
+    formdata.append("drivingLicence", addDriverData.drivingLicence);
+    formdata.append("email", addDriverData.email);
+    formdata.append("drivername", addDriverData.drivername);
+    formdata.append("mobile", addDriverData.mobile);
+    formdata.append("address", addDriverData.address);
+    formdata.append("aadharCard", addDriverData.governmentid);
+    formdata.append("otherDocs", addDriverData.other_docs);
+    formdata.append("profileImage", addDriverData.driverProfile);
+    formdata.append("experience", addDriverData.experience);
 
 
     if (
       localStorage.getItem("superAdminId") !== null &&
       localStorage.getItem("superAdminId") !== ""
     ) {
-      formdata.append("superAdminId", driverData.superAdminId);
+      formdata.append("superAdminId", addDriverData.superAdminId);
     } else if (
       localStorage.getItem("agencyId") !== null &&
       localStorage.getItem("agencyId") !== ""
     ) {
-      formdata.append("agencyId", driverData.agencyId);
+      formdata.append("agencyId", addDriverData.agencyId);
     }
 
     try {
