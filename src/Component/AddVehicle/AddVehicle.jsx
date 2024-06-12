@@ -9,6 +9,7 @@ const AddVehicle = () => {
   const token = localStorage.getItem("token");
   const URL = process.env.REACT_APP_VEHICLE_REGISTER_API_URL;
   const UN_ALLOTED_DRIVER_URL = process.env.REACT_APP_UNALLOTED_DRIVER_API_URL;
+  const VEHICLE_UPDATE_URL = process.env.REACT_APP_VEHICLE_UPDATE_API_URL;
   const navigate = useNavigate();
 
   const [isLoading, setIsLoading] = useState(false);
@@ -18,7 +19,6 @@ const AddVehicle = () => {
 
   const location = useLocation();
   const { vehicleData } = location.state === null ? null : location.state;
-
 
   const [unAllotedDrivers, setUnAllotedDrivers] = useState(null);
 
@@ -57,7 +57,6 @@ const AddVehicle = () => {
       FileSetUp();
     }
   }, [vehicleData]);
-
 
   const FileSetUp = () => {
     const newSelectedFiles = [...selectedFiles];
@@ -125,7 +124,7 @@ const AddVehicle = () => {
     addVehicleData.vehicleImagesOne = selectedFiles[0].file;
     addVehicleData.vehicleImagesTwo = selectedFiles[1].file;
     addVehicleData.vehicleImagesThree = selectedFiles[2].file;
-    addVehicleData.vehicleRcDoc = selectedFiles[3].file;
+    addVehicleData.vehicleRCDocument = selectedFiles[3].file;
     addVehicleData.vehicleInsuranceDocs = selectedFiles[4].file;
     addVehicleData.superAdminId = localStorage.getItem("superAdminId");
     addVehicleData.agencyId = localStorage.getItem("agencyId");
@@ -253,14 +252,101 @@ const AddVehicle = () => {
   };
 
   const EditVehicle = async () => {
-    console.log("Editing API calling");
+    console.log("EditVehicle");
+    const headers = {
+      headers: {
+        token: token,
+        type: "superAdmin",
+      },
+    };
+
+    const formdata = new FormData();
+    if (
+      localStorage.getItem("superAdminId") !== null &&
+      localStorage.getItem("superAdminId") !== ""
+    ) {
+      formdata.append("superAdminId", addVehicleData.superAdminId);
+    } else if (
+      localStorage.getItem("agencyId") !== null &&
+      localStorage.getItem("agencyId") !== ""
+    ) {
+      formdata.append("agencyId", addVehicleData.agencyId);
+    }
+    formdata.append("vehicleName", addVehicleData.vehicleType);
+    formdata.append("vehicleType", addVehicleData.vehicleType);
+    formdata.append("vehicleNoPlate", addVehicleData.vehicleNoPlate);
+    formdata.append("vehicleChechisNo", addVehicleData.vehicleChechisNo);
+    formdata.append(
+      "vehicleRegistrationNo",
+      addVehicleData.vehicleRegistrationNo
+    );
+    formdata.append(
+      "vehicleLastServising",
+      addVehicleData.vehicleLastServising
+    );
+    formdata.append("model", addVehicleData.model);
+    formdata.append("brand", addVehicleData.brand);
+    formdata.append("color", addVehicleData.color);
+    formdata.append("capacity", addVehicleData.capacity);
+    formdata.append("vehicleCharges", addVehicleData.vehicleCharges);
+    formdata.append("vehicleRCDocument", addVehicleData.vehicleRCDocument);
+    formdata.append("vehicleImg", addVehicleData.vehicleImagesOne);
+    formdata.append("vehicleImg", addVehicleData.vehicleImagesTwo);
+    formdata.append("vehicleImg", addVehicleData.vehicleImagesThree);
+    formdata.append(
+      "vehicleInsuranceDocs",
+      addVehicleData.vehicleInsuranceDocs
+    );
+    formdata.append("driverId", addVehicleData.driverId);
+
+    console.log([...formdata.entries()]);
+    try {
+      axios
+        .post(VEHICLE_UPDATE_URL, formdata, headers)
+        .then((response) => {
+          console.log("response", response);
+          if (response.data.status === true) {
+            setIsLoading(false);
+            setIsSubmit(false);
+            if (parentElement) {
+              parentElement.style.filter = "blur(0px)";
+              parentElement.style.pointerEvents = "auto";
+            }
+            alert(response.data.message);
+            navigate("/home/allVehicle");
+          } else {
+            setIsLoading(false);
+            setIsSubmit(false);
+            if (parentElement) {
+              parentElement.style.filter = "blur(0px)";
+              parentElement.style.pointerEvents = "auto";
+            }
+            alert(response.data.message);
+          }
+        })
+        .catch((error) => {
+          setIsLoading(false);
+          setIsSubmit(false);
+          if (parentElement) {
+            parentElement.style.filter = "blur(0px)";
+            parentElement.style.pointerEvents = "auto";
+          }
+          console.log(error);
+        });
+    } catch (error) {
+      setIsLoading(false);
+      setIsSubmit(false);
+      if (parentElement) {
+        parentElement.style.filter = "blur(0px)";
+        parentElement.style.pointerEvents = "auto";
+      }
+      console.log("error", error);
+    }
   };
 
-
- useEffect(() => {
-  getUnallotedDrivers();
- }, [])
- 
+  useEffect(() => {
+    getUnallotedDrivers();
+  }, []);
 
   const getUnallotedDrivers = async () => {
     const headers = {
@@ -679,11 +765,12 @@ const AddVehicle = () => {
                 required
               >
                 <option value="">Select Driver</option>
-                {unAllotedDrivers && unAllotedDrivers.map((driver) => (
-                  <option key={driver._id} value={driver._id}>
-                    {driver.drivername}
-                  </option>
-                ))}
+                {unAllotedDrivers &&
+                  unAllotedDrivers.map((driver) => (
+                    <option key={driver._id} value={driver._id}>
+                      {driver.drivername}
+                    </option>
+                  ))}
               </select>
             </div>
           </div>
