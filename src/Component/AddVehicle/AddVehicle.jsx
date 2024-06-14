@@ -9,7 +9,7 @@ const AddVehicle = () => {
   const token = localStorage.getItem("token");
   const URL = process.env.REACT_APP_VEHICLE_REGISTER_API_URL;
   const UN_ALLOTED_DRIVER_URL = process.env.REACT_APP_UNALLOTED_DRIVER_API_URL;
-  const VEHICLE_UPDATE_URL = process.env.REACT_APP_VEHICLE_UPDATE_API_URL;
+
   const navigate = useNavigate();
 
   const [isLoading, setIsLoading] = useState(false);
@@ -19,6 +19,10 @@ const AddVehicle = () => {
 
   const location = useLocation();
   const { vehicleData } = location.state === null ? null : location.state;
+
+  const vehicleId = vehicleData._id ;
+  const VEHICLE_UPDATE_URL = `${process.env.REACT_APP_VEHICLE_UPDATE_API_URL}/${vehicleId}`;
+  console.log("VEHICLE_UPDATE_URL",VEHICLE_UPDATE_URL);
 
   const [unAllotedDrivers, setUnAllotedDrivers] = useState(null);
 
@@ -302,7 +306,7 @@ const AddVehicle = () => {
     console.log([...formdata.entries()]);
     try {
       axios
-        .post(VEHICLE_UPDATE_URL, formdata, headers)
+        .put(VEHICLE_UPDATE_URL, formdata, headers)
         .then((response) => {
           console.log("response", response);
           if (response.data.status === true) {

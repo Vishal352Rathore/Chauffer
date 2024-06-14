@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Images from "../Images";
 import axios from "axios";
-import { useNavigate ,useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import Spinner from "react-bootstrap/Spinner";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -22,7 +22,12 @@ const AddDriver = () => {
 
   const location = useLocation();
   const { driverData } = location.state === null ? null : location.state;
-  console.log("driverData",driverData);
+
+  console.log("driverDataForEdit",driverData);
+
+  const driverId = driverData._id ;
+  const DRIVER_UPDATE_URL = `${process.env.REACT_APP_DRIVER_UPDATE_API_URL}/${driverId}`;
+  console.log("DRIVER_UPDATE_URL",DRIVER_UPDATE_URL); 
 
   const token = localStorage.getItem("token");
 
@@ -35,7 +40,7 @@ const AddDriver = () => {
     experience: "",
     drivingLicence: [],
     governmentid: [],
-    other_docs: [],
+    otherDocs: [],
     superAdminId: "",
     agencyId: "",
   });
@@ -146,7 +151,7 @@ const AddDriver = () => {
     addDriverData.driverProfile = selectedFiles[3].file;
     addDriverData.drivingLicence = selectedFiles[0].file;
     addDriverData.governmentid = selectedFiles[1].file;
-    addDriverData.other_docs = selectedFiles[2].file;
+    addDriverData.otherDocs = selectedFiles[2].file;
     addDriverData.superAdminId = localStorage.getItem("superAdminId");
     addDriverData.agencyId = localStorage.getItem("agencyId");
     console.log("addDriverData", addDriverData);
@@ -156,7 +161,7 @@ const AddDriver = () => {
     console.log("isValid", isValid);
 
     if (isValid) {
-      driverData === null ? DriverRegister(): DriverEdit();
+      driverData === null ? DriverRegister() : DriverEdit();
       setIsLoading(true);
       setIsSubmit(true);
       if (parentElement) {
@@ -198,7 +203,6 @@ const AddDriver = () => {
     formdata.append("otherDocs", addDriverData.other_docs);
     formdata.append("profileImage", addDriverData.driverProfile);
     formdata.append("experience", addDriverData.experience);
-
 
     if (
       localStorage.getItem("superAdminId") !== null &&
@@ -257,9 +261,84 @@ const AddDriver = () => {
     }
   };
 
-  const DriverEdit = ()=>{
-    console.log("Editing API calling");
-  }
+  const DriverEdit = () => {
+    
+    const headers = {
+      headers: {
+        token: token,
+        type: "superAdmin",
+      },
+    };
+
+    const formdata = new FormData();
+    formdata.append("drivingLicence", addDriverData.drivingLicence);
+    formdata.append("email", addDriverData.email);
+    formdata.append("drivername", addDriverData.drivername);
+    formdata.append("mobile", addDriverData.mobile);
+    formdata.append("address", addDriverData.address);
+    formdata.append("aadharCard", addDriverData.governmentid);
+    formdata.append("otherDocs", addDriverData.otherDocs);
+    formdata.append("profileImage", addDriverData.driverProfile);
+    formdata.append("experience", addDriverData.experience);
+
+    if (
+      localStorage.getItem("superAdminId") !== null &&
+      localStorage.getItem("superAdminId") !== ""
+    ) {
+      formdata.append("superAdminId", addDriverData.superAdminId);
+    } else if (
+      localStorage.getItem("agencyId") !== null &&
+      localStorage.getItem("agencyId") !== ""
+    ) {
+      formdata.append("agencyId", addDriverData.agencyId);
+    }
+
+    console.log([...formdata.entries()]);
+
+    try {
+      setIsLoading(true);
+      axios
+        .put(DRIVER_UPDATE_URL, formdata, headers)
+        .then((response) => {
+          console.log("response", response);
+
+          if (response.data.status === true) {
+            setIsLoading(false);
+            setIsSubmit(false);
+            if (parentElement) {
+              parentElement.style.filter = "blur(0px)";
+              parentElement.style.pointerEvents = "auto";
+            }
+            alertShowing(response);
+          } else {
+            setIsLoading(false);
+            setIsSubmit(false);
+            if (parentElement) {
+              parentElement.style.filter = "blur(0px)";
+              parentElement.style.pointerEvents = "auto";
+            }
+            toast.error(response.message);
+          }
+        })
+        .catch((error) => {
+          if (parentElement) {
+            parentElement.style.filter = "blur(0px)";
+            parentElement.style.pointerEvents = "auto";
+          }
+          setIsLoading(false);
+          setIsSubmit(false);
+          toast.error(error);
+          console.error(error);
+        });
+    } catch (error) {
+      if (parentElement) {
+        parentElement.style.filter = "blur(0px)";
+        parentElement.style.pointerEvents = "auto";
+      }
+      setIsLoading(false);
+      setIsSubmit(false);
+    }
+  };
 
   const alertShowing = (response) => {
     toast.success(response.message);
@@ -276,7 +355,6 @@ const AddDriver = () => {
       FileSetUp();
     }
   }, [driverData]);
-
 
   const FileSetUp = () => {
     const newSelectedFiles = [...selectedFiles];
@@ -308,7 +386,7 @@ const AddDriver = () => {
           <div className="col-md-12">
             <div className="form-title  margin_top_4 padding_left_20 ">
               <p>
-                {driverData=== null ?"Add":"Edit"} <span>Driver</span>
+                {driverData === null ? "Add" : "Edit"} <span>Driver</span>
               </p>
             </div>
           </div>
