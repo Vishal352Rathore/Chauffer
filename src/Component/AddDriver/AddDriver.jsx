@@ -23,26 +23,26 @@ const AddDriver = () => {
   const location = useLocation();
   const { driverData } = location.state === null ? null : location.state;
 
-  console.log("driverDataForEdit",driverData);
+  console.log("driverDataForEdit", driverData);
 
-  const driverId = driverData._id ;
+  const driverId = driverData !== null && driverData._id;
   const DRIVER_UPDATE_URL = `${process.env.REACT_APP_DRIVER_UPDATE_API_URL}/${driverId}`;
-  console.log("DRIVER_UPDATE_URL",DRIVER_UPDATE_URL); 
 
   const token = localStorage.getItem("token");
 
   const [addDriverData, setAddDriverData] = useState({
-    driverProfile: [],
+    driverProfile: "",
     drivername: "",
     email: "",
     mobile: "",
     address: "",
     experience: "",
-    drivingLicence: [],
-    governmentid: [],
-    otherDocs: [],
+    drivingLicence: "",
+    governmentid: "",
+    otherDocs: "",
     superAdminId: "",
     agencyId: "",
+    password:""
   });
 
   const [validationMessages, setValidationMessages] = useState({
@@ -51,9 +51,11 @@ const AddDriver = () => {
     mobile: "",
     address: "",
     experience: "",
+    password:""
   });
 
-  const [selectedFiles, setSelectedFiles] = useState(
+  const [
+    selectedFiles, setSelectedFiles] = useState(
     Array.from({ length: 4 }, () => ({ file: null, error: null }))
   );
 
@@ -200,9 +202,11 @@ const AddDriver = () => {
     formdata.append("mobile", addDriverData.mobile);
     formdata.append("address", addDriverData.address);
     formdata.append("aadharCard", addDriverData.governmentid);
-    formdata.append("otherDocs", addDriverData.other_docs);
+    formdata.append("otherDocs", addDriverData.otherDocs);
     formdata.append("profileImage", addDriverData.driverProfile);
     formdata.append("experience", addDriverData.experience);
+    formdata.append("password", addDriverData.password);
+
 
     if (
       localStorage.getItem("superAdminId") !== null &&
@@ -262,7 +266,6 @@ const AddDriver = () => {
   };
 
   const DriverEdit = () => {
-    
     const headers = {
       headers: {
         token: token,
@@ -538,6 +541,25 @@ const AddDriver = () => {
                   </p>
                 )}
               </div>
+            </div>
+            <div className="col-md-6">
+              <label htmlFor="password">Password</label>
+              <input
+                type="text"
+                id="password"
+                name="password"
+                placeholder="Password"
+                value={addDriverData.password}
+                onChange={handleChange}
+                required
+                onInvalid={(e) =>
+                  e.target.setCustomValidity("Please enter password")
+                }
+                onInput={(e) => e.target.setCustomValidity("")}
+              />
+              {validationMessages.password && (
+                <p style={{ color: "red" }}>{validationMessages.password}</p>
+              )}
             </div>
           </div>
           <div className="row add-driver-form">

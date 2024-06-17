@@ -19,8 +19,9 @@ const AddVehicle = () => {
 
   const location = useLocation();
   const { vehicleData } = location.state === null ? null : location.state;
+  console.log("vehicleData",vehicleData);
 
-  const vehicleId = vehicleData._id ;
+  const vehicleId = vehicleData !==  null && vehicleData._id ;
   const VEHICLE_UPDATE_URL = `${process.env.REACT_APP_VEHICLE_UPDATE_API_URL}/${vehicleId}`;
   console.log("VEHICLE_UPDATE_URL",VEHICLE_UPDATE_URL);
 
