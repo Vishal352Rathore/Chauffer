@@ -120,10 +120,10 @@ table tbody tr{
    
 }
 .all-driver-conainer .action_icon a img:first-child{   
-    width:20px;    
+    width:15px;    
   }
 .all-driver-conainer .action_icon img:last-child{
-    width:16px;
+    width:15px;
 }
 
 .all-driver-conainer tbody tr td:nth-child(5) button {
