@@ -119,7 +119,7 @@ const AllDriverData = ({ superAdminId, agencyId }) => {
   };
 
   const handleDelete = () => {
-    console.log("Driver_DELETE_URL",DRIVER_DELETE_URL)
+    console.log("Driver_DELETE_URL", DRIVER_DELETE_URL);
     try {
       axios
         .delete(DRIVER_DELETE_URL, {
@@ -129,8 +129,8 @@ const AllDriverData = ({ superAdminId, agencyId }) => {
           },
         })
         .then((res) => {
-          setToogleLogoutPopup(!toogleLogoutPopup)
-          setDriverId(null)
+          setToogleLogoutPopup(!toogleLogoutPopup);
+          setDriverId(null);
           fetchData();
           console.log(res);
         });
@@ -138,7 +138,6 @@ const AllDriverData = ({ superAdminId, agencyId }) => {
       console.log(error);
     }
   };
-
 
   return (
     <div>
@@ -201,7 +200,10 @@ const AllDriverData = ({ superAdminId, agencyId }) => {
                                     alt="not found"
                                   />
                                 </Link>
-                                <Link to="addDriver" state={{ driverData: driver }}>
+                                <Link
+                                  to="addDriver"
+                                  state={{ driverData: driver }}
+                                >
                                   <img
                                     src={Images("edit_icon")}
                                     alt="not found"
@@ -210,7 +212,10 @@ const AllDriverData = ({ superAdminId, agencyId }) => {
                                 <img
                                   src={Images("delete_icon")}
                                   alt="not found"
-                                  onClick={() =>{setDriverId(driver._id); setToogleLogoutPopup(true)}}
+                                  onClick={() => {
+                                    setDriverId(driver._id);
+                                    setToogleLogoutPopup(true);
+                                  }}
                                 />
                               </div>
                             </td>
@@ -265,7 +270,6 @@ const AllDriverData = ({ superAdminId, agencyId }) => {
           </div>
         </div>
       )}
-
 
       <section className="container">
         <div className="row">

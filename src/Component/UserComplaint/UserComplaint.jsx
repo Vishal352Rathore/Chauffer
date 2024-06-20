@@ -1,9 +1,46 @@
 import React from "react";
-import { useState } from "react";
+import { useState , useEffect } from "react";
+import axios  from "axios";
 import "./UserComplaint.css";
 
 const UserComplaint = () => {
   const [userComplainData, setUserComplainData] = useState(null);
+  const token = localStorage.getItem("token");
+
+   const COMPLAINT_LIST_API_URL = process.env.REACT_APP_COMPLAINT_LIST_API_URL ;
+
+   
+   const headers = {
+    token: token,
+    type: "superAdmin",
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, [])
+  
+
+
+   const fetchData = async () => {
+    try {
+      if (token) {
+        const response = await axios.get(
+          COMPLAINT_LIST_API_URL,
+          // headers
+          {
+            headers: headers,
+          }
+        );
+        console.log("response for ride", response);
+        setUserComplainData(response.data.items);
+  
+      } else {
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
 
   return (
   

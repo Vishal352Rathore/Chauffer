@@ -11,13 +11,15 @@ const AllRides = () => {
   const [filteredDrivers, setFilteredDrivers] = useState(null);
   const token = localStorage.getItem("token");
 
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
 
   const URL = process.env.REACT_APP_RIDE_DETAIL_API_URL;
 
   const headers = {
     "Content-Type": "application/json",
     token: token,
-    type : "superAdmin"
+    type: "superAdmin",
   };
 
   // Function to handle search input change
@@ -47,21 +49,38 @@ const AllRides = () => {
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [page]);
 
   const fetchData = async () => {
     try {
       if (token) {
-        const response = await axios.get(URL, {
-          method: "GET",
-          headers: headers,
-        });
-        console.error("response for ride", response);
-        setRideData(response.data.items);
+        const response = await axios.post(
+          URL,
+          {
+            page: page
+          },
+          {
+            headers: headers,
+          }
+        );
+        console.log("response for ride", response);
+        setRideData(response.data.items.rides);
+        setTotalPages(Math.ceil(response.data.items.totalPages));
       } else {
       }
     } catch (error) {
       console.error("Error fetching data:", error);
+    }
+  };
+
+  const selectPageHandler = (selectedPage) => {
+    if (
+      selectedPage >= 1 &&
+      selectedPage <= totalPages &&
+      selectedPage !== page
+    ) {
+      setPage(selectedPage);
+      console.log("selectedPage", selectedPage);
     }
   };
 
@@ -113,11 +132,11 @@ const AllRides = () => {
                 </thead>
                 <tbody>
                   {rideData &&
-                    rideData.map((ride,index) => {
+                    rideData.map((ride, index) => {
                       return (
                         <tr key={ride._id}>
                           <>
-                            <td>{index + 1}</td>
+                            <td>{index + 1 + (page - 1) * 10}</td>
                             <td>{ride.firstName}</td>
                             <td>{ride.amount}</td>
                             <td>{ride.rideType}</td>
@@ -128,14 +147,14 @@ const AllRides = () => {
                             </td>
                             <td>
                               <div className="action_icon">
-                              <Link
+                                <Link
                                   to={`rideDetails/${ride._id}`}
                                   state={{ rideData: ride }}
                                 >
-                                <img
-                                  src={Images("view_icon")}
-                                  alt="not found"
-                                />
+                                  <img
+                                    src={Images("view_icon")}
+                                    alt="not found"
+                                  />
                                 </Link>
                                 <img
                                   src={Images("delete_icon")}
@@ -153,6 +172,62 @@ const AllRides = () => {
           </div>
         </div>
       </div>
+
+      <section className="container">
+        <div className="row">
+          <div className="col-md-12">
+            {rideData && (
+              <div className="pagination">
+                {/* Show previous button */}
+                <span
+                  onClick={() => selectPageHandler(page - 1)}
+                  className={page > 1 ? "prev_page" : "pagination__disable"}
+                >
+                  <i className="fa-solid fa-chevron-left"></i>
+                </span>
+
+                {/* Render page numbers */}
+                {Array.from(
+                  { length: totalPages >= 4 ? 4 : totalPages },
+                  (_, i) => {
+                    const startingPage = page <= 3 ? 1 : page - 3;
+                    const pageNumber = startingPage + i;
+                    if (pageNumber <= totalPages) {
+                      return (
+                        <span
+                          key={pageNumber}
+                          className={
+                            page === pageNumber
+                              ? "pagination__selected"
+                              : "inactive_page"
+                          }
+                          onClick={() => selectPageHandler(pageNumber)}
+                        >
+                          {pageNumber}
+                        </span>
+                      );
+                    } else {
+                      return null; // Render nothing for pages beyond totalPages
+                    }
+                  }
+                )}
+
+                {/* Show next button if there are more than 2 pages */}
+                {totalPages > 0 && (
+                  <span
+                    onClick={() => selectPageHandler(page + 1)}
+                    className={
+                      page === totalPages ? "pagination__disable" : "next-page"
+                    }
+                  >
+                    <i className="fa-solid fa-angle-right"></i>
+                  </span>
+                )}
+              </div>
+            )}
+          </div>
+        </div>
+      </section>
     </div>
   );
 };
