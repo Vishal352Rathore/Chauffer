@@ -14,7 +14,12 @@ const AllVehicleForApproval = () => {
   const [filteredVehicles, setFilteredVehicles] = useState(null);
   const token = localStorage.getItem("token");
   const URL = process.env.REACT_APP_VEHICLE_LIST_API_URL;
+  
   const VEHICLE_SEARCH_URL = process.env.REACT_APP_VEHICLE_SEARCH_API_URL;
+
+  const [VehicleStatus , setVehicleStatus] = useState({
+    isApproved: "",
+  })
 
   useEffect(() => {
     if (searchQuery.trim() === "") {
@@ -63,6 +68,16 @@ const AllVehicleForApproval = () => {
       console.error("Error fetching data:", error);
     }
   };
+  const selectPageHandler = (selectedPage) => {
+    if (
+      selectedPage >= 1 &&
+      selectedPage <= totalPages &&
+      selectedPage !== page
+    ) {
+      setPage(selectedPage);
+      console.log("selectedPage", selectedPage);
+    }
+  };
 
   useEffect(() => {
     setPage(1);
@@ -106,16 +121,7 @@ const AllVehicleForApproval = () => {
     }
   };
 
-  const selectPageHandler = (selectedPage) => {
-    if (
-      selectedPage >= 1 &&
-      selectedPage <= totalPages &&
-      selectedPage !== page
-    ) {
-      setPage(selectedPage);
-      console.log("selectedPage", selectedPage);
-    }
-  };
+ 
 
   return (
     <div>
@@ -140,7 +146,7 @@ const AllVehicleForApproval = () => {
           <img src={Images("search_icon")} alt="not found" />
           <input
             type="text"
-            placeholder="Search"
+            placeholder="Search..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value.toLowerCase())}
           />
@@ -158,6 +164,7 @@ const AllVehicleForApproval = () => {
                     <th>Vehicle No. </th>
                     <th>Vehicle Brand</th>
                     <th>Registration No</th>
+                    <th>Status</th>
                     <th>Action</th>
                   </tr>
                 </thead>
@@ -171,6 +178,7 @@ const AllVehicleForApproval = () => {
                             <td> {vehicle.vehicleNoPlate}</td>
                             <td> {vehicle.brand}</td>
                             <td>{vehicle.vehicleRegistrationNo}</td>
+                            <td>{vehicle.status}</td>
                             <td>
                               <div className="action_icon">
                                 <Link

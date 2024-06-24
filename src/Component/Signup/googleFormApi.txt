@@ -1,0 +1,35 @@
+import React, { useState } from "react";
+import { LoadScript, Autocomplete } from "@react-google-maps/api";
+
+const LocationAutocomplete = ({ onLocationChange }) => {
+  const [location, setLocation] = useState("");
+  const [coordinates, setCoordinates] = useState([]);
+//   const YOUR_GOOGLE_MAPS_API_KEY = "AIzaSyCZ0UycRv9Fy9PMDBY-uoU_SkXZGnmjP18";
+  const handlePlaceSelect = (place) => {
+    setLocation(place.formatted_address);
+    const { lat, lng } = place.geometry.location;
+    setCoordinates([lat(), lng()]);
+    onLocationChange([lat(), lng()]);
+  };
+
+  return (
+    <LoadScript
+    //   googleMapsApiKey={YOUR_GOOGLE_MAPS_API_KEY }
+      libraries={["places"]}
+    >
+      <Autocomplete onLoad={(autocomplete) => {
+        autocomplete.addListener("place_changed", () => handlePlaceSelect(autocomplete.getPlace()));
+      }}>
+        <input
+          type="text"
+          className="form-control"
+          placeholder="Enter Location"
+          value={location}
+          onChange={(e) => setLocation(e.target.value)}
+        />
+      </Autocomplete>
+    </LoadScript>
+  );
+};
+
+export default LocationAutocomplete;

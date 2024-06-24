@@ -4,7 +4,7 @@ import axios from "axios";
 import "../DriverDetail/DriverDetail.css";
 
 const DriverApproval = () => {
-  const { driverId } = useParams();
+  // const { driverId } = useParams();
   const location = useLocation();
   const token = localStorage.getItem("token")
   const navigate = useNavigate();
@@ -14,7 +14,7 @@ const DriverApproval = () => {
  const AGENCYDRIVER_STATUS_CHANGE_URL = process.env.REACT_APP_AGENCYDRIVER_STATUS_CHANGE_API_URL ;
   
   const [DriverStatus , setDriverStatus] = useState({
-    isApproved: ""
+    isApproved: "",
   })
   const handleChange = (e)=>{
     setDriverStatus({...DriverStatus,[e.target.name]:e.target.value})
@@ -25,11 +25,12 @@ const DriverApproval = () => {
   }
   const ApiCalling = async () => {
     try {
-      const response = await axios.post(
-        AGENCYDRIVER_STATUS_CHANGE_URL,
+      const response = await axios.post(AGENCYDRIVER_STATUS_CHANGE_URL
+        ,
         {
-          // agencyId: agencyData._id,
-          agencyStatus: DriverStatus.isApproved,
+          status: DriverStatus.isApproved,
+          
+          driverId:driverData._id
         },
         {
           headers: {
@@ -42,7 +43,7 @@ const DriverApproval = () => {
       if (response.data.status === true) {
         console.log("response.data.items", response.items);
         alert(response.data.message);
-        navigate("/home/allAgent");
+        navigate(-1);
       } else {
         alert(response.data.message);
         console.log("response.data.items.drivers fail", response);
@@ -70,14 +71,13 @@ const DriverApproval = () => {
     </section>
     <div className="driver-detail-container">
       <section className="container">
-        {/* <form onSubmit={handleSubmit}> */}
         <div class="row">
           <div className="col-md-4 mx-auto">
             {driverData.profileImage && (
               <div className="profile">
                 <div className="profile-preview">
                   <img
-                    src={driverData.profileImage || "#"}
+                    src={driverData.profileImage[0] || "#"}
                     alt="images"
                     id="imageProfile"
                   />
@@ -115,23 +115,7 @@ const DriverApproval = () => {
               </div>
             </div>
 
-            {/* <div class="col-md-6">
-              <label htmlfor="serviceArea" class="form-label">
-                Selected Status
-              </label>
-              <select
-                class="form-select"
-                aria-label="Default select example"
-                id="status"
-                name="status"
-                value={driverData.status}
-                onChange={handleChange}
-              >
-                <option>Vehicle Select Class</option>
-                <option value="active">Approve</option>
-                <option value="inactive">Reject</option>
-              </select>
-            </div> */}
+           
           </div>
 
           <div className="row">
@@ -148,7 +132,7 @@ const DriverApproval = () => {
                 {driverData.drivingLicence ? (
                   <label className="filelabel" htmlFor="FileInput-0">
                     <img
-                      src={driverData.drivingLicence || "#"}
+                      src={driverData.drivingLicence[0] || "#"}
                       alt="images"
                       id="imagePreview"
                     />
@@ -237,7 +221,6 @@ const DriverApproval = () => {
           </div>
         </form> 
         </div>
-        {/* </form> */}
       </section>
     </div>
   </div>

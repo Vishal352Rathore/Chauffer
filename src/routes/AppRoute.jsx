@@ -19,9 +19,9 @@ const AppRoute = () => {
  
   return (
     <div>
-            <Routes>
+            {/* <Routes>
                
-                <Route path='/dashboard' element={<Dashboard/>} />
+                 <Route path='/dashboard' element={<Dashboard/>} />
                 <Route path='/allRides' element={<AllRides/>} />
                 <Route path='/rideDetails' element={<RideDetails/>} />
                 <Route path='/allDriver' element={<AllDriver/>} />
@@ -33,10 +33,10 @@ const AppRoute = () => {
                 <Route path='/complaints' element={<Complaints/>} />
                 <Route path='/complaintForm' element={<ComplaintForm/>} />
                 <Route path='/terms&Condition' element={<TermsAndCondition/>} />
-                <Route path='/policy' element={<Policy/>} />
+                <Route path='/policy' element={<Policy/>} /> 
                
 
-            </Routes>
+            </Routes> */}
     </div>
   );
 };

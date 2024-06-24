@@ -4,7 +4,7 @@ import "../VehicleDetail/VehicleDetail.css";
 import axios from "axios";
 
 const ApproveVehicle = () => {
-  const AGENCYVEHICLE_STATUS_CHANGE_URL = process.env.REACT_APP_AGENCYVEHICLE_STATUS_CHANGE_API_URL;
+  const AGENYVEHICLE_STATUS_CHANGE_URL = process.env.REACT_APP_AGENCYVEHICLE_STATUS_CHANGE_API_URL;
 
   const { vehicleId } = useParams();
   console.log("vehicleId:", vehicleId);
@@ -18,7 +18,7 @@ const ApproveVehicle = () => {
   console.log("vehicleData", vehicleData);
 
   const handleChange = (e) => {
-    setAddVehicleStatus({ ...vehicleStatus, [e.targer.name]: e.target.value });
+    setAddVehicleStatus({ ...vehicleStatus, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = (e) => {
@@ -29,10 +29,11 @@ const ApproveVehicle = () => {
   const ApiCalling = async () => {
     try {
       const response = await axios.post(
-        AGENCYVEHICLE_STATUS_CHANGE_URL,
+        AGENYVEHICLE_STATUS_CHANGE_URL,
         {
-          agencyId: 1,
-          agencyStatus: vehicleStatus.isApproved,
+          // agencyId: 1,
+          vehicleId:vehicleData._id,
+          vehicleStatus: vehicleStatus.isApproved,
         },
         {
           headers: {
@@ -45,7 +46,7 @@ const ApproveVehicle = () => {
       if (response.data.status === true) {
         console.log("response.data.items", response.items);
         alert(response.data.message);
-        navigate("/home/allAgent");
+        navigate(-1);
       } else {
         alert(response.data.message);
         console.log("response.data.items.drivers fail", response);

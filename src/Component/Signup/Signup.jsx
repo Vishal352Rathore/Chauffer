@@ -5,11 +5,17 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { LoadScript, Autocomplete } from "@react-google-maps/api";
 import Images from "../Images";
 
 const Signup = () => {
   const URL = process.env.REACT_APP_AGENCY_REGISTER_API_URL ;
+  const YOUR_GOOGLE_MAPS_API_KEY = "AIzaSyCZ0UycRv9Fy9PMDBY-uoU_SkXZGnmjP18";
+  const Google_API_KEY = process.env.REACT_APP_GOOGLE_MAPS_API_KEY
   const navigate = useNavigate();
+  const [coordinates, setCoordinates] = useState({
+    ServiceWeCovrage : "",
+  });
   const [signupInfo, setSignupInfo] = useState({
     AgencyName: "",
     BusinessRegistrationNumber: "",
@@ -21,22 +27,47 @@ const Signup = () => {
     password: "",
     YearsInOperation: "",
     NumberOfVehiclesInFleet: "",
-    ServiceWeCovrage: "",
+    ServiceWeCovrage: [],
     BusinessLicensePermit: "",
     TaxInformationNumber: "",
   });
   const [ConfirmPassword, setConfirmPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
-
+  
+  const [isSuggestionSelected, setIsSuggestionSelected] = useState({ServiceWeCovrage : false});
   const handleConfirmPasswordChange = (e) => {
     setConfirmPassword(e.target.value);
   };
 
   const handleChange = (e) => {
     setSignupInfo({ ...signupInfo, [e.target.name]: e.target.value });
-    
+    setIsSuggestionSelected({ ...isSuggestionSelected, [e.target.name]: false });
   };
-
+  const handleBlur = (fieldName) => {
+    if (!isSuggestionSelected[fieldName]) {
+      setSignupInfo({ ...signupInfo, [fieldName]: '' });
+    }
+  };
+  
+  const handlePlaceSelect = (place ,name) => {
+    console.log("Selected place:", place); // Log the place object to see its structure
+    if (place && place.geometry && place.geometry.location)
+       {
+      const { lat, lng } = place.geometry.location;
+      setSignupInfo((signupInfo) => ({ ...signupInfo, [name]: place.formatted_address }));
+      setCoordinates((prevCoordinates) => ({
+        ...prevCoordinates,
+        [name]: `${lat()},${lng()}`,
+      }));
+      console.log('Coordinates:name', `${name} ${lat()},${lng()}` );
+      setIsSuggestionSelected({ ...isSuggestionSelected, [name]: true });
+    } 
+    else {
+      console.error("Invalid place object:", place);
+    }
+  };
+  
+  
   const validatePasswords = () => {
     if (signupInfo.password !== ConfirmPassword) {
       setErrorMessage("Passwords do not match");
@@ -123,7 +154,7 @@ const Signup = () => {
         password: "",
         YearsInOperation: "",
         NumberOfVehiclesInFleet: "",
-        ServiceWeCovrage: "",
+        ServiceWeCovrage: [],
         BusinessLicensePermit: "",
         TaxInformationNumber: "",
       });
@@ -282,7 +313,7 @@ const Signup = () => {
               </div>
               {/* {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>} */}
               <div className="row">
-                <div className="col-md-6">
+                <div className="col-md-6 mt-4">
                   <input
                     type="password"
                     value={ConfirmPassword}
@@ -341,6 +372,20 @@ const Signup = () => {
                     htmlFor="serviceWeCovrage"
                     className="form-label"
                   ></label>
+                   <LoadScript
+                  googleMapsApiKey={YOUR_GOOGLE_MAPS_API_KEY}
+                  libraries={["places"]}
+                >
+                  <Autocomplete
+                    onLoad={(autocomplete) => {
+                      autocomplete.addListener("place_changed", () =>
+                        handlePlaceSelect(
+                          autocomplete.getPlace(),
+                          "serviceWeCovrage"
+                        )
+                      );
+                    }}
+                  >
                   <input
                     type="text"
                     className="form-control"
@@ -349,8 +394,12 @@ const Signup = () => {
                     name="ServiceWeCovrage"
                     value={signupInfo.ServiceWeCovrage}
                     onChange={handleChange}
+                    onBlur={() => handleBlur("pickUpLocation")}
+                    // onChange={handleServiceCoverageChange}
                     required
                   />
+                   </Autocomplete>
+                   </LoadScript>
                 </div>
               </div>
               <div className="row">
@@ -409,3 +458,30 @@ const Signup = () => {
 };
 
 export default Signup;
+
+// const handleServiceCoverageChange = async (e) => {
+//   const { value } = e.target;
+//   const locations = value.split(',').map(loc => loc.trim()); // Split by commas and trim spaces
+//   const coordinatesArray = [];
+  
+
+//   for (const location of locations) {
+//     try {
+//       const response = await axios.get(
+//         `https://maps.googleapis.com/maps/api/geocode/json?address=${location}&key=${Google_API_KEY}`
+//       );
+
+//       if (response.data.status === 'OK') {
+//         const { lat, lng } = response.data.results[0].geometry.location;
+//         coordinatesArray.push({ lat, lng });
+//         console.log("coordinatesArray:",coordinatesArray)
+//       } else {
+//         console.error(`Geocoding API error for location: ${location}`);
+//       }
+//     } catch (error) {
+//       console.error('Error fetching geocode data:', error);
+//     }
+//   }
+
+//   setSignupInfo({ ...signupInfo, ServiceWeCovrage: coordinatesArray });
+// };

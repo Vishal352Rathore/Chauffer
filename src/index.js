@@ -5,9 +5,10 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { Provider } from 'react-redux';
 import { Store } from "./Redux/Store/Store";
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import 'bootstrap/dist/css/bootstrap.css';
+// import LocationAutocomplete from "./Component/Signup/GoogleApiform";
 
 
 Store.subscribe(()=>console.log("store",Store))
@@ -15,6 +16,7 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <Provider store={Store}>
+      {/* <LocationAutocomplete/> */}
       <App />
       <ToastContainer />
     </Provider>

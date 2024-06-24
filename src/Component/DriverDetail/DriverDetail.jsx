@@ -171,7 +171,7 @@ const DriverDetail = ({agencyData}) => {
               </div>
 
               <div className="col-md-4">
-                <div className="upload-container">
+                <div className="upload-container mb-5">
                   {driverData.otherDocs[0] ? (
                     <label className="filelabel" htmlFor="FileInput-0">
                       <img
@@ -193,13 +193,13 @@ const DriverDetail = ({agencyData}) => {
 
           
           
-            <div className="row">
+            {/* <div className="row">
               <div className="col-md-4 mx-auto my-3">
                 <button className="form-btn" type="submit">
                   Submit
                 </button>
               </div>
-            </div>
+            </div> */}
           </div>
           {/* </form> */}
         </section>
