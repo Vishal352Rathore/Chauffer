@@ -87,13 +87,14 @@ const Login = () => {
                     />
                   </div>
                   <div className="mb-3">
-                    <label htmlFor="password"></label>
+                    <label htmlFor="password" className="form-label"></label>
                     <input
                       type="password"
                       id="password"
                       name="password"
                       placeholder="Password"
                       value={loginData.password}
+                      className="form-control"
                       onChange={handleChange}
                       required
                     />
