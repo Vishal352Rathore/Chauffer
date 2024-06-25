@@ -178,7 +178,19 @@ const AllVehicleForApproval = () => {
                             <td> {vehicle.vehicleNoPlate}</td>
                             <td> {vehicle.brand}</td>
                             <td>{vehicle.vehicleRegistrationNo}</td>
-                            <td>{vehicle.status}</td>
+                            <td>{vehicle.vehicleStatus}
+                            {/* {vehicle.vehicleStatus && vehicle.vehicleStatus === "active" ? (
+                              <td>
+                                <button style={{ background: "#5DCA95" }}>
+                                  Done
+                                </button>
+                              </td>
+                            ) : (
+                              <td>
+                                <button>Pending</button>
+                              </td>
+                            )} */}
+                            </td>
                             <td>
                               <div className="action_icon">
                                 <Link

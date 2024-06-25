@@ -51,7 +51,7 @@ function App() {
             <Route path="allVehicle" element={<AllVehicle/>} />
             <Route path="allVehicle/vehicleDetail/:vehicleId" element={<VehicleDetail />} /> 
             <Route path="allVehicleForApproval" element={<AllVehicleForApproval />} />
-            <Route path="allVehicleForApproval/approveVehicle/:vehicleId" element={<ApproveVehicle />} /> 
+            <Route path="allVehicleForApproval/vehicleDetail/:vehicleId" element={<ApproveVehicle />} /> 
 
             <Route path="allVehicle/addVehicle" element={<AddVehicle />} />
             <Route path="allAgent" element={<AllAgent />} /> 

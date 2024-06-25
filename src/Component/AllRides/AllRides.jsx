@@ -112,7 +112,7 @@ const AllRides = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {rideData &&
+                  {rideData!==null && rideData.length >0 &&
                     rideData.map((ride,index) => {
                       return (
                         <tr key={ride._id}>
