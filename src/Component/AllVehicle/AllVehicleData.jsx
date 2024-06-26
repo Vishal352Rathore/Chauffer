@@ -181,7 +181,7 @@ const AllVehicleData = ({ superAdminId, agencyId }) => {
                             <td> {vehicle.vehicleNoPlate}</td>
                             <td> {vehicle.brand}</td>
                             <td>{vehicle.vehicleRegistrationNo}</td>
-                            <td>{}</td>
+                            <td>{vehicle.vehicleStatus}</td>
                             <td>
                               <div className="action_icon">
                                 <Link

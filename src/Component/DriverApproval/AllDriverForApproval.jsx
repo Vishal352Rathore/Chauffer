@@ -168,7 +168,7 @@ const AllDriverForApproval = () => {
                         <td>{driver.email}</td>
                         <td>{driver.createdAt}</td>
                         <td>
-                          <button style={{ background: driver.status === "active" ? "#5DCA95" : "#32FdE1" }}>
+                          <button style={{ background: driver.status === "active" ? "#5DCA95" : "" }}>
                             {driver.status === "active" ? "Done" : "Pending"}
                           </button>
                         </td>

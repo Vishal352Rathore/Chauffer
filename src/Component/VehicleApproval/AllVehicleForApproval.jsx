@@ -17,7 +17,7 @@ const AllVehicleForApproval = () => {
   const VEHICLE_SEARCH_URL = process.env.REACT_APP_VEHICLE_SEARCH_API_URL;
   console.log("APPROVE_API_URL", APPROVE_VEHICLE_URL);
 
-  const [VehicleStatus, setVehicleStatus] = useState({
+  const [vehicleStatus, setVehicleStatus] = useState({
     isApproved: "",
   });
 
@@ -177,32 +177,11 @@ const AllVehicleForApproval = () => {
                             <td> {vehicle.brand}</td>
                             <td>{vehicle.vehicleRegistrationNo}</td>
                             {/* <td>{vehicle.vehicleStatus}</td> */}
-                            {vehicle.vehicleStatus &&
-                            vehicle.vehicleStatus === "active" ? (
-                              <td>
-                                <button
-                                  style={{
-                                    background: "#5DCA95",
-                                    borderRadius: "16px",
-                                    textAlign: "center",
-                                    color: "#fff",
-                                    fontFamily: "Inter",
-                                    fontSize: "16px",
-                                    fontWeight: "400",
-                                    border: "none",
-                                    padding: "4px 10px",
-                                  }}
-                                >
-                                  Done
-                                </button>
-                              </td>
-                            ) : (
-                              <td>
-                                <button style={{ background: "" }}>
-                                  Pending
-                                </button>
-                              </td>
-                            )}
+                            <td>
+                              <button style={{ background: vehicle.vehicleStatus === "active" ? "#5DCA95" : "" }}>
+                                {vehicle.vehicleStatus === "active" ? "Done" : "Pending"}
+                              </button>
+                            </td>
 
                             <td>
                               <div className="action_icon">
