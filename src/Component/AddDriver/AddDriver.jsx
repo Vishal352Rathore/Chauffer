@@ -200,7 +200,8 @@ const AddDriver = () => {
       localStorage.getItem("superAdminId") !== ""
     ) {
       formdata.append("superAdminId", driverData.superAdminId);
-    } else if (
+    } 
+    else if (
       localStorage.getItem("agencyId") !== null &&
       localStorage.getItem("agencyId") !== ""
     ) {

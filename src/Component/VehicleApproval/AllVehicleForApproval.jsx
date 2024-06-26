@@ -13,13 +13,13 @@ const AllVehicleForApproval = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredVehicles, setFilteredVehicles] = useState(null);
   const token = localStorage.getItem("token");
-  const URL = process.env.REACT_APP_VEHICLE_LIST_API_URL;
-  
+  const APPROVE_VEHICLE_URL = process.env.REACT_APP_GET_VEHICLE_LIST_FOR_APPROVE_API_URL;
   const VEHICLE_SEARCH_URL = process.env.REACT_APP_VEHICLE_SEARCH_API_URL;
+  console.log("APPROVE_API_URL", APPROVE_VEHICLE_URL);
 
-  const [VehicleStatus , setVehicleStatus] = useState({
+  const [VehicleStatus, setVehicleStatus] = useState({
     isApproved: "",
-  })
+  });
 
   useEffect(() => {
     if (searchQuery.trim() === "") {
@@ -49,7 +49,7 @@ const AllVehicleForApproval = () => {
         redirect: "follow",
       };
 
-      fetch(URL, requestOptions)
+      fetch(APPROVE_VEHICLE_URL, requestOptions)
         .then((response) => response.json())
         .then((result) => {
           console.log(result);
@@ -121,8 +121,6 @@ const AllVehicleForApproval = () => {
     }
   };
 
- 
-
   return (
     <div>
       <section className="container-fluid">
@@ -131,7 +129,7 @@ const AllVehicleForApproval = () => {
             <div className="all-vehicle-header">
               <div className="form-title  padding_left_20  ">
                 <p>
-                Vehicle <span>Approval</span>
+                  Vehicle <span>Approval</span>
                 </p>
               </div>
             </div>
@@ -178,19 +176,34 @@ const AllVehicleForApproval = () => {
                             <td> {vehicle.vehicleNoPlate}</td>
                             <td> {vehicle.brand}</td>
                             <td>{vehicle.vehicleRegistrationNo}</td>
-                            <td>{vehicle.vehicleStatus}
-                            {/* {vehicle.vehicleStatus && vehicle.vehicleStatus === "active" ? (
+                            {/* <td>{vehicle.vehicleStatus}</td> */}
+                            {vehicle.vehicleStatus &&
+                            vehicle.vehicleStatus === "active" ? (
                               <td>
-                                <button style={{ background: "#5DCA95" }}>
+                                <button
+                                  style={{
+                                    background: "#5DCA95",
+                                    borderRadius: "16px",
+                                    textAlign: "center",
+                                    color: "#fff",
+                                    fontFamily: "Inter",
+                                    fontSize: "16px",
+                                    fontWeight: "400",
+                                    border: "none",
+                                    padding: "4px 10px",
+                                  }}
+                                >
                                   Done
                                 </button>
                               </td>
                             ) : (
                               <td>
-                                <button>Pending</button>
+                                <button style={{ background: "" }}>
+                                  Pending
+                                </button>
                               </td>
-                            )} */}
-                            </td>
+                            )}
+
                             <td>
                               <div className="action_icon">
                                 <Link

@@ -41,14 +41,14 @@ const Login = () => {
           localStorage.setItem("agencyId", res.items._id);
           localStorage.setItem("superAdminId", "");
           localStorage.setItem("AgencyName",res.items.AgencyName)
-          toast.success(res.message);
+          toast.success("message",res.message);
           }
         console.log("login successfully", res);
         setLoginData({ email: "", password: "" });
         navigate("/home");
       }
        else if(res.status=== false){
-        toast.error(res.message);
+        toast.error(`${res.message}`);
       }
     } catch (err) {
       console.log("Error :", err.message);
