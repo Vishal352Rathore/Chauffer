@@ -29,7 +29,7 @@ const UserComplaint = () => {
           }
         );
         console.log("response for ride", response);
-        setUserComplainData(response.data.items);
+        setUserComplainData(response.data.complaints);
       } else {
         console.log("response fail for ride"); 
       }
@@ -60,18 +60,16 @@ const UserComplaint = () => {
                     return (
                       <tr key={complain._id}>
                         <>
-                          <td> {complain._id}</td>
+                          <td> {complain.rideId._id}</td>
                           <td> {complain.dropLocation}</td>
-                          <td>{complain.firstName}</td>
+                          <td>{complain.rideId.firstName}</td>
                           <td>{complain.rideType}</td>
                           <td>{complain.status}</td>
                           <td>
                             {complain.date}
                             {complain.time}
                           </td>
-                          <td>
-                            <input type="checkbox" />
-                          </td>
+                         
                         </>
                       </tr>
                     );
