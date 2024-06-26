@@ -49,14 +49,14 @@ const Complaints = () => {
             Driver
           </button>
         </div>
-        <div>
+        {/* <div>
           <span>
             <Link className="add-complaint-btn" to="complaintForm">
               {" "}
               Add Complain
             </Link>{" "}
           </span>
-        </div>
+        </div> */}
       </div>
 
       <div className="">{isTrue ? <UserComplaint /> : <DriverComplaint />}</div>

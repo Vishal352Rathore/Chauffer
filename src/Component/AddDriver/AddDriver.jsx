@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Images from "../Images";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import Spinner from "react-bootstrap/Spinner";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -20,20 +20,29 @@ const AddDriver = () => {
     setParentElement(document.getElementById("home-container"));
   }, []);
 
+  const location = useLocation();
+  const { driverData } = location.state === null ? null : location.state;
+
+  console.log("driverDataForEdit", driverData);
+
+  const driverId = driverData !== null && driverData._id;
+  const DRIVER_UPDATE_URL = `${process.env.REACT_APP_DRIVER_UPDATE_API_URL}/${driverId}`;
+
   const token = localStorage.getItem("token");
 
-  const [driverData, setDriverData] = useState({
-    driverProfile: [],
+  const [addDriverData, setAddDriverData] = useState({
+    driverProfile: "",
     drivername: "",
     email: "",
     mobile: "",
     address: "",
     experience: "",
-    drivingLicence: [],
-    governmentid: [],
-    other_docs: [],
+    drivingLicence: "",
+    governmentid: "",
+    otherDocs: "",
     superAdminId: "",
     agencyId: "",
+    password:""
   });
 
   const [validationMessages, setValidationMessages] = useState({
@@ -42,9 +51,11 @@ const AddDriver = () => {
     mobile: "",
     address: "",
     experience: "",
+    password:""
   });
 
-  const [selectedFiles, setSelectedFiles] = useState(
+  const [
+    selectedFiles, setSelectedFiles] = useState(
     Array.from({ length: 4 }, () => ({ file: null, error: null }))
   );
 
@@ -85,7 +96,7 @@ const AddDriver = () => {
 
   const handleChange = (event) => {
     const { name, value } = event.target;
-    setDriverData({ ...driverData, [name]: value });
+    setAddDriverData({ ...addDriverData, [name]: value });
     validateField(name, value);
   };
 
@@ -139,20 +150,20 @@ const AddDriver = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    driverData.driverProfile = selectedFiles[3].file;
-    driverData.drivingLicence = selectedFiles[0].file;
-    driverData.governmentid = selectedFiles[1].file;
-    driverData.other_docs = selectedFiles[2].file;
-    driverData.superAdminId = localStorage.getItem("superAdminId");
-    driverData.agencyId = localStorage.getItem("agencyId");
-    console.log("driverData", driverData);
+    addDriverData.driverProfile = selectedFiles[3].file;
+    addDriverData.drivingLicence = selectedFiles[0].file;
+    addDriverData.governmentid = selectedFiles[1].file;
+    addDriverData.otherDocs = selectedFiles[2].file;
+    addDriverData.superAdminId = localStorage.getItem("superAdminId");
+    addDriverData.agencyId = localStorage.getItem("agencyId");
+    console.log("addDriverData", addDriverData);
 
     let isValid = validationSchema();
 
     console.log("isValid", isValid);
 
     if (isValid) {
-      DriverRegister();
+      driverData === null ? DriverRegister() : DriverEdit();
       setIsLoading(true);
       setIsSubmit(true);
       if (parentElement) {
@@ -185,27 +196,28 @@ const AddDriver = () => {
     };
 
     const formdata = new FormData();
-    formdata.append("drivingLicence", driverData.drivingLicence);
-    formdata.append("email", driverData.email);
-    formdata.append("drivername", driverData.drivername);
-    formdata.append("mobile", driverData.mobile);
-    formdata.append("address", driverData.address);
-    formdata.append("aadharCard", driverData.governmentid);
-    formdata.append("otherDocs", driverData.other_docs);
-    formdata.append("profileImage", driverData.driverProfile);
-    formdata.append("experience", `${driverData.experience}years`);
+    formdata.append("drivingLicence", addDriverData.drivingLicence);
+    formdata.append("email", addDriverData.email);
+    formdata.append("drivername", addDriverData.drivername);
+    formdata.append("mobile", addDriverData.mobile);
+    formdata.append("address", addDriverData.address);
+    formdata.append("aadharCard", addDriverData.governmentid);
+    formdata.append("otherDocs", addDriverData.otherDocs);
+    formdata.append("profileImage", addDriverData.driverProfile);
+    formdata.append("experience", addDriverData.experience);
+    formdata.append("password", addDriverData.password);
+
 
     if (
       localStorage.getItem("superAdminId") !== null &&
       localStorage.getItem("superAdminId") !== ""
     ) {
-      formdata.append("superAdminId", driverData.superAdminId);
-    } 
-    else if (
+      formdata.append("superAdminId", addDriverData.superAdminId);
+    } else if (
       localStorage.getItem("agencyId") !== null &&
       localStorage.getItem("agencyId") !== ""
     ) {
-      formdata.append("agencyId", driverData.agencyId);
+      formdata.append("agencyId", addDriverData.agencyId);
     }
 
     try {
@@ -253,23 +265,131 @@ const AddDriver = () => {
     }
   };
 
+  const DriverEdit = () => {
+    const headers = {
+      headers: {
+        token: token,
+        type: "superAdmin",
+      },
+    };
+
+    const formdata = new FormData();
+    formdata.append("drivingLicence", addDriverData.drivingLicence);
+    formdata.append("email", addDriverData.email);
+    formdata.append("drivername", addDriverData.drivername);
+    formdata.append("mobile", addDriverData.mobile);
+    formdata.append("address", addDriverData.address);
+    formdata.append("aadharCard", addDriverData.governmentid);
+    formdata.append("otherDocs", addDriverData.otherDocs);
+    formdata.append("profileImage", addDriverData.driverProfile);
+    formdata.append("experience", addDriverData.experience);
+
+    if (
+      localStorage.getItem("superAdminId") !== null &&
+      localStorage.getItem("superAdminId") !== ""
+    ) {
+      formdata.append("superAdminId", addDriverData.superAdminId);
+    } else if (
+      localStorage.getItem("agencyId") !== null &&
+      localStorage.getItem("agencyId") !== ""
+    ) {
+      formdata.append("agencyId", addDriverData.agencyId);
+    }
+
+    console.log([...formdata.entries()]);
+
+    try {
+      setIsLoading(true);
+      axios
+        .put(DRIVER_UPDATE_URL, formdata, headers)
+        .then((response) => {
+          console.log("response", response);
+
+          if (response.data.status === true) {
+            setIsLoading(false);
+            setIsSubmit(false);
+            if (parentElement) {
+              parentElement.style.filter = "blur(0px)";
+              parentElement.style.pointerEvents = "auto";
+            }
+            alertShowing(response);
+          } else {
+            setIsLoading(false);
+            setIsSubmit(false);
+            if (parentElement) {
+              parentElement.style.filter = "blur(0px)";
+              parentElement.style.pointerEvents = "auto";
+            }
+            toast.error(response.message);
+          }
+        })
+        .catch((error) => {
+          if (parentElement) {
+            parentElement.style.filter = "blur(0px)";
+            parentElement.style.pointerEvents = "auto";
+          }
+          setIsLoading(false);
+          setIsSubmit(false);
+          toast.error(error);
+          console.error(error);
+        });
+    } catch (error) {
+      if (parentElement) {
+        parentElement.style.filter = "blur(0px)";
+        parentElement.style.pointerEvents = "auto";
+      }
+      setIsLoading(false);
+      setIsSubmit(false);
+    }
+  };
+
   const alertShowing = (response) => {
     toast.success(response.message);
     navigate("/home/allDriver");
   };
 
+  useEffect(() => {
+    if (driverData) {
+      setAddDriverData((prevState) => ({
+        ...prevState,
+        ...driverData,
+      }));
+
+      FileSetUp();
+    }
+  }, [driverData]);
+
+  const FileSetUp = () => {
+    const newSelectedFiles = [...selectedFiles];
+    newSelectedFiles[0].file = driverData.aadharCard;
+    newSelectedFiles[1].file = driverData.drivingLicence;
+    newSelectedFiles[2].file = driverData.otherDocs;
+    newSelectedFiles[3].file = driverData.profileImage;
+
+    setSelectedFiles(newSelectedFiles);
+
+    const updatedPreviews = [...imagePreviews];
+    updatedPreviews[0] = driverData.aadharCard;
+    updatedPreviews[1] = driverData.drivingLicence;
+    updatedPreviews[2] = driverData.otherDocs;
+    updatedPreviews[3] = driverData.profileImage;
+
+    setImagePreviews(updatedPreviews);
+  };
+
   return (
     <div className="add-driver">
-      {/* <Spinner
+      <Spinner
         className={`spinner ${isLoading ? "isLoading" : ""}`}
         animation="border"
-      /> */}
+      />
+
       <section className="container-fluid">
         <div className="row">
           <div className="col-md-12">
             <div className="form-title  margin_top_4 padding_left_20 ">
               <p>
-                Add <span>Driver</span>
+                {driverData === null ? "Add" : "Edit"} <span>Driver</span>
               </p>
             </div>
           </div>
@@ -326,7 +446,7 @@ const AddDriver = () => {
                 id="drivername"
                 name="drivername"
                 placeholder="Driver Name"
-                value={driverData.drivername}
+                value={addDriverData.drivername}
                 onChange={handleChange}
                 required
                 onInvalid={(e) =>
@@ -345,7 +465,7 @@ const AddDriver = () => {
                 id="email"
                 name="email"
                 placeholder="Enter Your Email"
-                value={driverData.email}
+                value={addDriverData.email}
                 onChange={handleChange}
                 required
                 pattern="[a-zA-Z0-9._%+-]+@[a-z]+\.[a-z]{2,}$"
@@ -365,7 +485,7 @@ const AddDriver = () => {
                 id="mobile"
                 name="mobile"
                 placeholder="Enter Your Phone No"
-                value={driverData.mobile}
+                value={addDriverData.mobile}
                 onChange={handleChange}
                 maxLength={10}
                 onKeyDown={handleKeyDown}
@@ -382,7 +502,7 @@ const AddDriver = () => {
                 id="address"
                 name="address"
                 placeholder="Enter Your Address"
-                value={driverData.address}
+                value={addDriverData.address}
                 onChange={handleChange}
                 required
                 onInvalid={(e) =>
@@ -400,7 +520,7 @@ const AddDriver = () => {
                   type="number"
                   id="experience"
                   name="experience"
-                  value={driverData.experience}
+                  value={addDriverData.experience}
                   onChange={handleChange}
                   placeholder="Enter Your Experience"
                   required
@@ -421,6 +541,25 @@ const AddDriver = () => {
                   </p>
                 )}
               </div>
+            </div>
+            <div className="col-md-6">
+              <label htmlFor="password">Password</label>
+              <input
+                type="text"
+                id="password"
+                name="password"
+                placeholder="Password"
+                value={addDriverData.password}
+                onChange={handleChange}
+                required
+                onInvalid={(e) =>
+                  e.target.setCustomValidity("Please enter password")
+                }
+                onInput={(e) => e.target.setCustomValidity("")}
+              />
+              {validationMessages.password && (
+                <p style={{ color: "red" }}>{validationMessages.password}</p>
+              )}
             </div>
           </div>
           <div className="row add-driver-form">

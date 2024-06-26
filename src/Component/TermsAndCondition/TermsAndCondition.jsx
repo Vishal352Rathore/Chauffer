@@ -1,4 +1,5 @@
 import React from "react";
+import './TermsAndCondition.css'
 
 const TermsAndCondition = () => {
   const termsAndConditionsData = {
@@ -33,8 +34,11 @@ const TermsAndCondition = () => {
           </div>
         </div>
       </section>
+      <div className="terms-container">
       <p>{termsAndConditionsData.agreement}</p>
-      <div>
+      </div>
+
+      <div className="terms-container">
         <h2> Acceptance of Terms</h2>
         <p>{termsAndConditionsData.acceptance}</p>
 

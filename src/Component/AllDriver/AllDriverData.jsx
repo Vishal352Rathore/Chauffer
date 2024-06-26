@@ -15,6 +15,10 @@ const AllDriverData = ({ superAdminId, agencyId }) => {
   const URL = process.env.REACT_APP_DRIVER_LIST_API_URL;
   const DRIVER_SEARCH_URL = process.env.REACT_APP_DRIVER_SEARCH_API_URL;
 
+  const [toogleLogoutPopup, setToogleLogoutPopup] = useState(false);
+  const [driverId, setDriverId] = useState(null);
+  const DRIVER_DELETE_URL = `${process.env.REACT_APP_DRIVER_DELETE_API_URL}/${driverId}`;
+
   const fetchData = async () => {
     const raw = JSON.stringify({
       superAdminId: superAdminId,
@@ -114,9 +118,29 @@ const AllDriverData = ({ superAdminId, agencyId }) => {
     }
   };
 
+  const handleDelete = () => {
+    console.log("Driver_DELETE_URL", DRIVER_DELETE_URL);
+    try {
+      axios
+        .delete(DRIVER_DELETE_URL, {
+          headers: {
+            token: token,
+            type: "superAdmin",
+          },
+        })
+        .then((res) => {
+          setToogleLogoutPopup(!toogleLogoutPopup);
+          setDriverId(null);
+          fetchData();
+          console.log(res);
+        });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div>
-      
       <div className="search-box-section">
         <label htmlFor="searchby">Search :</label>
         <div className="search-box">
@@ -145,8 +169,8 @@ const AllDriverData = ({ superAdminId, agencyId }) => {
                   </tr>
                 </thead>
                 <tbody>
-                  {filteredDrivers &&
-                   filteredDrivers.length ? filteredDrivers.map((driver, index) => {
+                  {filteredDrivers && filteredDrivers.length ? (
+                    filteredDrivers.map((driver, index) => {
                       return (
                         <tr key={driver._id}>
                           <>
@@ -176,22 +200,77 @@ const AllDriverData = ({ superAdminId, agencyId }) => {
                                     alt="not found"
                                   />
                                 </Link>
+                                <Link
+                                  to="addDriver"
+                                  state={{ driverData: driver }}
+                                >
+                                  <img
+                                    src={Images("edit_icon")}
+                                    alt="not found"
+                                  />
+                                </Link>
                                 <img
                                   src={Images("delete_icon")}
                                   alt="not found"
+                                  onClick={() => {
+                                    setDriverId(driver._id);
+                                    setToogleLogoutPopup(true);
+                                  }}
                                 />
                               </div>
                             </td>
                           </>
                         </tr>
                       );
-                    }) : <div> <p> No Driver found</p> </div>}
+                    })
+                  ) : (
+                    <div>
+                      {" "}
+                      <p> No Driver found</p>{" "}
+                    </div>
+                  )}
                 </tbody>
               </table>
             </div>
           </div>
         </div>
       </div>
+
+      {toogleLogoutPopup && (
+        <div className="container">
+          <div className="row">
+            <div className="col-md-3 mx-auto">
+              <div className="popup-container">
+                <div className="popup-modal">
+                  <div className="popup-content">
+                    <div className="popup-title-content">
+                      <h5>Confirm Delete</h5>
+                      <span onClick={() => setToogleLogoutPopup(false)}>
+                        <i className="fa-solid fa-xmark"></i>
+                      </span>
+                    </div>
+                    <p>Are you sure you want to Delete ?</p>
+                  </div>
+                  <div className="popup-buttons">
+                    <button
+                      className="btn btn-secondary"
+                      onClick={() => {
+                        setToogleLogoutPopup(!toogleLogoutPopup);
+                      }}
+                    >
+                      Close
+                    </button>
+                    <button className="btn btn-primary" onClick={handleDelete}>
+                      Delete
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
       <section className="container">
         <div className="row">
           <div className="col-md-12">
@@ -235,14 +314,15 @@ const AllDriverData = ({ superAdminId, agencyId }) => {
                 {totalPages > 0 && (
                   <span
                     onClick={() => selectPageHandler(page + 1)}
-                    className={page === totalPages ? "pagination__disable" : "next-page"}
+                    className={
+                      page === totalPages ? "pagination__disable" : "next-page"
+                    }
                   >
                     <i className="fa-solid fa-angle-right"></i>
                   </span>
                 )}
               </div>
             )}
-
           </div>
         </div>
       </section>

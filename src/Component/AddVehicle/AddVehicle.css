@@ -1,3 +1,17 @@
+.spinner {
+    position: absolute;
+    top: 50%;
+    left: 42%;
+    z-index: 999;
+    display: none !important;
+    filter: blur(0);
+}
+
+.isLoading {
+    display: block !important;
+}
+
+
 .add-vehicle-container form {
     margin-top: 3%;
 }

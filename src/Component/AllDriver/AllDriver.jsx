@@ -22,7 +22,7 @@ const AllDriver = () => {
                 ( */}
                   <div className="add-driver-navigate-btn-div">
                 <span>
-                  <Link to="addDriver" className="add-driver-btn">
+                  <Link to="addDriver" className="add-driver-btn"  state={{ driverData: null }}>
                     {" "}
                     Add Driver
                   </Link>{" "}

@@ -1,32 +1,88 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./AddVehicle.css";
 import Images from "../Images";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
+import Spinner from "react-bootstrap/Spinner";
 
 const AddVehicle = () => {
   const token = localStorage.getItem("token");
   const URL = process.env.REACT_APP_VEHICLE_REGISTER_API_URL;
+  const UN_ALLOTED_DRIVER_URL = process.env.REACT_APP_UNALLOTED_DRIVER_API_URL;
+
   const navigate = useNavigate();
+
+  const [isLoading, setIsLoading] = useState(false);
+  const [isSubmit, setIsSubmit] = useState(false);
+
+  const [parentElement, setParentElement] = useState(null);
+
+  const location = useLocation();
+  const { vehicleData } = location.state === null ? null : location.state;
+  console.log("vehicleData",vehicleData);
+
+  const vehicleId = vehicleData !==  null && vehicleData._id ;
+  const VEHICLE_UPDATE_URL = `${process.env.REACT_APP_VEHICLE_UPDATE_API_URL}/${vehicleId}`;
+  console.log("VEHICLE_UPDATE_URL",VEHICLE_UPDATE_URL);
+
+  const [unAllotedDrivers, setUnAllotedDrivers] = useState(null);
+
+  useEffect(() => {
+    setParentElement(document.getElementById("home-container"));
+  }, []);
+
   const [addVehicleData, setAddVehicleData] = useState({
     vehicleType: "",
-    vehicleBrand: "",
-    vehicleVariant: "",
-    vehicleCapcity: "",
-    vehicleColor: "",
+    brand: "",
+    model: "",
+    capacity: "",
+    color: "",
     vehicleCharges: "",
     vehicleImagesOne: "",
     vehicleImagesTwo: "",
     vehicleImagesThree: "",
-    vehicleNo: "",
+    vehicleNoPlate: "",
     vehicleRegistrationNo: "",
-    vehicleChassisNo: "",
-    vehicleLastService: "",
-    vehicleRcDoc: "",
-    vehicleInsuranceDoc: "",
+    vehicleChechisNo: "",
+    vehicleLastServising: "",
+    vehicleRCDocument: "",
+    vehicleInsuranceDocs: "",
     superAdminId: "",
     agencyId: "",
+    driverId: "",
   });
+
+  useEffect(() => {
+    if (vehicleData) {
+      setAddVehicleData((prevState) => ({
+        ...prevState,
+        ...vehicleData,
+      }));
+
+      FileSetUp();
+    }
+  }, [vehicleData]);
+
+  const FileSetUp = () => {
+    const newSelectedFiles = [...selectedFiles];
+    newSelectedFiles[0].file = vehicleData.vehicleImg[0];
+    newSelectedFiles[1].file = vehicleData.vehicleImg[1];
+    newSelectedFiles[2].file = vehicleData.vehicleImg[2];
+    newSelectedFiles[3].file = vehicleData.vehicleRCDocument;
+    newSelectedFiles[4].file = vehicleData.vehicleInsuranceDocs;
+
+    setSelectedFiles(newSelectedFiles);
+
+    const updatedPreviews = [...imagePreviews];
+    updatedPreviews[0] = vehicleData.vehicleImg[0];
+    updatedPreviews[1] = vehicleData.vehicleImg[1];
+    updatedPreviews[2] = vehicleData.vehicleImg[2];
+    updatedPreviews[3] = vehicleData.vehicleRCDocument;
+    updatedPreviews[4] = vehicleData.vehicleInsuranceDocs;
+
+    setImagePreviews(updatedPreviews);
+  };
+
   const [selectedFiles, setSelectedFiles] = useState(
     Array.from({ length: 5 }, () => ({ file: null, error: null }))
   );
@@ -64,18 +120,24 @@ const AddVehicle = () => {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    addVehicleData.vehicleImagesOne = selectedFiles[0].file ;
+    addVehicleData.vehicleImagesOne = selectedFiles[0].file;
     addVehicleData.vehicleImagesTwo = selectedFiles[1].file;
     addVehicleData.vehicleImagesThree = selectedFiles[2].file;
-    addVehicleData.vehicleRcDoc = selectedFiles[3].file;
-    addVehicleData.vehicleInsuranceDoc = selectedFiles[4].file;
+    addVehicleData.vehicleRCDocument = selectedFiles[3].file;
+    addVehicleData.vehicleInsuranceDocs = selectedFiles[4].file;
     addVehicleData.superAdminId = localStorage.getItem("superAdminId");
     addVehicleData.agencyId = localStorage.getItem("agencyId");
     console.log("addVehicleData", addVehicleData);
     let isValid = validationSchema();
     console.log("isValid", isValid);
     if (isValid) {
-      AddVehicle();
+      vehicleData === null ? AddVehicle() : EditVehicle();
+      setIsLoading(true);
+      setIsSubmit(true);
+      if (parentElement) {
+        parentElement.style.filter = "blur(1.2px)";
+        parentElement.style.pointerEvents = "none";
+      }
     }
   };
   const validationSchema = () => {
@@ -97,7 +159,7 @@ const AddVehicle = () => {
         type: "superAdmin",
       },
     };
-    
+
     const formdata = new FormData();
     if (
       localStorage.getItem("superAdminId") !== null &&
@@ -112,50 +174,208 @@ const AddVehicle = () => {
     }
     formdata.append("vehicleName", addVehicleData.vehicleType);
     formdata.append("vehicleType", addVehicleData.vehicleType);
-    formdata.append("vehicleNoPlate", addVehicleData.vehicleNo);
-    formdata.append("vehicleChechisNo", addVehicleData.vehicleChassisNo);
+    formdata.append("vehicleNoPlate", addVehicleData.vehicleNoPlate);
+    formdata.append("vehicleChechisNo", addVehicleData.vehicleChechisNo);
     formdata.append(
       "vehicleRegistrationNo",
       addVehicleData.vehicleRegistrationNo
     );
-    formdata.append("vehicleLastServising", addVehicleData.vehicleLastService);
-    formdata.append("model", addVehicleData.vehicleVariant);
-    formdata.append("brand", addVehicleData.vehicleBrand);
-    formdata.append("color", addVehicleData.vehicleColor);
-    formdata.append("capacity", addVehicleData.vehicleCapcity);
+    formdata.append(
+      "vehicleLastServising",
+      addVehicleData.vehicleLastServising
+    );
+    formdata.append("model", addVehicleData.model);
+    formdata.append("brand", addVehicleData.brand);
+    formdata.append("color", addVehicleData.color);
+    formdata.append("capacity", addVehicleData.capacity);
     formdata.append("vehicleCharges", addVehicleData.vehicleCharges);
-    formdata.append("vehicleRCDocument", addVehicleData.vehicleRcDoc);
-    formdata.append("vehicleImg",  addVehicleData.vehicleImagesOne);
-    formdata.append("vehicleImg",  addVehicleData.vehicleImagesTwo);
-    formdata.append("vehicleImg",  addVehicleData.vehicleImagesThree);
-    formdata.append("vehicleInsuranceDocs", addVehicleData.vehicleInsuranceDoc);
+    formdata.append("vehicleRCDocument", addVehicleData.vehicleRCDocument);
+    formdata.append("vehicleImg", addVehicleData.vehicleImagesOne);
+    formdata.append("vehicleImg", addVehicleData.vehicleImagesTwo);
+    formdata.append("vehicleImg", addVehicleData.vehicleImagesThree);
+    formdata.append(
+      "vehicleInsuranceDocs",
+      addVehicleData.vehicleInsuranceDocs
+    );
+    formdata.append("driverId", addVehicleData.driverId);
+
     console.log([...formdata.entries()]);
     try {
       axios
         .post(URL, formdata, headers)
         .then((response) => {
           console.log("response", response);
-          if (response.status === 200) {
+          if (response.data.status === true) {
+            setIsLoading(false);
+            setIsSubmit(false);
+            if (parentElement) {
+              parentElement.style.filter = "blur(0px)";
+              parentElement.style.pointerEvents = "auto";
+            }
             alert(response.data.message);
             navigate("/home/allVehicle");
           } else {
+            setIsLoading(false);
+            setIsSubmit(false);
+            if (parentElement) {
+              parentElement.style.filter = "blur(0px)";
+              parentElement.style.pointerEvents = "auto";
+            }
             alert(response.data.message);
           }
         })
-        .catch((error) => console.log(error));
+        .catch((error) => {
+          setIsLoading(false);
+          setIsSubmit(false);
+          if (parentElement) {
+            parentElement.style.filter = "blur(0px)";
+            parentElement.style.pointerEvents = "auto";
+          }
+          console.log(error);
+        });
     } catch (error) {
+      setIsLoading(false);
+      setIsSubmit(false);
+      if (parentElement) {
+        parentElement.style.filter = "blur(0px)";
+        parentElement.style.pointerEvents = "auto";
+      }
       console.log("error", error);
+    }
+  };
+
+  const EditVehicle = async () => {
+    console.log("EditVehicle");
+    const headers = {
+      headers: {
+        token: token,
+        type: "superAdmin",
+      },
+    };
+
+    const formdata = new FormData();
+    if (
+      localStorage.getItem("superAdminId") !== null &&
+      localStorage.getItem("superAdminId") !== ""
+    ) {
+      formdata.append("superAdminId", addVehicleData.superAdminId);
+    } else if (
+      localStorage.getItem("agencyId") !== null &&
+      localStorage.getItem("agencyId") !== ""
+    ) {
+      formdata.append("agencyId", addVehicleData.agencyId);
+    }
+    formdata.append("vehicleName", addVehicleData.vehicleType);
+    formdata.append("vehicleType", addVehicleData.vehicleType);
+    formdata.append("vehicleNoPlate", addVehicleData.vehicleNoPlate);
+    formdata.append("vehicleChechisNo", addVehicleData.vehicleChechisNo);
+    formdata.append(
+      "vehicleRegistrationNo",
+      addVehicleData.vehicleRegistrationNo
+    );
+    formdata.append(
+      "vehicleLastServising",
+      addVehicleData.vehicleLastServising
+    );
+    formdata.append("model", addVehicleData.model);
+    formdata.append("brand", addVehicleData.brand);
+    formdata.append("color", addVehicleData.color);
+    formdata.append("capacity", addVehicleData.capacity);
+    formdata.append("vehicleCharges", addVehicleData.vehicleCharges);
+    formdata.append("vehicleRCDocument", addVehicleData.vehicleRCDocument);
+    formdata.append("vehicleImg", addVehicleData.vehicleImagesOne);
+    formdata.append("vehicleImg", addVehicleData.vehicleImagesTwo);
+    formdata.append("vehicleImg", addVehicleData.vehicleImagesThree);
+    formdata.append(
+      "vehicleInsuranceDocs",
+      addVehicleData.vehicleInsuranceDocs
+    );
+    formdata.append("driverId", addVehicleData.driverId);
+
+    console.log([...formdata.entries()]);
+    try {
+      axios
+        .put(VEHICLE_UPDATE_URL, formdata, headers)
+        .then((response) => {
+          console.log("response", response);
+          if (response.data.status === true) {
+            setIsLoading(false);
+            setIsSubmit(false);
+            if (parentElement) {
+              parentElement.style.filter = "blur(0px)";
+              parentElement.style.pointerEvents = "auto";
+            }
+            alert(response.data.message);
+            navigate("/home/allVehicle");
+          } else {
+            setIsLoading(false);
+            setIsSubmit(false);
+            if (parentElement) {
+              parentElement.style.filter = "blur(0px)";
+              parentElement.style.pointerEvents = "auto";
+            }
+            alert(response.data.message);
+          }
+        })
+        .catch((error) => {
+          setIsLoading(false);
+          setIsSubmit(false);
+          if (parentElement) {
+            parentElement.style.filter = "blur(0px)";
+            parentElement.style.pointerEvents = "auto";
+          }
+          console.log(error);
+        });
+    } catch (error) {
+      setIsLoading(false);
+      setIsSubmit(false);
+      if (parentElement) {
+        parentElement.style.filter = "blur(0px)";
+        parentElement.style.pointerEvents = "auto";
+      }
+      console.log("error", error);
+    }
+  };
+
+  useEffect(() => {
+    getUnallotedDrivers();
+  }, []);
+
+  const getUnallotedDrivers = async () => {
+    const headers = {
+      headers: {
+        token: token,
+        type: "superAdmin",
+      },
+    };
+
+    try {
+      await axios
+        .get(UN_ALLOTED_DRIVER_URL, headers)
+        .then((res) => {
+          setUnAllotedDrivers(res.data.items);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    } catch (error) {
+      console.log("Error from try catch", error);
     }
   };
 
   return (
     <div className="add-vehicle-container">
+      <Spinner
+        className={`spinner ${isLoading ? "isLoading" : ""}`}
+        animation="border"
+      />
+
       <section className="container-fluid">
         <div className="row">
           <div className="col-md-12">
             <div className="form-title margin_top_4 padding_left_20">
               <p>
-                Add <span>Vehicle</span>
+                {vehicleData === null ? "Add" : "Edit"} <span>Vehicle</span>
               </p>
             </div>
           </div>
@@ -185,70 +405,70 @@ const AddVehicle = () => {
             </div>
 
             <div className="col-md-6">
-              <label htmlFor="vehicleBrand" className="form-label">
+              <label htmlFor="brand" className="form-label">
                 Vehicle Brand
               </label>
               <input
                 type="text"
                 className="form-control"
                 placeholder="Vehicle Brand"
-                name="vehicleBrand"
-                id="vehicleBrand"
-                value={addVehicleData.vehicleBrand}
+                name="brand"
+                id="brand"
+                value={addVehicleData.brand}
                 onChange={handleChange}
                 required
               />
             </div>
             <div className="col-md-6">
-              <label htmlFor="vehicleVariant" className="form-label">
+              <label htmlFor="model" className="form-label">
                 Vehicle Variant
               </label>
               <input
                 type="text"
                 className="form-control"
                 placeholder="Vehicle Variant"
-                name="vehicleVariant"
-                id="vehicleVariant"
-                value={addVehicleData.vehicleVariant}
+                name="model"
+                id="model"
+                value={addVehicleData.model}
                 onChange={handleChange}
                 required
               />
             </div>
 
             <div className="col-md-6">
-              <label htmlFor="vehicleCapcity" className="form-label">
+              <label htmlFor="capacity" className="form-label">
                 Capacity
               </label>
               <input
                 type="number"
                 className="form-control"
                 placeholder="Vehicle Capacity"
-                name="vehicleCapcity"
-                id="vehicleCapcity"
-                value={addVehicleData.vehicleCapcity}
+                name="capacity"
+                id="capacity"
+                value={addVehicleData.capacity}
                 onChange={handleChange}
                 required
               />
             </div>
 
             <div className="col-md-6">
-              <label htmlFor="vehicleColor" className="form-label">
+              <label htmlFor="color" className="form-label">
                 Colour
               </label>
               <input
                 type="text"
                 className="form-control"
                 placeholder="Vehicles Colour"
-                name="vehicleColor"
-                id="vehicleColor"
-                value={addVehicleData.vehicleColor}
+                name="color"
+                id="color"
+                value={addVehicleData.color}
                 onChange={handleChange}
                 required
               />
             </div>
 
             <div className="col-md-6">
-              <label htmlFor="vehiclesCharges" className="form-label">
+              <label htmlFor="vehicleCharges" className="form-label">
                 Charges / km
               </label>
               <input
@@ -370,16 +590,16 @@ const AddVehicle = () => {
 
           <div className="row  add-driver-form">
             <div className="col-md-6">
-              <label htmlFor="vehicleNo" className="form-label">
+              <label htmlFor="vehicleNoPlate" className="form-label">
                 Vehicle Number
               </label>
               <input
                 type="text"
                 className="form-control"
                 placeholder="Vehicle Number"
-                name="vehicleNo"
-                id="vehicleNo"
-                value={addVehicleData.vehicleNo}
+                name="vehicleNoPlate"
+                id="vehicleNoPlate"
+                value={addVehicleData.vehicleNoPlate}
                 onChange={handleChange}
                 required
               />
@@ -403,31 +623,31 @@ const AddVehicle = () => {
           </div>
           <div className="row  add-driver-form">
             <div className="col-md-6">
-              <label htmlFor="vehicleChassisNo" className="form-label">
+              <label htmlFor="vehicleChechisNo" className="form-label">
                 Vehicle Chassis Number
               </label>
               <input
                 type="text"
                 className="form-control"
                 placeholder="Vehicle Chassis Number"
-                name="vehicleChassisNo"
-                id="vehicleChassisNo"
-                value={addVehicleData.vehicleChassisNo}
+                name="vehicleChechisNo"
+                id="vehicleChechisNo"
+                value={addVehicleData.vehicleChechisNo}
                 onChange={handleChange}
                 required
               />
             </div>
             <div className="col-md-6">
-              <label htmlFor="vehicleLastService" className="form-label">
+              <label htmlFor="vehicleLastServising" className="form-label">
                 Vehicle Last Servicing
               </label>
               <input
                 type="date"
                 className="form-control"
                 placeholder=""
-                name="vehicleLastService"
-                id="vehicleLastService"
-                value={addVehicleData.vehicleLastService}
+                name="vehicleLastServising"
+                id="vehicleLastServising"
+                value={addVehicleData.vehicleLastServising}
                 onChange={handleChange}
                 max={new Date().toISOString().split("T")[0]} // Set max date to today
                 pattern="\d{2}-\d{2}-\d{4}"
@@ -445,9 +665,9 @@ const AddVehicle = () => {
             <div className="col-md-6">
               <div className="vehicleregdoc">
                 <label htmlFor="VehicleRegDoc">Vehicle RC Document</label>
-                <div className="add-btn">
+                {/* <div className="add-btn">
                   <button>Add+</button>
-                </div>
+                </div> */}
               </div>
             </div>
             <div className="col-md-6">
@@ -456,9 +676,9 @@ const AddVehicle = () => {
                   Vehicle Insurance Document
                 </label>
 
-                <div className="add-btn">
+                {/* <div className="add-btn">
                   <button>Add+</button>
-                </div>
+                </div> */}
               </div>
             </div>
 
@@ -522,6 +742,29 @@ const AddVehicle = () => {
               {selectedFiles[4].error && (
                 <p className="error-message">{selectedFiles[4].error}</p>
               )}
+            </div>
+
+            <div className="col-md-6">
+              <label htmlFor="driverId" className="form-label">
+                Driver
+              </label>
+              <select
+                className="form-select"
+                aria-label="Default select example"
+                id="driverId"
+                name="driverId"
+                value={addVehicleData.driverId}
+                onChange={handleChange}
+                required
+              >
+                <option value="">Select Driver</option>
+                {unAllotedDrivers &&
+                  unAllotedDrivers.map((driver) => (
+                    <option key={driver._id} value={driver._id}>
+                      {driver.drivername}
+                    </option>
+                  ))}
+              </select>
             </div>
           </div>
 
