@@ -25,6 +25,7 @@ import AllVehicleForApproval from "./Component/VehicleApproval/AllVehicleForAppr
 import ApproveVehicle from "./Component/VehicleApproval/ApproveVehicle";
 import AllDriverForApproval from "./Component/DriverApproval/AllDriverForApproval.jsx";
 import DriverApproval from "./Component/DriverApproval/DriverApproval.jsx";
+import ComplainDetail from "./Component/ComplainDetail/ComplainDetail.jsx";
 function App() {
 
   return (
@@ -62,6 +63,9 @@ function App() {
             <Route path="earnings" element={<Earnings />} />
             <Route path="complaints" element={<Complaints />} />
             <Route path="complaints/complaintForm" element={<ComplaintForm />} />
+            <Route path="complaints/complaintDetail" element={<ComplainDetail />} />
+
+
             <Route path="terms&Condition" element={<TermsAndCondition />} />
             <Route path="policy" element={<Policy />} />
           </Route>

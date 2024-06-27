@@ -1,0 +1,20 @@
+.complaint-detail-container {
+    margin-left: 40px;
+}
+
+.complaint-detail-container h4{
+    margin-top: 20px;
+}
+
+.complaint-detail-container .value {
+    width: 100%;
+    border: 1px solid #E8E8E8;
+    color: #969696;
+    padding: 8px 20px 8px 0px;
+    border-radius: 12px;
+    font-size: 16px;
+    font-family: Inter;
+    font-size: 16px;
+    font-weight: 300;
+    text-align: left;
+}

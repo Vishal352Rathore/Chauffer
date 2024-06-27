@@ -32,14 +32,14 @@ const Complaints = () => {
           <div className="all-driver-header">
             <div className="form-title padding_left_20">
               <p>
-                Complaint <span>Detail</span>
+                All <span>Complaints</span>
               </p>
             </div>
           </div>
         </div>
       </div>
     </section>
-
+{/* 
       <div className="complaint-tab">
         <div>
           <button style={tabStylesForUser} onClick={handleUser}>
@@ -49,17 +49,18 @@ const Complaints = () => {
             Driver
           </button>
         </div>
-        {/* <div>
+        <div>
           <span>
             <Link className="add-complaint-btn" to="complaintForm">
               {" "}
               Add Complain
             </Link>{" "}
           </span>
-        </div> */}
-      </div>
+        </div>
+      </div> */}
 
-      <div className="">{isTrue ? <UserComplaint /> : <DriverComplaint />}</div>
+      {/* <div className="">{isTrue ? <UserComplaint /> : <DriverComplaint />}</div> */}
+      <UserComplaint /> 
     </div>
   );
 };

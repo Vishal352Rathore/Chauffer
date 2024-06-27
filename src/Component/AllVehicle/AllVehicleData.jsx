@@ -55,7 +55,6 @@ const AllVehicleData = ({ superAdminId, agencyId }) => {
             setVehicleData(result.items.vehicles);
             setFilteredVehicles(result.items.vehicles);
             setTotalPages(Math.ceil(result.items.totalCount / 10));
-
             console.log("response.data.items", result);
           } else {
             console.log("response.data.items", result);
