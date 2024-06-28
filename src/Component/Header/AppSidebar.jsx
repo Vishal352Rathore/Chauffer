@@ -391,7 +391,8 @@ const AppSidebar = ({ isOpen, toggleSidebar }) => {
                   alt="not found"
                   className="complaints-icon"
                 /> */}
-                <i className={`fa-regular fa-face-frown complaints-icon ${isActive === "complaints"  ? "active-link" : ""}`}></i>
+                
+                <i className={`fa-regular fa-face-frown complaints-icon ${isActive === "complaints"  ? "active-link" : ""}`} onClick={() => setIsActive("complaints")}></i>
                 <span
                   className={`link-tag ${
                     isActive === "complaints" ? "active-link" : ""

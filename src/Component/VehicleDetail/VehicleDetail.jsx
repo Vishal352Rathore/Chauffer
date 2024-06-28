@@ -6,7 +6,7 @@ import axios from "axios";
 
 const VehicleDetail = ({agencyData}) => {
 
-  // const  AGENCYVEHICLE_STATUS_CHANGE_URL = process.env.REACT_APP_AGENCYVEHICLE_STATUS_CHANGE_API_URL
+  const  AGENCYVEHICLE_STATUS_CHANGE_URL = process.env.REACT_APP_AGENCYVEHICLE_STATUS_CHANGE_API_URL
   const { vehicleId} = useParams();
   console.log("vehicleId:",vehicleId)
   const navigate = useNavigate();
@@ -24,37 +24,37 @@ setAddVehicleStatus({...vehicleStatus ,[e.target.name]:e.target.value});
 
   const handleSubmit = (e)=>{
     e.preventDefault();
-    // ApiCalling();
+    ApiCalling();
   }
 
-  // const ApiCalling = async () => {
-  //   try {
-  //     const response = await axios.post(
-  //       AGENCYVEHICLE_STATUS_CHANGE_URL,
-  //       {
-  //         vehicleId: agencyData._id,
-  //         agencyStatus: vehicleStatus.isApproved,
-  //       },
-  //       {
-  //         headers: {
-  //           token: token,
-  //           type: "superAdmin",
-  //         },
-  //       }
-  //     );
+  const ApiCalling = async () => {
+    try {
+      const response = await axios.post(
+        AGENCYVEHICLE_STATUS_CHANGE_URL,
+        {
+          vehicleId:vehicleData._id,
+          vehicleStatus: vehicleStatus.isApproved,
+        },
+        {
+          headers: {
+            token: token,
+            type: "superAdmin",
+          },
+        }
+      );
 
-  //     if (response.data.status === true) {
-  //       console.log("response.data.items", response.items);
-  //       alert(response.data.message);
-  //       navigate(-1);
-  //     } else {
-  //       alert(response.data.message);
-  //       console.log("response.data.items.drivers fail", response);
-  //     }
-  //   } catch (error) {
-  //     console.log("error", error);
-  //   }
-  // };
+      if (response.data.status === true) {
+        console.log("response.data.items", response.items);
+        alert(response.data.message);
+        navigate(-1);
+      } else {
+        alert(response.data.message);
+        console.log("response.data.items.drivers fail", response);
+      }
+    } catch (error) {
+      console.log("error", error);
+    }
+  };
 
   return (
     <div className="vehicle-detail">
@@ -231,7 +231,7 @@ setAddVehicleStatus({...vehicleStatus ,[e.target.name]:e.target.value});
             </div>
           </div>
         
-          {/* <form onSubmit={handleSubmit} className='statusform'> 
+          <form onSubmit={handleSubmit} className='statusform'> 
           <h4 className='statusformtitle'>Vehicle Status approved/pending </h4>
             <div className='container'>
             <div className='row'>
@@ -264,7 +264,7 @@ setAddVehicleStatus({...vehicleStatus ,[e.target.name]:e.target.value});
                 </button>
               </div>
             </div>
-          </form>   */}
+          </form>  
           </div>
         
 

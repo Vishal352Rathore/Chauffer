@@ -194,10 +194,10 @@ const AllVehicleForApproval = () => {
                                     alt="not found"
                                   />
                                 </Link>
-                                <img
+                                {/* <img
                                   src={Images("edit_icon")}
                                   alt="not found"
-                                />
+                                /> */}
                                 <img
                                   src={Images("delete_icon")}
                                   alt="not found"

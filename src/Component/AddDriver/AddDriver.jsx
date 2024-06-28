@@ -27,7 +27,11 @@ const AddDriver = () => {
 
   const driverId = driverData !== null && driverData._id;
   const DRIVER_UPDATE_URL = `${process.env.REACT_APP_DRIVER_UPDATE_API_URL}/${driverId}`;
-
+  const AGENCYDRIVER_STATUS_CHANGE_URL = process.env.REACT_APP_AGENCYDRIVER_STATUS_CHANGE_API_URL ;
+  
+  const [DriverStatus , setDriverStatus] = useState({
+    isApproved: "",
+  })
   const token = localStorage.getItem("token");
 
   const [addDriverData, setAddDriverData] = useState({
@@ -662,6 +666,9 @@ const AddDriver = () => {
               )}
             </div>
           </div>
+
+
+         
 
           <div className="row">
             <div className="col-md-4 add-driver-btn-div">

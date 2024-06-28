@@ -207,7 +207,18 @@ const AllVehicleData = ({ superAdminId, agencyId }) => {
                             <td> {vehicle.vehicleNoPlate}</td>
                             <td> {vehicle.brand}</td>
                             <td>{vehicle.vehicleRegistrationNo}</td>
-                            <td>{vehicle.vehicleStatus}</td>
+                            {vehicle.vehicleStatus && vehicle.vehicleStatus === "active" ? (
+                              <td>
+                                <button style={{ background: "#5DCA95" }}>
+                                  Done
+                                </button>
+                              </td>
+                            ) : (
+                              <td>
+                                <button>Pending</button>
+                              </td>
+                            )}
+                            {/* <td>{vehicle.vehicleStatus}</td> */}
                             <td>
                               <div className="action_icon">
                                 <Link
