@@ -19,11 +19,14 @@ const AddVehicle = () => {
 
   const location = useLocation();
   const { vehicleData } = location.state === null ? null : location.state;
-  console.log("vehicleData",vehicleData);
+
 
   const vehicleId = vehicleData !==  null && vehicleData._id ;
   const VEHICLE_UPDATE_URL = `${process.env.REACT_APP_VEHICLE_UPDATE_API_URL}/${vehicleId}`;
-  console.log("VEHICLE_UPDATE_URL",VEHICLE_UPDATE_URL);
+
+  const superAdminId = localStorage.getItem("superAdminId");
+  const agencyId = localStorage.getItem("agencyId");
+
 
   const [unAllotedDrivers, setUnAllotedDrivers] = useState(null);
 
@@ -342,25 +345,48 @@ const AddVehicle = () => {
   }, []);
 
   const getUnallotedDrivers = async () => {
-    const headers = {
-      headers: {
-        token: token,
-        type: "superAdmin",
-      },
+    const myHeaders = new Headers();
+    myHeaders.append("token", token);
+    myHeaders.append("type", "superAdmin");
+    myHeaders.append("Content-Type", "application/json");
+    
+    const raw = JSON.stringify({
+      "superAdminId": superAdminId,
+      "agencyId": agencyId
+    });
+    
+    const requestOptions = {
+      method: "POST",
+      headers: myHeaders,
+      body: raw,
+      redirect: "follow"
     };
+    
+    fetch(UN_ALLOTED_DRIVER_URL, requestOptions)
+      .then((response) => response.json())
+      .then((result) =>{
+       
+          console.log("res",result);
+          setUnAllotedDrivers(result.items);
+        
+      })
+      .catch((error) => console.error(error));
+    
+ 
 
-    try {
-      await axios
-        .get(UN_ALLOTED_DRIVER_URL, headers)
-        .then((res) => {
-          setUnAllotedDrivers(res.data.items);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    } catch (error) {
-      console.log("Error from try catch", error);
-    }
+    // try {
+    //   await axios
+    //     .get(UN_ALLOTED_DRIVER_URL,{  headers: config.headers,  data: data})
+    //     .then((res) => {
+    //       console.log("res",res);
+    //       setUnAllotedDrivers(res.data.items);
+    //     })
+    //     .catch((error) => {
+    //       console.log(error);
+    //     });
+    // } catch (error) {
+    //   console.log("Error from try catch", error);
+    // }
   };
 
   return (
@@ -758,7 +784,7 @@ const AddVehicle = () => {
                 required
               >
                 <option value="">Select Driver</option>
-                {unAllotedDrivers &&
+                {unAllotedDrivers && unAllotedDrivers.length > 0 &&
                   unAllotedDrivers.map((driver) => (
                     <option key={driver._id} value={driver._id}>
                       {driver.drivername}
