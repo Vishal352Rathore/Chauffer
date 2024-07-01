@@ -227,6 +227,7 @@ const Signup = () => {
                     required
                     maxLength="10"
                     minLength="10"
+                    
                   />
                 </div>
                 <div className="col-md-6">
@@ -290,6 +291,7 @@ const Signup = () => {
                     onChange={handleConfirmPasswordChange}
                     onBlur={validatePasswords} // Validate on blur
                     className="form-control confirmpassword"
+                    required
                   />
                 </div>
               </div>

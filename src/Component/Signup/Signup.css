@@ -12,6 +12,44 @@
     border: unset;
 }
 
+
+h1.signup-form-title {
+    padding: 50px 0px;
+    font-family: Inter;
+font-size: 40px;
+font-weight: 600;
+line-height: 58.09px;
+text-align: center;
+}
+p.form-input-title {
+    font-family: Inter;
+    font-size: 32px;
+    font-weight: 600;
+    line-height: 38.73px;
+    text-align: left;
+    padding: 20px 0px 0px 0px;
+}
+.form-control {
+    display: block;
+    width: 100%;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: var(--bs-body-color);
+    appearance: none;
+    background-color: var(--bs-body-bg);
+    background-clip: padding-box;
+    border: var(--bs-border-width) solid var(--bs-border-color);
+    border-radius: var(--bs-border-radius);
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    font-family: Inter;
+    text-align: left;
+    border-bottom: 1px solid #777777;
+}
+.confirmpassword{
+    padding-top: 30px;
+}
 .signup-container .set_postion .login-image {
     position: absolute;
     top: 50%;
@@ -21,7 +59,9 @@
     text-align: center;
     width: 100%;
 }
-
+.signup-form .form-input-title.operation-title {
+    padding: 30px 0px 0px 0px;
+}
 .signup-container .set_postion .login-image p:nth-child(1) {
     font-family: Inter;
     font-size: 24px;
@@ -32,7 +72,7 @@
     width: 100%;
     object-fit: cover;
     position: relative;
-
+   height: 110vh;
 }
 .signup-container .container-fluid {
     padding: 0px !important;
