@@ -9,13 +9,11 @@ import { LoadScript, Autocomplete } from "@react-google-maps/api";
 import Images from "../Images";
 
 const Signup = () => {
-  const URL = process.env.REACT_APP_AGENCY_REGISTER_API_URL ;
+  const URL = process.env.REACT_APP_AGENCY_REGISTER_API_URL;
   const YOUR_GOOGLE_MAPS_API_KEY = "AIzaSyCZ0UycRv9Fy9PMDBY-uoU_SkXZGnmjP18";
-  const Google_API_KEY = process.env.REACT_APP_GOOGLE_MAPS_API_KEY
+  const Google_API_KEY = process.env.REACT_APP_GOOGLE_MAPS_API_KEY;
   const navigate = useNavigate();
-  const [coordinates, setCoordinates] = useState({
-    ServiceWeCovrage : "",
-  });
+  const [coordinates, setCoordinates] = useState([]);
   const [signupInfo, setSignupInfo] = useState({
     AgencyName: "",
     BusinessRegistrationNumber: "",
@@ -33,41 +31,44 @@ const Signup = () => {
   });
   const [ConfirmPassword, setConfirmPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
-  
-  const [isSuggestionSelected, setIsSuggestionSelected] = useState({ServiceWeCovrage : false});
+
+  const [isSuggestionSelected, setIsSuggestionSelected] = useState({
+    ServiceWeCovrage: false,
+  });
   const handleConfirmPasswordChange = (e) => {
     setConfirmPassword(e.target.value);
   };
 
   const handleChange = (e) => {
     setSignupInfo({ ...signupInfo, [e.target.name]: e.target.value });
-    setIsSuggestionSelected({ ...isSuggestionSelected, [e.target.name]: false });
+    setIsSuggestionSelected({
+      ...isSuggestionSelected,
+      [e.target.name]: false,
+    });
   };
   const handleBlur = (fieldName) => {
     if (!isSuggestionSelected[fieldName]) {
-      setSignupInfo({ ...signupInfo, [fieldName]: '' });
+      setSignupInfo({ ...signupInfo, [fieldName]: "" });
     }
   };
-  
-  const handlePlaceSelect = (place ,name) => {
+
+  const handlePlaceSelect = (place, name) => {
     console.log("Selected place:", place); // Log the place object to see its structure
-    if (place && place.geometry && place.geometry.location)
-       {
+    if (place && place.geometry && place.geometry.location) {
       const { lat, lng } = place.geometry.location;
-      setSignupInfo((signupInfo) => ({ ...signupInfo, [name]: place.formatted_address }));
-      setCoordinates((prevCoordinates) => ({
-        ...prevCoordinates,
-        [name]: `${lat()},${lng()}`,
+      setSignupInfo((signupInfo) => ({
+        ...signupInfo,
+        [name]: place.formatted_address,
       }));
-      console.log('Coordinates:name', `${name} ${lat()},${lng()}` );
+      setCoordinates( [lat(), lng()] );
+      console.log("place.formatted_address", place.formatted_address);
+      console.log("Coordinates:name", [lat(), lng()]);
       setIsSuggestionSelected({ ...isSuggestionSelected, [name]: true });
-    } 
-    else {
+    } else {
       console.error("Invalid place object:", place);
     }
   };
-  
-  
+
   const validatePasswords = () => {
     if (signupInfo.password !== ConfirmPassword) {
       setErrorMessage("Passwords do not match");
@@ -82,12 +83,86 @@ const Signup = () => {
       // Proceed with form submission or further processing
       console.log("Passwords match. Form submitted.");
     }
+    signupInfo.ServiceWeCovrage = coordinates;
     console.log("signupInfo :", signupInfo);
     AgencyRegister();
-
   };
 
   const AgencyRegister = async () => {
+    try {
+      const myHeaders = new Headers();
+      myHeaders.append("Content-Type", "application/json");
+
+      const raw = JSON.stringify({
+        AgencyName: signupInfo.AgencyName,
+        ContactEmail: signupInfo.ContactEmail,
+        password: signupInfo.password,
+        ContactNumber: signupInfo.ContactNumber,
+        ContactPerson: signupInfo.ContactPerson,
+        PhysicalAddress: signupInfo.PhysicalAddress,
+        BusinessRegistrationNumber: signupInfo.BusinessRegistrationNumber,
+        AgencyWebsite: signupInfo.AgencyWebsite,
+        YearsInOperation: signupInfo.YearsInOperation,
+        ServiceWeCovrage: signupInfo.ServiceWeCovrage,
+        NumberOfVehiclesInFleet: signupInfo.NumberOfVehiclesInFleet,
+        BusinessLicensePermit: signupInfo.BusinessLicensePermit,
+        TaxInformationNumber: signupInfo.TaxInformationNumber
+      });
+
+      const requestOptions = {
+        method: "POST",
+        headers: myHeaders,
+        body: raw,
+        redirect: "follow",
+      };
+
+      fetch(URL, requestOptions)
+        .then((response) => response.json())
+        .then((result) => {
+          if (signupInfo.password === ConfirmPassword) {
+            // Proceed with form submission or further processing
+            console.log("Password match. Form submitted.");
+          }
+          if (result.data.subCode === 200) {
+            console.log(
+              result.data.subCode,
+              result.data.message,
+              result.data
+            );
+            // alert("Data Register successfully");
+            toast.success(result.data.message);
+            console.log("Registered Data :");
+            navigate("/login");
+          } else {
+            console.log(
+              result.data.subCode,
+              result.data.message,
+              result.data
+            );
+            toast.success(result.data.message);
+          }
+          // Clear the form fields after submission
+          setSignupInfo({
+            AgencyName: "",
+            BusinessRegistrationNumber: "",
+            ContactPerson: "",
+            ContactEmail: "",
+            ContactNumber: "",
+            AgencyWebsite: "",
+            PhysicalAddress: "",
+            password: "",
+            YearsInOperation: "",
+            NumberOfVehiclesInFleet: "",
+            ServiceWeCovrage: [],
+            BusinessLicensePermit: "",
+            TaxInformationNumber: "",
+          });
+    })
+        .catch((error) => console.error(error));
+    } catch (error) {
+      console.log("catch error", error);
+    }
+
     try {
       const response = await axios.post(URL, signupInfo);
       if (signupInfo.password === ConfirmPassword) {
@@ -104,36 +179,7 @@ const Signup = () => {
         toast.success(response.data.message);
         console.log("Registered Data :");
         navigate("/login");
-      } else if (response.data.subCode === 201) {
-        console.log(
-          response.data.subCode,
-          response.data.message,
-          response.data
-        );
-        toast.success(response.data.message);
-      } else if (response.data.subCode === 400) {
-        console.log(
-          response.data.subCode,
-          response.data.message,
-          response.data
-        );
-        toast.success(response.data.message);
-        navigate("/login");
-      } else if (response.data.subCode === 401) {
-        console.log(
-          response.data.subCode,
-          response.data.message,
-          response.data
-        );
-        toast.success(response.data.message);
-      } else if (response.data.subCode === 403) {
-        console.log(
-          response.data.subCode,
-          response.data.message,
-          response.data
-        );
-        toast.success(response.data.message);
-      } else if (response.data.subCode === 404) {
+      } else {
         console.log(
           response.data.subCode,
           response.data.message,
@@ -141,7 +187,6 @@ const Signup = () => {
         );
         toast.success(response.data.message);
       }
-
       // Clear the form fields after submission
       setSignupInfo({
         AgencyName: "",
@@ -182,9 +227,7 @@ const Signup = () => {
           <div className="col-md-8">
             <h1 className="signup-form-title">Sign Up</h1>
             <form className="signup-form" onSubmit={handleSubmit}>
-              <p className="form-input-title">
-                Agency Information
-              </p>
+              <p className="form-input-title">Agency Information</p>
               <div className="row">
                 <div className="col-md-6">
                   <label htmlFor="agencyname" className="form-label"></label>
@@ -294,10 +337,7 @@ const Signup = () => {
                   />
                 </div>
                 <div className="col-md-6">
-                  <label
-                    htmlFor="Password"
-                    className="form-label"
-                  ></label>
+                  <label htmlFor="Password" className="form-label"></label>
                   <input
                     type="password"
                     className="form-control"
@@ -372,34 +412,34 @@ const Signup = () => {
                     htmlFor="serviceWeCovrage"
                     className="form-label"
                   ></label>
-                   <LoadScript
-                  googleMapsApiKey={YOUR_GOOGLE_MAPS_API_KEY}
-                  libraries={["places"]}
-                >
-                  <Autocomplete
-                    onLoad={(autocomplete) => {
-                      autocomplete.addListener("place_changed", () =>
-                        handlePlaceSelect(
-                          autocomplete.getPlace(),
-                          "serviceWeCovrage"
-                        )
-                      );
-                    }}
+                  <LoadScript
+                    googleMapsApiKey={YOUR_GOOGLE_MAPS_API_KEY}
+                    libraries={["places"]}
                   >
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="serviceWeCovrage"
-                    placeholder="Service Area"
-                    name="ServiceWeCovrage"
-                    value={signupInfo.ServiceWeCovrage}
-                    onChange={handleChange}
-                    onBlur={() => handleBlur("pickUpLocation")}
-                    // onChange={handleServiceCoverageChange}
-                    required
-                  />
-                   </Autocomplete>
-                   </LoadScript>
+                    <Autocomplete
+                      onLoad={(autocomplete) => {
+                        autocomplete.addListener("place_changed", () =>
+                          handlePlaceSelect(
+                            autocomplete.getPlace(),
+                            "ServiceWeCovrage"
+                          )
+                        );
+                      }}
+                    >
+                      <input
+                        type="text"
+                        className="form-control"
+                        id="serviceWeCovrage"
+                        placeholder="Service Area"
+                        name="ServiceWeCovrage"
+                        value={signupInfo.ServiceWeCovrage}
+                        onChange={handleChange}
+                        onBlur={() => handleBlur("ServiceWeCovrage")}
+                        // onChange={handleServiceCoverageChange}
+                        required
+                      />
+                    </Autocomplete>
+                  </LoadScript>
                 </div>
               </div>
               <div className="row">
@@ -463,7 +503,6 @@ export default Signup;
 //   const { value } = e.target;
 //   const locations = value.split(',').map(loc => loc.trim()); // Split by commas and trim spaces
 //   const coordinatesArray = [];
-  
 
 //   for (const location of locations) {
 //     try {
