@@ -118,7 +118,12 @@ const DriverDetail = ({agencyData}) => {
                   {driverData.experience || "Not Available"}
                 </div>
               </div>
-
+              <div class="col-md-6">
+                <div class="label">Password</div>
+                <div class="value">
+                  {driverData.password || "Not Available"}
+                </div>
+              </div>
             </div>
 
             <div className="row">

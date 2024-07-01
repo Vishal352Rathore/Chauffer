@@ -17,6 +17,7 @@ const AllDriverForApproval = () => {
   const DRIVER_SEARCH_URL = process.env.REACT_APP_DRIVER_SEARCH_API_URL;
 
 
+
   console.log("APPROVE DRIVER URL:",  process.env.REACT_APP_GET_DRIVER_LIST_FOR_APPROVE_API_URL);
   console.log("DRIVER SEARCH URL:", DRIVER_SEARCH_URL);
 
@@ -28,9 +29,9 @@ const AllDriverForApproval = () => {
       myHeaders.append("Content-Type", "application/json");
 
       const raw = JSON.stringify({
-        superAdminId,
-        agencyId,
-        page,
+        superAdminId: superAdminId,
+        agencyId: agencyId,
+        page: page,
       });
 
       const requestOptions = {
